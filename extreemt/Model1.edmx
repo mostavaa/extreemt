@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="extreemtModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="mobile" Type="nvarchar" MaxLength="20" />
+          <Property Name="homephone" Type="nvarchar" MaxLength="20" />
+          <Property Name="country" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="city" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ssn" Type="nvarchar" MaxLength="14" Nullable="false" />
+          <Property Name="nationality" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="relationship" Type="nvarchar" MaxLength="15" />
+          <Property Name="loginPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="walletPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="20" />
+          <Property Name="rightActiveCount" Type="int" Nullable="false" />
+          <Property Name="leftActiveCount" Type="int" Nullable="false" />
+          <Property Name="rightInactiveCount" Type="int" Nullable="false" />
+          <Property Name="leftInactiveCount" Type="int" Nullable="false" />
+          <Property Name="position" Type="nvarchar" MaxLength="20" />
+          <Property Name="genNumber" Type="int" Nullable="false" />
+          <Property Name="parentGenNum" Type="int" />
+          <Property Name="parentUserId" Type="int" />
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="registererId" Type="int" />
+          <Property Name="cashBank" Type="int" Nullable="false" />
+          <Property Name="productBank" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="extreemtModelStoreContainer">
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="extreemtModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="extreemtEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="users" EntityType="extreemtModel.user" />
+        </EntityContainer>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="homephone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="country" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ssn" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="nationality" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="relationship" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="loginPassword" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="walletPassword" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="rightActiveCount" Type="Int32" Nullable="false" />
+          <Property Name="leftActiveCount" Type="Int32" Nullable="false" />
+          <Property Name="rightInactiveCount" Type="Int32" Nullable="false" />
+          <Property Name="leftInactiveCount" Type="Int32" Nullable="false" />
+          <Property Name="position" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="genNumber" Type="Int32" Nullable="false" />
+          <Property Name="parentGenNum" Type="Int32" />
+          <Property Name="parentUserId" Type="Int32" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="registererId" Type="Int32" />
+          <Property Name="cashBank" Type="Int32" Nullable="false" />
+          <Property Name="productBank" Type="Int32" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="extreemtModelStoreContainer" CdmEntityContainer="extreemtEntities">
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="extreemtModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="productBank" ColumnName="productBank" />
+                <ScalarProperty Name="cashBank" ColumnName="cashBank" />
+                <ScalarProperty Name="registererId" ColumnName="registererId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="parentUserId" ColumnName="parentUserId" />
+                <ScalarProperty Name="parentGenNum" ColumnName="parentGenNum" />
+                <ScalarProperty Name="genNumber" ColumnName="genNumber" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="leftInactiveCount" ColumnName="leftInactiveCount" />
+                <ScalarProperty Name="rightInactiveCount" ColumnName="rightInactiveCount" />
+                <ScalarProperty Name="leftActiveCount" ColumnName="leftActiveCount" />
+                <ScalarProperty Name="rightActiveCount" ColumnName="rightActiveCount" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="walletPassword" ColumnName="walletPassword" />
+                <ScalarProperty Name="loginPassword" ColumnName="loginPassword" />
+                <ScalarProperty Name="relationship" ColumnName="relationship" />
+                <ScalarProperty Name="nationality" ColumnName="nationality" />
+                <ScalarProperty Name="ssn" ColumnName="ssn" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="homephone" ColumnName="homephone" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

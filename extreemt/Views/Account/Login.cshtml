@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+<br />
+<div class="container">
+    <form id="myForm" role="form" class="form-inline">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="col-md-3 control-label" for="mail">ID</label>
+                <input required type="text" class="form-control col-md-6" id="id" placeholder="Enter ID">
+                <div class="col-md-3 error"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="col-md-3 control-label" for="">Login Password</label>
+
+                <input required type="password" id="password" class="form-control col-md-6" placeholder="Enter Password">
+                <div class="col-md-3 error"></div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <input type="button" class="btn btn-default col-md-offset-3" value="Login" id="login" />
+            <img src="~/Content/images/loading.gif" class="loading col-md-offset-3" style="display:none" />
+        </div>
+        <br /><br />
+        <br /><br />
+        <br /><br />
+        <br /><br /><br />
+    </form>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#login").click(function () {
+                button = this;
+                $(this).hide();
+                $(this).parent().find(".loading").show();
+                $.post("@Url.Action("submitLogin", "Account")", "id=" + $("#id").val()+"&password="+$("#password").val(), function (res) {
+                    $(".error").each(function () {
+                        $(this).html("");
+                    });
+                    $("input").each(function () {
+                        $(this).css("border-color", "");
+                    });
+                    if (res == "success") {
+                        window.location.href = "@Url.Action("Index" , "Home")";
+                    } else {
+                        $(button).show();
+                        $(button).parent().find(".loading").hide();
+                        errors = res.split("#");
+                        for (var i = 0; i < errors.length - 1; i++) {
+                            field = errors[i].split(",")[0];
+                            fieldError = errors[i].split(",")[1];
+                            $("#" + field).css("border-color", "red").parent().parent().find(".error").html(fieldError);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

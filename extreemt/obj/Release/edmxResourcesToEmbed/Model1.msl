@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="extreemtModelStoreContainer" CdmEntityContainer="extreemtEntities">
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="extreemtModel.user">
+        <MappingFragment StoreEntitySet="user">
+          <ScalarProperty Name="registererId" ColumnName="registererId" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="parentUserId" ColumnName="parentUserId" />
+          <ScalarProperty Name="parentGenNum" ColumnName="parentGenNum" />
+          <ScalarProperty Name="genNumber" ColumnName="genNumber" />
+          <ScalarProperty Name="credit" ColumnName="credit" />
+          <ScalarProperty Name="position" ColumnName="position" />
+          <ScalarProperty Name="leftInactiveCount" ColumnName="leftInactiveCount" />
+          <ScalarProperty Name="rightInactiveCount" ColumnName="rightInactiveCount" />
+          <ScalarProperty Name="leftActiveCount" ColumnName="leftActiveCount" />
+          <ScalarProperty Name="rightActiveCount" ColumnName="rightActiveCount" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="walletPassword" ColumnName="walletPassword" />
+          <ScalarProperty Name="loginPassword" ColumnName="loginPassword" />
+          <ScalarProperty Name="relationship" ColumnName="relationship" />
+          <ScalarProperty Name="birthDate" ColumnName="birthDate" />
+          <ScalarProperty Name="nationality" ColumnName="nationality" />
+          <ScalarProperty Name="ssn" ColumnName="ssn" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="country" ColumnName="country" />
+          <ScalarProperty Name="homephone" ColumnName="homephone" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="firstname" ColumnName="firstname" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="mail" ColumnName="mail" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
