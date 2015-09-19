@@ -37,6 +37,8 @@
                 Response.Redirect(Url.Action("Index", "Home"));
             }
         }
+            
+            
     }
     <div>
         <img style="width:250px;max-height:150px" class="img-rounded" src="~/Content/images/logo.jpg" />
@@ -51,8 +53,8 @@
                 {
                    <!-- <li class="right"><a href="@Url.Action("logout" , "Account")"><span class="glyphicon glyphicon-log-in"></span>LogOut</a></li>
                     <li class="right"><a href="@Url.Action("Index", "Account")"><span class="glyphicon glyphicon-log-in"></span>@usr.username</a></li>-->
+                  <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("Index", "Account")">@usr.username</a></p>
                 <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("logout", "Account")">LogOut</a></p>
-                <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("Index", "Account")">@usr.username</a></p>
                 }
                 else
                 {
@@ -60,14 +62,7 @@
                 }
             }
 
-            <div class="col-md-3 search">
-                <form>
-                    <input type="submit" value="">
-                    <input type="text" value="Search " onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
-                </form>
-            </div>
-
-
+         
             <div class="clearfix"></div>
         </div>
     </div>

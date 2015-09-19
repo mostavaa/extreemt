@@ -166,6 +166,6 @@ C:\aspdemo\extreme_t\extreemt\bin\System.Web.Razor.xml
 C:\aspdemo\extreme_t\extreemt\bin\System.Web.WebPages.xml
 C:\aspdemo\extreme_t\extreemt\bin\System.Web.WebPages.Deployment.xml
 C:\aspdemo\extreme_t\extreemt\bin\System.Web.WebPages.Razor.xml
-C:\aspdemo\extreme_t\extreemt\obj\Debug\extreemt.csprojResolveAssemblyReference.cache
 C:\aspdemo\extreme_t\extreemt\obj\Debug\extreemt.dll
 C:\aspdemo\extreme_t\extreemt\obj\Debug\extreemt.pdb
+C:\aspdemo\extreme_t\extreemt\obj\Debug\extreemt.csprojResolveAssemblyReference.cache
