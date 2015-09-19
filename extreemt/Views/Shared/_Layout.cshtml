@@ -18,7 +18,9 @@
     @{
         if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
         {
-            //test git hub
+            /*
+             test again
+             */
             if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
             {
                 Response.Redirect(Url.Action("Index", "Home"));
