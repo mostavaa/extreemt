@@ -16,7 +16,19 @@ namespace extreemt.Controllers
         {
             return View();
         }
+        public ActionResult Product()
+        {
+            return View();
 
+        }
+        public ActionResult Category()
+        {
+            return View();
+        }
+        public ActionResult Afetr_Login()
+        {
+            return View();
+        }
         public ActionResult genology()
         {
             ViewData["id"] = Request.QueryString["a"].Replace("25252", "+");

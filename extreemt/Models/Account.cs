@@ -33,6 +33,8 @@ namespace extreemt
                 return va.validateLogin();
 
             extreemtEntities db = new extreemtEntities();
+
+            
             int userId = int.Parse(this.accountController.Request.Form["id"]);
             string password = this.accountController.Request.Form["password"];
             if (db.users.Where(u => u.userId == userId && u.loginPassword == password).Count() <= 0)
@@ -150,9 +152,19 @@ namespace extreemt
             user.rightActiveCount = 0;
             user.rightInactiveCount = 1;
             user.leftInactiveCount = 1;
+          
             user.registererId = int.Parse(HttpContext.Current.Session["userId"].ToString());
 
-            user.userId = int.Parse(tools.generateRandomNumber(8));
+            string _generatedNumber = tools.generateRandomNumber(8);
+            int generatedNumber  = int.Parse(_generatedNumber);
+            while (db.users.Where(o => o.userId == generatedNumber).Count() > 0)
+            {
+                 _generatedNumber = tools.generateRandomNumber(8);
+                 generatedNumber = int.Parse(_generatedNumber);
+            }
+
+
+            user.userId = generatedNumber;
             db.users.Add(user);
 
             db.SaveChanges();
@@ -177,6 +189,7 @@ namespace extreemt
             rightUser.status = "inActive";
             db.users.Add(rightUser);
             db.SaveChanges();
+
             user parent = db.users.Where(u => u.userId == user.userId && u.genNumber == 1).First();
             this.UpdateParents(parent);
             this.cutOffCashCredit(this.getLoggedUser(), 250);

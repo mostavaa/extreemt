@@ -218,6 +218,7 @@
   <ItemGroup>
     <Content Include="Content\12.ico" />
     <Content Include="Content\files\isCloseSignUp.txt" />
+    <Content Include="Content\images\1.jpg" />
     <Content Include="Content\images\11647263_1665759616988040_1501714094_n.jpg" />
     <Content Include="Content\images\11650933_688249964609472_1883218474_n.jpg" />
     <Content Include="Content\images\2.jpg" />
@@ -225,16 +226,39 @@
     <Content Include="Content\images\3449132166_fe6117a161_b.jpg" />
     <Content Include="Content\images\7734495598_c2d9bc5a72_c.jpg" />
     <Content Include="Content\images\are_you_winning_at_life_banner.jpg" />
+    <Content Include="Content\images\bg-two.jpg" />
     <Content Include="Content\images\bgk.jpg" />
     <Content Include="Content\images\Company-culture-dos-and-donts.png" />
     <Content Include="Content\images\deal.jpg" />
+    <Content Include="Content\images\do.jpg" />
+    <Content Include="Content\images\head.jpg" />
+    <Content Include="Content\images\hiring-company-building-blocks.jpg" />
+    <Content Include="Content\images\hp1.jpg" />
+    <Content Include="Content\images\htc.jpg" />
+    <Content Include="Content\images\icons.png" />
+    <Content Include="Content\images\icons.svg" />
     <Content Include="Content\images\images %282%29.jpg" />
     <Content Include="Content\images\images.jpg" />
+    <Content Include="Content\images\img-sprite.png" />
+    <Content Include="Content\images\ip1.jpg" />
     <Content Include="Content\images\level1.PNG" />
     <Content Include="Content\images\level2.PNG" />
     <Content Include="Content\images\level3.PNG" />
     <Content Include="Content\images\loading.gif" />
     <Content Include="Content\images\logo.jpg" />
+    <Content Include="Content\images\men.png" />
+    <Content Include="Content\images\menu-icon.png" />
+    <Content Include="Content\images\move-top.png" />
+    <Content Include="Content\images\never.jpg" />
+    <Content Include="Content\images\ni.jpg" />
+    <Content Include="Content\images\nio.jpg" />
+    <Content Include="Content\images\quote.png" />
+    <Content Include="Content\images\read.png" />
+    <Content Include="Content\images\rol.jpg" />
+    <Content Include="Content\images\search.png" />
+    <Content Include="Content\images\sony.jpg" />
+    <Content Include="Content\images\try.jpg" />
+    <Content Include="Content\images\vaio.jpg" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -294,7 +318,11 @@
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\business-casual.css" />
+    <Content Include="css\component.css" />
+    <Content Include="css\flexslider.css" />
+    <Content Include="css\style.css" />
     <Content Include="css\styles.css" />
+    <Content Include="css\swipebox.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -308,6 +336,15 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="js\classie.js" />
+    <Content Include="js\easing.js" />
+    <Content Include="js\jquery.chocolat.js" />
+    <Content Include="js\jquery.flexslider.js" />
+    <Content Include="js\jquery.swipebox.min.js" />
+    <Content Include="js\memenu.js" />
+    <Content Include="js\move-top.js" />
+    <Content Include="js\responsiveslides.min.js" />
+    <Content Include="js\script.js" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -367,6 +404,9 @@
     <Content Include="Views\Home\genology - Copy.cshtml" />
     <Content Include="Views\Account\adminpage.cshtml" />
     <Content Include="Views\Home\genology2.cshtml" />
+    <Content Include="Views\Home\Product.cshtml" />
+    <Content Include="Views\Home\Category.cshtml" />
+    <Content Include="Views\Home\Afetr_Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
