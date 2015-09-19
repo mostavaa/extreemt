@@ -18,9 +18,6 @@
     @{
         if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
         {
-            /*
-             test 
-             */
             if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
             {
                 Response.Redirect(Url.Action("Index", "Home"));
