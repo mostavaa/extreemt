@@ -7,17 +7,15 @@
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="mail" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="title" Type="nvarchar" MaxLength="10" Nullable="false" />
-    <Property Name="firstname" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="lastname" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="mobile" Type="nvarchar" MaxLength="20" Nullable="false" />
-    <Property Name="homephone" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="mobile" Type="nvarchar" MaxLength="20" />
+    <Property Name="homephone" Type="nvarchar" MaxLength="20" />
     <Property Name="country" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="city" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="address" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="ssn" Type="nvarchar" MaxLength="14" Nullable="false" />
     <Property Name="nationality" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="birthDate" Type="date" Nullable="false" />
-    <Property Name="relationship" Type="nvarchar" MaxLength="15" Nullable="false" />
+    <Property Name="relationship" Type="nvarchar" MaxLength="15" />
     <Property Name="loginPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="walletPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="status" Type="nvarchar" MaxLength="20" />
@@ -26,12 +24,13 @@
     <Property Name="rightInactiveCount" Type="int" Nullable="false" />
     <Property Name="leftInactiveCount" Type="int" Nullable="false" />
     <Property Name="position" Type="nvarchar" MaxLength="20" />
-    <Property Name="credit" Type="int" Nullable="false" />
     <Property Name="genNumber" Type="int" Nullable="false" />
     <Property Name="parentGenNum" Type="int" />
     <Property Name="parentUserId" Type="int" />
     <Property Name="userId" Type="int" Nullable="false" />
     <Property Name="registererId" Type="int" />
+    <Property Name="cashBank" Type="int" Nullable="false" />
+    <Property Name="productBank" Type="int" Nullable="false" />
   </EntityType>
   <EntityContainer Name="extreemtModelStoreContainer">
     <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />

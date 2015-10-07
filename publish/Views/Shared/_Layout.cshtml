@@ -1,0 +1,214 @@
+﻿@using org.jivesoftware.util;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+    <link href="~/css/style.css" type="text/css" rel="stylesheet" media="all">
+    <link href="~/css/component.css" rel="stylesheet" type="text/css" />
+    <!-- Custom Theme files -->
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!--web-fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Philosopher:400,700,400italic,700italic|PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+    <!--js-->
+    <script src="~/js/jquery-2.1.3.min.js"></script>
+    <script src="~/js/bootstrap.js"></script>
+    <script src="~/js/modernizr.custom.js"></script>
+
+
+    <!--<link href="~/css/business-casual.css" rel="stylesheet" />
+    <link href="~/css/styles.css" rel="stylesheet" />-->
+    
+                
+
+        @RenderSection("head", required: false)
+        <link rel="shortcut icon" href="~/Content/12.ico">
+</head>
+<body>
+    @{
+        if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
+        {
+            if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
+            {
+                Response.Redirect(Url.Action("Index", "Home"));
+            }
+        }
+            
+            
+    }
+    <div>
+        <img style="width:250px;max-height:150px" class="img-rounded" src="~/Content/images/logo.jpg" />
+    </div>
+    <div id="house" class="top-header">
+        <div class="container">
+            
+            
+            @{
+                extreemt.user usr = extreemt.Account.staticGetLoggedUser();
+                if (usr != null)
+                {
+                   <!-- <li class="right"><a href="@Url.Action("logout" , "Account")"><span class="glyphicon glyphicon-log-in"></span>LogOut</a></li>
+                    <li class="right"><a href="@Url.Action("Index", "Account")"><span class="glyphicon glyphicon-log-in"></span>@usr.username</a></li>-->
+                  <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("Index", "Account")">@usr.username</a></p>
+                <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("logout", "Account")">LogOut</a></p>
+                }
+                else
+                {
+                   <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("Login" , "Account")">Login</a></p>
+                }
+            }
+
+         
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!--bottom-->
+    <section class="button">
+        <button id="showLeftPush" style=" margin-top:151px; "><img src="~/Content/images/menu-icon.png" alt=""></button>
+    </section>
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+
+        <h3>Menu</h3>
+        <ul>
+
+            <li><a href="@Url.Action("Index","Home")" class="active">Home</a></li>
+            <li><a href="#">Your Company</a></li>
+            <li><a href="#">Team Work</a></li>
+
+            <li>
+
+                <a href="#">Products</a>
+
+
+                @{
+
+                    string userId = (string)Session["userId"];
+                    if (userId != null && userId != "")
+                    {
+                        extreemt.crypt algo = new extreemt.crypt();
+                        userId = algo.Encrypt(userId + "$$$1");
+                        userId = HttpUtility.UrlEncode(userId.Replace("+", "25252"));
+                    }
+                    string url = Url.Action("genology", "Home") + "?a=" + userId;
+                }
+
+            </li>
+            <li><a href="@url">Genealogy <span class="sr-only">(current)</span></a></li>
+            <li><a href="@Url.Action("transfer", "Account")">Transfer</a></li>
+
+            <li><a href="#">Your Brands</a></li>
+            <li><a href="#">Contact Us</a></li>
+        </ul>
+
+    </nav>
+    @*Menu Toogle*@
+
+
+
+
+
+        @RenderBody()
+
+
+    <!--contact-->
+    <div class="contact">
+        <div class="col-md-6 contact-top">
+            <div class="point"> <i class="glyphicon glyphicon-map-marker"></i></div>
+            <h3 class="tittle two">Find Us</h3>
+            <h4>For Any questions, Please feel free to Contact us by mail.</h4>
+            <div class="contact-ad">
+                <p>Address:.<p>
+                <p>Phone:<p>
+                <p>E-mail :<a href="#"></a></p>
+
+            </div>
+        </div>
+        <div class="col-md-6 map">
+            <iframe></iframe>
+            <div class="black">
+                <div class="map-l"> <i class="glyphicon glyphicon-map-marker"></i></div>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+    <!--//contact-->
+    <!--/footer-->
+    <div class="copy">
+        <div class="container">
+            <div class="footer-top-at">
+
+                <div class="col-md-4 amet-sed">
+                    <h4>MORE INFO</h4>
+                    <ul class="nav-bottom">
+                        <li><a href="#">How to order</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="">Location</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Membership</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 amet-sed ">
+                    <h4>CONTACT US</h4>
+
+                    <p>
+                        Contrary to popular belief
+                    </p>
+
+                    <p>office:  </p>
+                    <ul class="social">
+                        <li><a href="#"><i> </i></a></li>
+                        <li><a href="#"><i class="twitter"> </i></a></li>
+
+                    </ul>
+                </div>
+                <img style="width:250px;max-height:150px" class="img-rounded" src="~/Content/images/logo.jpg" />
+
+                <div class="clearfix"> </div>
+            </div>
+
+        </div>
+        <p>&copy; All Rights Reserved</p>
+    </div>
+
+    
+    <script src="~/js/jquery-2.1.3.min.js"></script>
+    <script src="~/js/bootstrap.js"></script>
+    <script src="~/js/script.js"></script>
+
+    <script>
+        $('.carousel').carousel({
+            interval: 5000 //changes the speed
+        })
+    </script>
+    <script src="~/js/classie.js"></script>
+    <script>
+        var menuLeft = document.getElementById('cbp-spmenu-s1'),
+            showLeftPush = document.getElementById('showLeftPush'),
+            showRightPush = document.getElementById('showRightPush'),
+            body = document.body;
+
+        showLeftPush.onclick = function () {
+            classie.toggle(this, 'active');
+            classie.toggle(body, 'cbp-spmenu-push-toright');
+            classie.toggle(menuLeft, 'cbp-spmenu-open');
+            disableOther('showLeftPush');
+        };
+
+        function disableOther(button) {
+            if (button !== 'showLeftPush') {
+                classie.toggle(showLeftPush, 'disabled');
+            }
+            if (button !== 'showRightPush') {
+                classie.toggle(showRightPush, 'disabled');
+            }
+        }
+    </script>
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

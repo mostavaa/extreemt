@@ -359,6 +359,7 @@
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
     <None Include="Properties\PublishProfiles\mostava.pubxml" />
+    <None Include="Properties\PublishProfiles\new extreme t domain.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />

@@ -3,25 +3,28 @@
     ViewBag.Title = "genology";
 }
 
-@helper renderEmptyNode(extreemt.user currentUser, extreemt.user loginUser, string cssClass)
+@helper renderEmptyNode(extreemt.user currentUser, string cssClass, string myPos)
 {
     string url = "#";
 
     extreemt.crypt algo = new extreemt.crypt();
     string content = "";
-    if (loginUser.credit >= 250)
+
+    if (currentUser != null)
     {
-        if (currentUser != null)
-        {
-            //parent gen number , my position , parent user id
-            content = currentUser.genNumber + "$$$left$$$" + currentUser.userId;
-            content = algo.Encrypt(content);
-            content = HttpUtility.UrlEncode(content.Replace("+", "25252"));
-             url = Url.Action("SignUp", "Account") + "?a=" + content;
-        }
+        //parent gen number , my position , parent user id
+        content = currentUser.genNumber + "$$$" + myPos + "$$$" + currentUser.userId;
+        content = algo.Encrypt(content);
+        content = HttpUtility.UrlEncode(content.Replace("+", "25252"));
+        url = Url.Action("SignUp", "Account") + "?a=" + content;
     }
+    else
+    {
+        url = "#";
+    }
+
     <div class="@cssClass">
-        <div style=" background-color:gray;text-align:center;border-style:solid;border-radius:10px;">
+        <div style="min-height:200px;background-color:gray;text-align:center;border-style:solid;border-radius:7px;">
 
             <div class="">
                 <img src="~/Content/images/images.jpg" width="60" height="60" style="border: 2px solid gray;">
@@ -31,32 +34,47 @@
             <div class="">
                 <span>Empty</span>
             </div>
-            <div class="">
-                <span><a href="@url">Add One</a></span>
+            
+                @{
+                    if (currentUser != null)
+                    {
+                        <div class=""><span><a href="@url">Add One</a></span></div>
+                    }
+                    else
+                    {
+                        <div class=""><a href="#">Add One</a></div>
+                    }
+}
+
+            <div class="greenrow">
+                L: 0  R: 0
+            </div>
+            <div class="redrow">
+                L: 0 R: 0
             </div>
 
         </div>
     </div>
 }
 
-@helper renderNode(extreemt.user user, string cssClass)
+@helper renderNode(extreemt.user user, string cssClass, string style="")
 {
-<div class="@cssClass">
-    @{
-        string backGround = "white";
-        if (user.status == "inActive")
-        {
-            backGround = "burlywood";
+    <div class="@cssClass" style="@style">
+        @{
+            string backGround = "white";
+            if (user.status == "inActive")
+            {
+                backGround = "burlywood";
+            }
         }
-    }
-        <div style="background-color:@backGround;text-align:center;border-style:solid;border-radius:10px">
+        <div style="min-height:200px;background-color:@backGround;text-align:center;border-style:solid;border-radius:7px">
 
             <div class="">
                 <img src="~/Content/images/images.jpg" width="60" height="60" style="border: 2px solid gray;">
             </div>
 
             @{
-                
+
                 extreemt.crypt algo = new extreemt.crypt();
                 string userId = algo.Encrypt(user.userId + "$$$" + user.genNumber);
 
@@ -66,7 +84,7 @@
             <div class=""><a href="@url">@user.userId</a> </div>
 
             <div class="">
-                <span>@user.firstname @user.lastname</span>
+                <span>@user.username</span>
             </div>
 
             <div class="greenrow">
@@ -101,8 +119,60 @@
             text-align: center;
         }
 
-        .col-md-1-nos {
+        .nodepixels {
             display: inline-block;
+        }
+
+        .wrapper {
+            clear: both;
+            width: 100%;
+            min-width: 900px;
+        }
+
+        .myrow {
+            clear: both;
+            width: 100%;
+            min-width: 1300px;
+        }
+
+        .nodepixels {
+            width: 140px;
+        }
+
+        .offset5 {
+            margin-left: 490px;
+        }
+
+        .offset3 {
+            margin-left: 285px;
+        }
+
+        .offset4 {
+            margin-left: 380px;
+        }
+
+        .offset2rob3 {
+            margin-left: 200px;
+        }
+
+        .offset2 {
+            margin-left: 180px;
+        }
+
+        .offset1nos {
+            margin-left: 137px;
+        }
+
+        .offset1 {
+            margin-left: 95px;
+        }
+
+        .offsetnos {
+            margin-left: 60px;
+        }
+
+        .offsetrob3 {
+            margin-left: 50px;
         }
     </style>
 }
@@ -110,24 +180,24 @@
 
 @{
     string id, decryptedId;
-        int currentUserId, GenNumber;
-        extreemt.crypt algo;
+    int currentUserId, GenNumber;
+    extreemt.crypt algo;
     try
     {
-         id = (string)ViewData["id"];
+        id = (string)ViewData["id"];
 
-         algo = new extreemt.crypt();
-         decryptedId = algo.Decrypt(id);
+        algo = new extreemt.crypt();
+        decryptedId = algo.Decrypt(id);
         string[] user = decryptedId.Split(new char[] { '$', '$', '$' });
         //string position = "parent";
 
-         currentUserId = int.Parse(user[0]);
+        currentUserId = int.Parse(user[0]);
         int i = 1;
         while (user[i] == "")
         {
             i++;
         }
-         GenNumber = int.Parse(user[i]);
+        GenNumber = int.Parse(user[i]);
     }
     catch (Exception c)
     {
@@ -184,71 +254,79 @@
                 rightUser = db.users.Where(u => u.parentUserId == currentUser.userId && u.genNumber == 1 && u.position == "right" && u.parentGenNum == 3).First();
             }
         }
+
+    <div class="wrapper">
+
+
+        <div class="myrow">
+            @{
+        string style = "margin:0 auto;display:block!important";
+            }
+            @renderNode(currentUser, "nodepixels", style)
+
+        </div>
         
-        <div class="container">
-            <div class="row">
-                @renderNode(currentUser, "col-md-offset-5 col-md-2");
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-offset-3 col-md-6">
+                <div class="myrow">
+                    <div class="offset4" style="width:585px">
 
-                    <img width="100%" height="100%" src="~/Content/images/level1.PNG">
+                        <img width="100%" height="100%" src="~/Content/images/level1.PNG">
 
+                    </div>
                 </div>
-            </div>
-            <br />
-            <!--level2-->
+                
+        <!--level2-->
 
-            <div class="row">
-                @{
+        <div class="myrow">
+            @{
 
 
         if (leftUser != null)
         {
-            @renderNode(leftUser, "col-md-offset-2 col-md-2");
+            @renderNode(leftUser, "offset3 nodepixels");
         }
         else
         {
-            @renderEmptyNode(currentUser, loginUser,"col-md-offset-2 col-md-2");
+            @renderEmptyNode(currentUser, "offset3 nodepixels", "left");
         }
-                }
+            }
 
 
-                @{
+            @{
+
 
         if (rightUser != null)
         {
-            @renderNode(rightUser, "col-md-offset-4 col-md-2");
+            @renderNode(rightUser, "offset5 nodepixels");
         }
         else
         {
-            @renderEmptyNode(currentUser, loginUser, "col-md-offset-4 col-md-2");
+            @renderEmptyNode(currentUser, "offset5 nodepixels", "right");
         }
-                }
-            </div>
-            <br />
-            <div class="row">
+            }
+        </div>
+        
+                <div class="myrow">
 
-                <div class="col-md-offset-1 col-md-4">
+                    <div class="offset2" style="width:335px;float:left">
 
-                    <img width="100%" height="100%" src="~/Content/images/level1.PNG">
+                        <img width="100%" height="100%" src="~/Content/images/level1.PNG">
+
+                    </div>
+
+
+                    <div class="offset3" style="width:340px;float:left">
+
+                        <img width="100%" height="100%" src="~/Content/images/level1.PNG">
+
+                    </div>
+
 
                 </div>
-
-
-                <div class="col-md-offset-2 col-md-4">
-
-                    <img width="100%" height="100%" src="~/Content/images/level1.PNG">
-
-                </div>
-
-
-            </div>
-            <br />
-            <!--level 3-->
-            <div class="row">
-                @{
+                
+        
+        <!--level 3-->
+        <div class="myrow">
+            @{
         extreemt.user leftLeftUser = null;
         extreemt.user leftRightUser = null;
         currentUser = leftUser;
@@ -304,26 +382,26 @@
 
         if (leftLeftUser != null)
         {
-            @renderNode(leftLeftUser, "col-md-offset-3-arb3 col-md-1-nos");
+            @renderNode(leftLeftUser, "offset1nos nodepixels");
         }
         else
         {
-            @renderEmptyNode(currentUser, loginUser, "col-md-offset-3-arb3 col-md-1-nos");
+            @renderEmptyNode(currentUser, "offset1nos nodepixels", "left");
 
         }
 
         if (leftRightUser != null)
-                {
-            @renderNode(leftRightUser, "col-md-offset-1-nos col-md-1-nos");
+        {
+            @renderNode(leftRightUser, "offset1nos nodepixels");
         }
         else
         {
-            @renderEmptyNode(currentUser, loginUser, "col-md-offset-1-nos col-md-1-nos");
+            @renderEmptyNode(currentUser, "offset1nos nodepixels", "right");
 
         }
-        
-                }
-                @{
+
+            }
+            @{
         extreemt.user rightLeftUser = null;
         extreemt.user rightRightUser = null;
         currentUser = rightUser;
@@ -374,62 +452,64 @@
 
         }
 
-        if (rightLeftUser != null)                {
-            @renderNode(rightLeftUser, "col-md-offset-1-nos col-md-1-nos");
+        if (rightLeftUser != null)
+        {
+            @renderNode(rightLeftUser, "offset2rob3 nodepixels");
         }
         else
         {
-            @renderEmptyNode(currentUser, loginUser, "col-md-offset-1-nos col-md-1-nos");
+            @renderEmptyNode(currentUser, "offset2rob3 nodepixels", "left");
 
         }
 
-        if (rightRightUser != null) {
-            @renderNode(rightRightUser, "col-md-offset-1-nos col-md-1-nos");
+        if (rightRightUser != null)
+        {
+            @renderNode(rightRightUser, "offset1nos nodepixels");
         }
         else
         {
-            @renderEmptyNode(currentUser, loginUser, "col-md-offset-1-nos col-md-1-nos");
+            @renderEmptyNode(currentUser, "offset1nos nodepixels", "right");
 
         }
-       
-                }
 
-            </div>
-            <br />
-            <div class="row">
+            }
 
-                <div class="col-md-2" style="margin-left:3.42599%">
+        </div>
 
-                    <img width="100%" height="100%" src="~/Content/images/level1.PNG">
+                <div class="myrow">
+
+                    <div class="" style="float:left;margin-left:100px;width:200px;">
+
+                        <img width="100%" height="100%" src="~/Content/images/level1.PNG">
+
+                    </div>
+
+
+                    <div class="" style="float:left;width:200px;margin-left: 89px;">
+
+                        <img width=" 100%" height="100%" src="~/Content/images/level1.PNG">
+
+                    </div>
+                    <div class="" style="float:left;width:200px;margin-left: 138px;">
+
+                        <img width=" 100%" height="100%" src="~/Content/images/level1.PNG">
+
+                    </div>
+
+
+                    <div class="" style="float:left;width:200px;margin-left: 89px;">
+
+                        <img width=" 100%" height="100%" src="~/Content/images/level1.PNG">
+
+                    </div>
 
                 </div>
 
+        
+        <!--level 4-->
+        <div class="myrow">
 
-                <div class="col-md-offset-1 col-md-2">
-
-                    <img width="100%" height="100%" src="~/Content/images/level1.PNG">
-
-                </div>
-                <div class="col-md-offset-1 col-md-2">
-
-                    <img width="100%" height="100%" src="~/Content/images/level1.PNG">
-
-                </div>
-
-
-                <div class="col-md-offset-1 col-md-2">
-
-                    <img width="100%" height="100%" src="~/Content/images/level1.PNG">
-
-                </div>
-
-            </div>
-            <br />
-
-            <!--level 4-->
-            <div class="row">
-
-                @{
+            @{
         extreemt.user leftLeftLeftUser = null;
         extreemt.user leftLeftRightUser = null;
         currentUser = leftLeftUser;
@@ -480,27 +560,29 @@
 
         }
 
-        if (leftLeftLeftUser != null){
-            @renderNode(leftLeftLeftUser, "col-md-1-nos");
+        if (leftLeftLeftUser != null)
+        {
+            @renderNode(leftLeftLeftUser, "offsetnos nodepixels");
         }
         else
         {
-            @renderEmptyNode(currentUser, loginUser, "col-md-1-nos");
+            @renderEmptyNode(currentUser, "offsetnos nodepixels", "left");
 
         }
 
-        if (leftLeftRightUser != null){
-            @renderNode(leftLeftRightUser, "col-md-1-nos");
+        if (leftLeftRightUser != null)
+        {
+            @renderNode(leftLeftRightUser, "nodepixels");
         }
         else
         {
-            @renderEmptyNode(currentUser, loginUser, "col-md-1-nos");
+            @renderEmptyNode(currentUser, "nodepixels", "right");
 
         }
-  
-                }
 
-                @{
+            }
+
+            @{
         extreemt.user leftRightLeftUser = null;
         extreemt.user leftRightRightUser = null;
         currentUser = leftRightUser;
@@ -551,29 +633,31 @@
 
         }
 
-        if (leftRightLeftUser != null){
-            @renderNode(leftRightLeftUser, "col-md-1-nos");
+        if (leftRightLeftUser != null)
+        {
+            @renderNode(leftRightLeftUser, "nodepixels");
         }
         else
         {
-            @renderEmptyNode(currentUser, loginUser, "col-md-1-nos");
+            @renderEmptyNode(currentUser, "nodepixels", "left");
 
         }
 
 
-        if (leftRightRightUser != null){
-            @renderNode(leftRightRightUser, "col-md-1-nos");
+        if (leftRightRightUser != null)
+        {
+            @renderNode(leftRightRightUser, "nodepixels");
         }
         else
         {
-            @renderEmptyNode(currentUser, loginUser, "col-md-1-nos");
+            @renderEmptyNode(currentUser, "nodepixels", "right");
 
         }
 
-       
-                }
 
-                @{
+            }
+
+            @{
         extreemt.user rightLeftLeftUser = null;
         extreemt.user rightLeftRightUser = null;
         currentUser = rightLeftUser;
@@ -626,25 +710,25 @@
 
         if (rightLeftLeftUser != null)
         {
-            @renderNode(rightLeftLeftUser, "col-md-1-nos");
+            @renderNode(rightLeftLeftUser, "offsetrob3 nodepixels");
         }
         else
         {
-            @renderEmptyNode(currentUser, loginUser, "col-md-1-nos");
+            @renderEmptyNode(currentUser, "offsetrob3 nodepixels", "left");
 
         }
 
         if (rightLeftRightUser != null)
         {
-            @renderNode(rightLeftRightUser, "col-md-1-nos");
+            @renderNode(rightLeftRightUser, "nodepixels");
         }
         else
         {
-            @renderEmptyNode(currentUser, loginUser, "col-md-1-nos");
+            @renderEmptyNode(currentUser, "nodepixels", "right");
 
         }
-}
-                @{
+            }
+            @{
         extreemt.user rightRightLeftUser = null;
         extreemt.user rightRightRightUser = null;
         currentUser = rightRightUser;
@@ -697,26 +781,26 @@
 
         if (rightRightLeftUser != null)
         {
-            @renderNode(rightRightLeftUser, "col-md-1-nos");
+            @renderNode(rightRightLeftUser, "nodepixels");
         }
         else
         {
-            @renderEmptyNode(currentUser, loginUser, "col-md-1-nos");
+            @renderEmptyNode(currentUser, "nodepixels", "left");
 
         }
         if (rightRightRightUser != null)
         {
-            @renderNode(rightRightRightUser, "col-md-1-nos");
+            @renderNode(rightRightRightUser, "nodepixels");
         }
         else
         {
-            @renderEmptyNode(currentUser, loginUser, "col-md-1-nos");
+            @renderEmptyNode(currentUser, "nodepixels", "right");
 
         }
-}
-            </div>
-            <br />
+            }
         </div>
+        <br />
+    </div>
 
     }
 }

@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "transfer";
+}
+<div class="container">
+    <div class="row">
+        <h4>If You Want To Transfer Money from Your Cash Bank to Your Product Bank , Enter Your Id </h4>
+        <form class="form" method="post" action="@Url.Action("transferMoney" , "Account")">
+            <label>ID</label> <input type="text" class="form-control" name="id" id="id" />
+            <div>
+                <label>Username : </label>
+                <h3 id="username"></h3>
+            </div>
+            <label>Amount</label> <input type="text" readonly="readonly" class="form-control" name="amount" id="amount" />
+            <input type="button" value="Find" id="find" class="btn btn-default" />
+            <input type="submit" value="submit" id="submit" class="btn btn-default"/>
+        </form>
+    </div>
+    <div class="row">
+        <div id="">
+            @{
+                string error = (string)ViewData["error"];
+                if (error != null && error != "")
+                {
+                    <p>@error</p>
+                }
+            }
+        </div>
+    </div>
+</div>
+<br /><br /><br /><br />
+
+@section scripts{
+<script>
+    $(document).ready(function () {
+        $("#find").click(function () {
+            id = $("#id").val();
+            $("#username").html("");
+            if (id != "" && id != null && !isNaN(id)) {
+                $.post("@Url.Action("getUserByIdForTransfer", "Account")", "id=" + id, function (res) {
+                    $("#username").html(res);
+                    $("#amount").removeAttr("readonly");
+                });
+            }
+            
+        });
+    });
+    </script>
+}
