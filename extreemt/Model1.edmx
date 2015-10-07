@@ -5,6 +5,44 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="extreemtModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="photos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="photo" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="productId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="count" Type="int" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="price" Type="int" Nullable="false" />
+          <Property Name="categoryId" Type="int" Nullable="false" />
+          <Property Name="userId" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="user">
           <Key>
             <PropertyRef Name="id" />
@@ -37,16 +75,179 @@
           <Property Name="cashBank" Type="int" Nullable="false" />
           <Property Name="productBank" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="userPayProduct">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="productId" Type="int" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_photos_product">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="photos" Type="Self.photos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="photos">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product_category">
+          <End Role="category" Type="Self.category" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userPayProduct_product">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="userPayProduct" Type="Self.userPayProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="userPayProduct">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userPayProduct_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="userPayProduct" Type="Self.userPayProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="userPayProduct">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="extreemtModelStoreContainer">
+          <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="photos" EntityType="Self.photos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userPayProduct" EntityType="Self.userPayProduct" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_photos_product" Association="Self.FK_photos_product">
+            <End Role="product" EntitySet="product" />
+            <End Role="photos" EntitySet="photos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_category" Association="Self.FK_product_category">
+            <End Role="category" EntitySet="category" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_user" Association="Self.FK_product_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userPayProduct_product" Association="Self.FK_userPayProduct_product">
+            <End Role="product" EntitySet="product" />
+            <End Role="userPayProduct" EntitySet="userPayProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userPayProduct_user" Association="Self.FK_userPayProduct_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="userPayProduct" EntitySet="userPayProduct" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="extreemtModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="extreemtEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="categories" EntityType="extreemtModel.category" />
+          <EntitySet Name="photos" EntityType="extreemtModel.photo" />
+          <EntitySet Name="products" EntityType="extreemtModel.product" />
+          <EntitySet Name="sysdiagrams" EntityType="extreemtModel.sysdiagram" />
           <EntitySet Name="users" EntityType="extreemtModel.user" />
+          <EntitySet Name="userPayProducts" EntityType="extreemtModel.userPayProduct" />
+          <AssociationSet Name="FK_product_category" Association="extreemtModel.FK_product_category">
+            <End Role="category" EntitySet="categories" />
+            <End Role="product" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_photos_product" Association="extreemtModel.FK_photos_product">
+            <End Role="product" EntitySet="products" />
+            <End Role="photo" EntitySet="photos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_user" Association="extreemtModel.FK_product_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="product" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userPayProduct_product" Association="extreemtModel.FK_userPayProduct_product">
+            <End Role="product" EntitySet="products" />
+            <End Role="userPayProduct" EntitySet="userPayProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userPayProduct_user" Association="extreemtModel.FK_userPayProduct_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="userPayProduct" EntitySet="userPayProducts" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="products" Relationship="extreemtModel.FK_product_category" FromRole="category" ToRole="product" />
+        </EntityType>
+        <EntityType Name="photo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="photo1" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="productId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="product" Relationship="extreemtModel.FK_photos_product" FromRole="photo" ToRole="product" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="categoryId" Type="Int32" Nullable="false" />
+          <Property Name="userId" Type="Int32" />
+          <NavigationProperty Name="category" Relationship="extreemtModel.FK_product_category" FromRole="product" ToRole="category" />
+          <NavigationProperty Name="photos" Relationship="extreemtModel.FK_photos_product" FromRole="product" ToRole="photo" />
+          <NavigationProperty Name="user" Relationship="extreemtModel.FK_product_user" FromRole="product" ToRole="user" />
+          <NavigationProperty Name="userPayProducts" Relationship="extreemtModel.FK_userPayProduct_product" FromRole="product" ToRole="userPayProduct" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="user">
           <Key>
             <PropertyRef Name="id" />
@@ -78,13 +279,128 @@
           <Property Name="registererId" Type="Int32" />
           <Property Name="cashBank" Type="Int32" Nullable="false" />
           <Property Name="productBank" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="products" Relationship="extreemtModel.FK_product_user" FromRole="user" ToRole="product" />
+          <NavigationProperty Name="userPayProducts" Relationship="extreemtModel.FK_userPayProduct_user" FromRole="user" ToRole="userPayProduct" />
         </EntityType>
+        <EntityType Name="userPayProduct">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="productId" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="product" Relationship="extreemtModel.FK_userPayProduct_product" FromRole="userPayProduct" ToRole="product" />
+          <NavigationProperty Name="user" Relationship="extreemtModel.FK_userPayProduct_user" FromRole="userPayProduct" ToRole="user" />
+        </EntityType>
+        <Association Name="FK_product_category">
+          <End Type="extreemtModel.category" Role="category" Multiplicity="1" />
+          <End Type="extreemtModel.product" Role="product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_photos_product">
+          <End Type="extreemtModel.product" Role="product" Multiplicity="1" />
+          <End Type="extreemtModel.photo" Role="photo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="photo">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product_user">
+          <End Type="extreemtModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="extreemtModel.product" Role="product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userPayProduct_product">
+          <End Type="extreemtModel.product" Role="product" Multiplicity="1" />
+          <End Type="extreemtModel.userPayProduct" Role="userPayProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="userPayProduct">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userPayProduct_user">
+          <End Type="extreemtModel.user" Role="user" Multiplicity="1" />
+          <End Type="extreemtModel.userPayProduct" Role="userPayProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="userPayProduct">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="extreemtModelStoreContainer" CdmEntityContainer="extreemtEntities">
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="extreemtModel.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="photos">
+            <EntityTypeMapping TypeName="extreemtModel.photo">
+              <MappingFragment StoreEntitySet="photos">
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="photo1" ColumnName="photo" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="extreemtModel.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="extreemtModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="extreemtModel.user">
               <MappingFragment StoreEntitySet="user">
@@ -114,6 +430,16 @@
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userPayProducts">
+            <EntityTypeMapping TypeName="extreemtModel.userPayProduct">
+              <MappingFragment StoreEntitySet="userPayProduct">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

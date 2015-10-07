@@ -196,8 +196,7 @@ namespace extreemt.Controllers
         }
 
         // new 
-
-        public ActionResult adminpage()
+        public ActionResult Admin()
         {
             ViewData["adminCashBank"] = getAdminCredit();
             ViewData["SignUpStatus"] = getSignUpStatus();
@@ -205,6 +204,7 @@ namespace extreemt.Controllers
 
             return View();
         }
+
 
         public void changeAdminCredit()
         {

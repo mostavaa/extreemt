@@ -6,7 +6,8 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\mostafa\Desktop\work\sala7\extreemt\publish</_PublishTargetUrl>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA/mtJa8TXwUu1phmlL6rMggAAAAACAAAAAAAQZgAAAAEAACAAAAD4qlNXm+XV0yFgV0UsTtdPS1+0sZc6x4KO05bOarBCMQAAAAAOgAAAAAIAACAAAABKroaTYbSqiDCCKDWA4RFBZ9Y8TdkduVYayazu8LCFaCAAAACeeBidutb1pTBUlkx7dkO/7+MgMniTM8kRXHSDq6rF9UAAAAAKG/8YTPgZccrOvPJPbwIdC/BuBhcvVmeyyVXxYrkX/KB6Sjagjwk5jdhbTl4kUhz2rd9BkvH8YLD4qLzXu1aT</EncryptedPassword>
+    <_PublishTargetUrl>ftp://188.121.43.18</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -19,7 +20,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/21/2015 10:40:38</publishTime>
     </File>
     <File Include="bin/extreemt.dll">
-      <publishTime>09/21/2015 01:26:05</publishTime>
+      <publishTime>09/21/2015 01:54:11</publishTime>
     </File>
     <File Include="bin/IKVM.OpenJDK.Core.dll">
       <publishTime>03/17/2011 06:31:08</publishTime>
@@ -576,6 +577,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/_references.js">
       <publishTime>06/21/2015 10:40:55</publishTime>
     </File>
+    <File Include="Views/Account/Admin.cshtml">
+      <publishTime>09/21/2015 01:39:41</publishTime>
+    </File>
     <File Include="Views/Account/adminpage.cshtml">
       <publishTime>09/02/2015 20:46:12</publishTime>
     </File>
@@ -631,7 +635,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/21/2015 10:40:25</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/21/2015 00:25:31</publishTime>
+      <publishTime>09/21/2015 01:54:17</publishTime>
     </File>
   </ItemGroup>
 </Project>

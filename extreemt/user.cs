@@ -14,6 +14,12 @@ namespace extreemt
     
     public partial class user
     {
+        public user()
+        {
+            this.products = new HashSet<product>();
+            this.userPayProducts = new HashSet<userPayProduct>();
+        }
+    
         public int id { get; set; }
         public string mail { get; set; }
         public string title { get; set; }
@@ -41,5 +47,8 @@ namespace extreemt
         public Nullable<int> registererId { get; set; }
         public int cashBank { get; set; }
         public int productBank { get; set; }
+    
+        public virtual ICollection<product> products { get; set; }
+        public virtual ICollection<userPayProduct> userPayProducts { get; set; }
     }
 }
