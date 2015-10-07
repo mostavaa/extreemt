@@ -11,7 +11,6 @@ namespace extreemt.Controllers
     {
         //
         // GET: /Home/
-
         public ActionResult Index()
         {
             return View();
@@ -26,6 +25,15 @@ namespace extreemt.Controllers
             return View();
         }
         public ActionResult Afetr_Login()
+        {
+            return View();
+        }
+        public  ActionResult Update_Category()
+        {
+            return View();
+
+        }
+        public ActionResult Add_Product()
         {
             return View();
         }

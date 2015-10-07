@@ -1102,6 +1102,37 @@ text-decoration:underline;
   text-indent: 100%;
   background: url(../images/move-top.png) no-repeat 0px 0px;
 }
+/*Update_category*/
+
+/* CSSTerm.com Simple CSS menu */
+.category ul {
+    margin: 0; 
+    padding: 30;
+    width:185px;
+    list-style-type: none;
+}
+
+.category ul li a , h3 {
+    text-decoration: none;
+    color: white; 
+    padding: 10.5px 11px;
+    background-color: #8488AD;
+    display:block;
+}
+ 
+.category ul li a:visited {
+    color: white;
+}
+ 
+.category ul li a:hover, .menu_simple ul li .current {
+    color: white;
+  color:#cacce0;
+}
+.category ul li a span:hover{
+  color:#D3564A;
+}
+
+
 /*new store*/
 .banner-text {
   width: 70%;
