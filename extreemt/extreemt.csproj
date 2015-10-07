@@ -431,12 +431,9 @@
     <Content Include="Views\Home\Product.cshtml" />
     <Content Include="Views\Home\Category.cshtml" />
     <Content Include="Views\Home\Afetr_Login.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Account\Admin.cshtml" />
-=======
     <Content Include="Views\Home\Update_Category.cshtml" />
     <Content Include="Views\Home\Add_Product.cshtml" />
->>>>>>> 4cd858a19a699c0f61842fdbbba5751ff9b45da3
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
