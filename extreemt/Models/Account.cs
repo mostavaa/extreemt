@@ -17,7 +17,7 @@ namespace extreemt
 
         public Account(Controllers.AccountController accountController)
         {
-            // TODO: Complete member initialization
+            
             this.accountController = accountController;
             this.context = new extreemtEntities();
         }
@@ -322,6 +322,8 @@ namespace extreemt
         }
 
 
+
+
         public static user staticGetLoggedUser()
         {
             extreemtEntities db = new extreemtEntities();
@@ -351,7 +353,7 @@ namespace extreemt
 
         public validateAccount(System.Collections.Specialized.NameValueCollection Form)
         {
-            // TODO: Complete member initialization
+            
             this.Form = Form;
         }
         private void addError(string field, string errorMsg)
