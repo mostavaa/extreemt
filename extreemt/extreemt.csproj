@@ -197,7 +197,10 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PhotoController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -238,6 +241,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\images\product.jpg" />
     <Content Include="Content\12.ico" />
     <Content Include="Content\files\isCloseSignUp.txt" />
     <Content Include="Content\images\1.jpg" />
@@ -434,9 +438,26 @@
     <Content Include="Views\Account\Admin.cshtml" />
     <Content Include="Views\Home\Update_Category.cshtml" />
     <Content Include="Views\Home\Add_Product.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Category\Details.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\Product\Create.cshtml" />
+    <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Views\Product\Delete.cshtml" />
+    <Content Include="Views\Photo\Index.cshtml" />
+    <Content Include="Views\Photo\Details.cshtml" />
+    <Content Include="Views\Photo\Create.cshtml" />
+    <Content Include="Views\Photo\Edit.cshtml" />
+    <Content Include="Views\Photo\Delete.cshtml" />
+    <Content Include="Views\Product\selectUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Upload\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
