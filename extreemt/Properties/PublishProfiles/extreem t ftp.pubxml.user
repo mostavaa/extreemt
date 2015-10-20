@@ -529,6 +529,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Model1.edmx.diagram">
       <publishTime>09/02/2015 18:04:43</publishTime>
     </File>
+    <File Include="Models/Account.cs">
+      <publishTime>10/17/2015 23:30:37</publishTime>
+    </File>
     <File Include="packages.config">
       <publishTime>06/21/2015 10:41:07</publishTime>
     </File>

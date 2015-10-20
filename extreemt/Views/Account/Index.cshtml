@@ -25,19 +25,27 @@
     </thead>
     <tbody>
         @{
-            foreach (extreemt.userPayProduct up in userPayProducts)
+            if (userPayProducts != null)
             {
-                int productId = up.productId;
-                if (db.products.Where(p => p.id == productId).Count() > 0)
+                foreach (extreemt.userPayProduct up in userPayProducts)
                 {
-                   
-                    <tr>
-                        <td>@up.product.name</td>
-                        <td>@up.date.ToString("yyyy-MM-dd")</td>
-                    </tr>
-                }
+                    int productId = up.productId;
+                    if (db.products.Where(p => p.id == productId).Count() > 0)
+                    {
 
+                        <tr>
+                            <td>@up.product.name</td>
+                            <td>@up.date.ToString("yyyy-MM-dd")</td>
+                        </tr>
+                    }
+
+                }
             }
+
         }
     </tbody>
 </table>
+<div class="row">
+    <h3>Cash Bank : @user.cashBank</h3>
+    <h3>Product Bank : @user.productBank</h3>
+</div>

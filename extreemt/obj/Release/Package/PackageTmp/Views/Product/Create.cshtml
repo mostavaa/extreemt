@@ -1,0 +1,75 @@
+﻿@model extreemt.product
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "Product", FormMethod.Post,
+      new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>product</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.name)
+            @Html.ValidationMessageFor(model => model.name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.description)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.description)
+            @Html.ValidationMessageFor(model => model.description)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.count)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.count)
+            @Html.ValidationMessageFor(model => model.count)
+        </div>
+
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.price)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.price)
+            @Html.ValidationMessageFor(model => model.price)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.categoryId, "category")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("categoryId", String.Empty)
+            @Html.ValidationMessageFor(model => model.categoryId)
+            <br />
+            <label>Or Add </label><a href="@Url.Action("Index" , "Category")" class="btn btn-default">Category</a>
+        </div>
+        <input type='file' multiple id='fileUpload' name="files[]" />
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

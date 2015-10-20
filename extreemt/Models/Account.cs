@@ -49,14 +49,14 @@ namespace extreemt
         public Dictionary<string, List<string>> signUp()
         {
             validateAccount va = new validateAccount(this.accountController.Request.Form);
-
+            /*
             if (this.signUpClosed())
             {
                 Dictionary<string, List<string>> errors = new Dictionary<string, List<string>>();
                 errors.Add("Sign Up Closed", new List<string> { "Sign Up Closed Temporarily" });
                 return errors;
             }
-
+            */
             if (va.validateSignUp().Count > 0)
                 return va.validateSignUp();
 
@@ -198,8 +198,9 @@ namespace extreemt
         private void cutOffCashCredit(user user, int amount)
         {
             this.context = new extreemtEntities();
-            this.context.Entry(user).State = System.Data.EntityState.Modified;
-            user.cashBank -= amount;
+            user usr = this.context.users.Find(user.id);
+            this.context.Entry(usr).State = System.Data.EntityState.Modified;
+            usr.cashBank -= amount;
             this.context.SaveChanges();
         }
         private bool userHaveEnoughMoneyForRegister(user user)

@@ -1,6 +1,51 @@
 ﻿@{
     ViewBag.Title = "Index";
     extreemt.user user = extreemt.Account.staticGetLoggedUser();
+    extreemt.extreemtEntities db = new extreemt.extreemtEntities();
+    List<extreemt.userPayProduct> userPayProducts = null;
+    if(db.userPayProducts.Where(u => u.id == user.id).Count()>0){
+        userPayProducts = db.userPayProducts.Where(u => u.id == user.id).ToList();
+
+    }
+    else
+    {
+        userPayProducts = null;
+    }
 }
 
 <h2>@user.username </h2>
+
+<h3>Products</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (userPayProducts != null)
+            {
+                foreach (extreemt.userPayProduct up in userPayProducts)
+                {
+                    int productId = up.productId;
+                    if (db.products.Where(p => p.id == productId).Count() > 0)
+                    {
+
+                        <tr>
+                            <td>@up.product.name</td>
+                            <td>@up.date.ToString("yyyy-MM-dd")</td>
+                        </tr>
+                    }
+
+                }
+            }
+
+        }
+    </tbody>
+</table>
+<div class="row">
+    <h3>Cash Bank : @user.cashBank</h3>
+    <h3>Product Bank : @user.productBank</h3>
+</div>

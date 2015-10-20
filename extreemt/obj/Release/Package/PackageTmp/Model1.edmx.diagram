@@ -4,8 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6024e077e6df490aa62334f378f41088" Name="Diagram1" ZoomLevel="50">
-        <EntityTypeShape EntityType="extreemtModel.user" Width="1.5" PointX="0.75" PointY="0.75" />
+      <Diagram DiagramId="6024e077e6df490aa62334f378f41088" Name="Diagram1" ZoomLevel="80">
+        <EntityTypeShape EntityType="extreemtModel.category" Width="1.5" PointX="0.75" PointY="9.625" />
+        <EntityTypeShape EntityType="extreemtModel.photo" Width="1.5" PointX="5.25" PointY="6.5" />
+        <EntityTypeShape EntityType="extreemtModel.product" Width="1.5" PointX="3" PointY="2.75" />
+        <EntityTypeShape EntityType="extreemtModel.sysdiagram" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="extreemtModel.user" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="extreemtModel.userPayProduct" Width="1.5" PointX="5.25" PointY="3.375" />
+        <AssociationConnector Association="extreemtModel.FK_product_category" />
+        <AssociationConnector Association="extreemtModel.FK_photos_product" />
+        <AssociationConnector Association="extreemtModel.FK_product_user" />
+        <AssociationConnector Association="extreemtModel.FK_userPayProduct_product" />
+        <AssociationConnector Association="extreemtModel.FK_userPayProduct_user" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
