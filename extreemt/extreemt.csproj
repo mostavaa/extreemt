@@ -201,6 +201,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\RegisteredController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -454,6 +455,14 @@
     <Content Include="Views\Photo\Edit.cshtml" />
     <Content Include="Views\Photo\Delete.cshtml" />
     <Content Include="Views\Product\selectUser.cshtml" />
+    <Content Include="Views\Registered\Cash_Bank.cshtml" />
+    <Content Include="Views\Registered\Product_Bank.cshtml" />
+    <Content Include="Views\Registered\Account_Summary.cshtml" />
+    <Content Include="Views\Registered\Group_list.cshtml" />
+    <Content Include="Views\Registered\Daily_Signup.cshtml" />
+    <Content Include="Views\Registered\My_Transfer.cshtml" />
+    <Content Include="Views\Registered\My_Basket.cshtml" />
+    <Content Include="Views\Registered\My_Order.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

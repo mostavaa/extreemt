@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "My_Order";
+}
+
+<h2>My_Order</h2>
+@{
+    extreemt.user usr = extreemt.Account.staticGetLoggedUser();
+    int count = usr.products.Count;
+
+}
+@*Display All Products This User Has Buied*@
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < count; i++)
+        {
+            <tr>
+            <td></td>
+            <td></td>
+
+        </tr>
+        }
+        
+    </tbody>
+</table>

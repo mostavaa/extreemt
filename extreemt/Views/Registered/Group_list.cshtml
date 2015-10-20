@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Group_list";
+}
+@{
+    extreemt.user usr = extreemt.Account.staticGetLoggedUser();
+   
+}
+<h2>Group_list</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>IR ID</th>
+            <th>IR Name</th>
+            <th>Applier id</th>
+            <th>Applier Name</th>
+            <th>Applier Side</th>
+            <th>Confirm Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i <5 ; i++)
+        {
+            <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+
+        </tr>
+        }        
+    </tbody>
+
+</table>
