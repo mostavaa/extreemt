@@ -8,8 +8,10 @@ using System.Web;
 
 namespace extreemt
 {
+    
     public class Account
     {
+       
         private extreemtEntities context;
         //private System.Collections.Specialized.NameValueCollection Form;
         private Controllers.AccountController accountController;
@@ -39,6 +41,7 @@ namespace extreemt
             string password = this.accountController.Request.Form["password"];
             if (db.users.Where(u => u.userId == userId && u.loginPassword == password).Count() <= 0)
             {
+               
                 Dictionary<string, List<string>> errors = new Dictionary<string, List<string>>();
                 errors.Add("id", new List<string>() { "<p>Id or password may wrong</p>" });
                 return errors;
@@ -107,6 +110,7 @@ namespace extreemt
             {
                 return;
             }
+            
             string userId = (string)HttpContext.Current.Session["userId"];
             if (userId != null && userId != "")
             {
