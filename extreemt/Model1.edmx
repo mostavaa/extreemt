@@ -12,6 +12,16 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <EntityType Name="cheque">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="amount" Type="int" Nullable="false" />
+          <Property Name="chequeDate" Type="date" Nullable="false" />
+          <Property Name="chequeType" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="photos">
           <Key>
             <PropertyRef Name="id" />
@@ -42,6 +52,16 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Transfer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="transferFrom" Type="int" Nullable="false" />
+          <Property Name="transferTo" Type="int" Nullable="false" />
+          <Property Name="transferDate" Type="date" Nullable="false" />
+          <Property Name="amount" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -74,6 +94,10 @@
           <Property Name="registererId" Type="int" />
           <Property Name="cashBank" Type="int" Nullable="false" />
           <Property Name="productBank" Type="int" Nullable="false" />
+          <Property Name="registerDate" Type="date" />
+          <Property Name="dailyLeftActiveCount" Type="int" Nullable="false" />
+          <Property Name="dailyRightActiveCount" Type="int" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="userPayProduct">
           <Key>
@@ -84,6 +108,18 @@
           <Property Name="productId" Type="int" Nullable="false" />
           <Property Name="date" Type="date" Nullable="false" />
         </EntityType>
+        <Association Name="FK_cheque_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="cheque" Type="Self.cheque" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cheque">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_photos_product">
           <End Role="product" Type="Self.product" Multiplicity="1" />
           <End Role="photos" Type="Self.photos" Multiplicity="*" />
@@ -120,6 +156,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Transfer_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="Transfer" Type="Self.Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Transfer">
+              <PropertyRef Name="transferFrom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transfer_user1">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="Transfer" Type="Self.Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Transfer">
+              <PropertyRef Name="transferTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_userPayProduct_product">
           <End Role="product" Type="Self.product" Multiplicity="1" />
           <End Role="userPayProduct" Type="Self.userPayProduct" Multiplicity="*" />
@@ -146,11 +206,17 @@
         </Association>
         <EntityContainer Name="extreemtModelStoreContainer">
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cheque" EntityType="Self.cheque" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="photos" EntityType="Self.photos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transfer" EntityType="Self.Transfer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="userPayProduct" EntityType="Self.userPayProduct" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_cheque_user" Association="Self.FK_cheque_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="cheque" EntitySet="cheque" />
+          </AssociationSet>
           <AssociationSet Name="FK_photos_product" Association="Self.FK_photos_product">
             <End Role="product" EntitySet="product" />
             <End Role="photos" EntitySet="photos" />
@@ -162,6 +228,14 @@
           <AssociationSet Name="FK_product_user" Association="Self.FK_product_user">
             <End Role="user" EntitySet="user" />
             <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transfer_user" Association="Self.FK_Transfer_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="Transfer" EntitySet="Transfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transfer_user1" Association="Self.FK_Transfer_user1">
+            <End Role="user" EntitySet="user" />
+            <End Role="Transfer" EntitySet="Transfer" />
           </AssociationSet>
           <AssociationSet Name="FK_userPayProduct_product" Association="Self.FK_userPayProduct_product">
             <End Role="product" EntitySet="product" />
@@ -181,7 +255,6 @@
           <EntitySet Name="photos" EntityType="extreemtModel.photo" />
           <EntitySet Name="products" EntityType="extreemtModel.product" />
           <EntitySet Name="sysdiagrams" EntityType="extreemtModel.sysdiagram" />
-          <EntitySet Name="users" EntityType="extreemtModel.user" />
           <EntitySet Name="userPayProducts" EntityType="extreemtModel.userPayProduct" />
           <AssociationSet Name="FK_product_category" Association="extreemtModel.FK_product_category">
             <End Role="category" EntitySet="categories" />
@@ -191,19 +264,34 @@
             <End Role="product" EntitySet="products" />
             <End Role="photo" EntitySet="photos" />
           </AssociationSet>
+          <AssociationSet Name="FK_userPayProduct_product" Association="extreemtModel.FK_userPayProduct_product">
+            <End Role="product" EntitySet="products" />
+            <End Role="userPayProduct" EntitySet="userPayProducts" />
+          </AssociationSet>
+          <EntitySet Name="Transfers" EntityType="extreemtModel.Transfer" />
+          <EntitySet Name="cheques" EntityType="extreemtModel.cheque" />
+          <EntitySet Name="users" EntityType="extreemtModel.user" />
+          <AssociationSet Name="FK_cheque_user" Association="extreemtModel.FK_cheque_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="cheque" EntitySet="cheques" />
+          </AssociationSet>
           <AssociationSet Name="FK_product_user" Association="extreemtModel.FK_product_user">
             <End Role="user" EntitySet="users" />
             <End Role="product" EntitySet="products" />
           </AssociationSet>
-          <AssociationSet Name="FK_userPayProduct_product" Association="extreemtModel.FK_userPayProduct_product">
-            <End Role="product" EntitySet="products" />
-            <End Role="userPayProduct" EntitySet="userPayProducts" />
+          <AssociationSet Name="FK_Transfer_user" Association="extreemtModel.FK_Transfer_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="Transfer" EntitySet="Transfers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transfer_user1" Association="extreemtModel.FK_Transfer_user1">
+            <End Role="user" EntitySet="users" />
+            <End Role="Transfer" EntitySet="Transfers" />
           </AssociationSet>
           <AssociationSet Name="FK_userPayProduct_user" Association="extreemtModel.FK_userPayProduct_user">
             <End Role="user" EntitySet="users" />
             <End Role="userPayProduct" EntitySet="userPayProducts" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="category">
           <Key>
             <PropertyRef Name="id" />
@@ -235,8 +323,8 @@
           <Property Name="userId" Type="Int32" />
           <NavigationProperty Name="category" Relationship="extreemtModel.FK_product_category" FromRole="product" ToRole="category" />
           <NavigationProperty Name="photos" Relationship="extreemtModel.FK_photos_product" FromRole="product" ToRole="photo" />
-          <NavigationProperty Name="user" Relationship="extreemtModel.FK_product_user" FromRole="product" ToRole="user" />
           <NavigationProperty Name="userPayProducts" Relationship="extreemtModel.FK_userPayProduct_product" FromRole="product" ToRole="userPayProduct" />
+          <NavigationProperty Name="user" Relationship="extreemtModel.FK_product_user" FromRole="product" ToRole="user" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -247,40 +335,6 @@
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="user">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="mail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="homephone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="country" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="city" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ssn" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="true" />
-          <Property Name="nationality" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="relationship" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="loginPassword" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="walletPassword" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="rightActiveCount" Type="Int32" Nullable="false" />
-          <Property Name="leftActiveCount" Type="Int32" Nullable="false" />
-          <Property Name="rightInactiveCount" Type="Int32" Nullable="false" />
-          <Property Name="leftInactiveCount" Type="Int32" Nullable="false" />
-          <Property Name="position" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="genNumber" Type="Int32" Nullable="false" />
-          <Property Name="parentGenNum" Type="Int32" />
-          <Property Name="parentUserId" Type="Int32" />
-          <Property Name="userId" Type="Int32" Nullable="false" />
-          <Property Name="registererId" Type="Int32" />
-          <Property Name="cashBank" Type="Int32" Nullable="false" />
-          <Property Name="productBank" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="products" Relationship="extreemtModel.FK_product_user" FromRole="user" ToRole="product" />
-          <NavigationProperty Name="userPayProducts" Relationship="extreemtModel.FK_userPayProduct_user" FromRole="user" ToRole="userPayProduct" />
         </EntityType>
         <EntityType Name="userPayProduct">
           <Key>
@@ -317,6 +371,94 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_userPayProduct_product">
+          <End Type="extreemtModel.product" Role="product" Multiplicity="1" />
+          <End Type="extreemtModel.userPayProduct" Role="userPayProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="userPayProduct">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Transfer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="transferFrom" Type="Int32" Nullable="false" />
+          <Property Name="transferTo" Type="Int32" Nullable="false" />
+          <Property Name="transferDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="amount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="extreemtModel.FK_Transfer_user" FromRole="Transfer" ToRole="user" />
+          <NavigationProperty Name="user1" Relationship="extreemtModel.FK_Transfer_user1" FromRole="Transfer" ToRole="user" />
+          </EntityType>
+        <EntityType Name="cheque">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="Int32" Nullable="false" />
+          <Property Name="chequeDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="chequeType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="user" Relationship="extreemtModel.FK_cheque_user" FromRole="cheque" ToRole="user" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="homephone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="country" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ssn" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="nationality" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="relationship" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="loginPassword" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="walletPassword" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="rightActiveCount" Type="Int32" Nullable="false" />
+          <Property Name="leftActiveCount" Type="Int32" Nullable="false" />
+          <Property Name="rightInactiveCount" Type="Int32" Nullable="false" />
+          <Property Name="leftInactiveCount" Type="Int32" Nullable="false" />
+          <Property Name="position" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="genNumber" Type="Int32" Nullable="false" />
+          <Property Name="parentGenNum" Type="Int32" />
+          <Property Name="parentUserId" Type="Int32" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="registererId" Type="Int32" />
+          <Property Name="cashBank" Type="Int32" Nullable="false" />
+          <Property Name="productBank" Type="Int32" Nullable="false" />
+          <Property Name="registerDate" Type="DateTime" Precision="0" />
+          <Property Name="dailyLeftActiveCount" Type="Int32" Nullable="false" />
+          <Property Name="dailyRightActiveCount" Type="Int32" Nullable="false" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="cheques" Relationship="extreemtModel.FK_cheque_user" FromRole="user" ToRole="cheque" />
+          <NavigationProperty Name="products" Relationship="extreemtModel.FK_product_user" FromRole="user" ToRole="product" />
+          <NavigationProperty Name="Transfers" Relationship="extreemtModel.FK_Transfer_user" FromRole="user" ToRole="Transfer" />
+          <NavigationProperty Name="Transfers1" Relationship="extreemtModel.FK_Transfer_user1" FromRole="user" ToRole="Transfer" />
+          <NavigationProperty Name="userPayProducts" Relationship="extreemtModel.FK_userPayProduct_user" FromRole="user" ToRole="userPayProduct" />
+        </EntityType>
+        <Association Name="FK_cheque_user">
+          <End Type="extreemtModel.user" Role="user" Multiplicity="1" />
+          <End Type="extreemtModel.cheque" Role="cheque" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cheque">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_product_user">
           <End Type="extreemtModel.user" Role="user" Multiplicity="0..1" />
           <End Type="extreemtModel.product" Role="product" Multiplicity="*" />
@@ -329,15 +471,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_userPayProduct_product">
-          <End Type="extreemtModel.product" Role="product" Multiplicity="1" />
-          <End Type="extreemtModel.userPayProduct" Role="userPayProduct" Multiplicity="*" />
+        <Association Name="FK_Transfer_user">
+          <End Type="extreemtModel.user" Role="user" Multiplicity="1" />
+          <End Type="extreemtModel.Transfer" Role="Transfer" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="product">
+            <Principal Role="user">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="userPayProduct">
-              <PropertyRef Name="productId" />
+            <Dependent Role="Transfer">
+              <PropertyRef Name="transferFrom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transfer_user1">
+          <End Type="extreemtModel.user" Role="user" Multiplicity="1" />
+          <End Type="extreemtModel.Transfer" Role="Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Transfer">
+              <PropertyRef Name="transferTo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -353,7 +507,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -401,9 +555,45 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="userPayProducts">
+            <EntityTypeMapping TypeName="extreemtModel.userPayProduct">
+              <MappingFragment StoreEntitySet="userPayProduct">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transfers">
+            <EntityTypeMapping TypeName="extreemtModel.Transfer">
+              <MappingFragment StoreEntitySet="Transfer">
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="transferDate" ColumnName="transferDate" />
+                <ScalarProperty Name="transferTo" ColumnName="transferTo" />
+                <ScalarProperty Name="transferFrom" ColumnName="transferFrom" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cheques">
+            <EntityTypeMapping TypeName="extreemtModel.cheque">
+              <MappingFragment StoreEntitySet="cheque">
+                <ScalarProperty Name="chequeType" ColumnName="chequeType" />
+                <ScalarProperty Name="chequeDate" ColumnName="chequeDate" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="extreemtModel.user">
               <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="dailyRightActiveCount" ColumnName="dailyRightActiveCount" />
+                <ScalarProperty Name="dailyLeftActiveCount" ColumnName="dailyLeftActiveCount" />
+                <ScalarProperty Name="registerDate" ColumnName="registerDate" />
                 <ScalarProperty Name="productBank" ColumnName="productBank" />
                 <ScalarProperty Name="cashBank" ColumnName="cashBank" />
                 <ScalarProperty Name="registererId" ColumnName="registererId" />
@@ -430,16 +620,6 @@
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="mail" ColumnName="mail" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="userPayProducts">
-            <EntityTypeMapping TypeName="extreemtModel.userPayProduct">
-              <MappingFragment StoreEntitySet="userPayProduct">
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="productId" ColumnName="productId" />
-                <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

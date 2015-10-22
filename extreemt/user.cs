@@ -16,7 +16,10 @@ namespace extreemt
     {
         public user()
         {
+            this.cheques = new HashSet<cheque>();
             this.products = new HashSet<product>();
+            this.Transfers = new HashSet<Transfer>();
+            this.Transfers1 = new HashSet<Transfer>();
             this.userPayProducts = new HashSet<userPayProduct>();
         }
     
@@ -47,8 +50,15 @@ namespace extreemt
         public Nullable<int> registererId { get; set; }
         public int cashBank { get; set; }
         public int productBank { get; set; }
+        public Nullable<System.DateTime> registerDate { get; set; }
+        public int dailyLeftActiveCount { get; set; }
+        public int dailyRightActiveCount { get; set; }
+        public bool isActive { get; set; }
     
+        public virtual ICollection<cheque> cheques { get; set; }
         public virtual ICollection<product> products { get; set; }
+        public virtual ICollection<Transfer> Transfers { get; set; }
+        public virtual ICollection<Transfer> Transfers1 { get; set; }
         public virtual ICollection<userPayProduct> userPayProducts { get; set; }
     }
 }

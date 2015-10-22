@@ -73,19 +73,76 @@ namespace extreemt.Controllers
                 Response.Write("success");
             }
         }
+        public void taskscheduledforcommmission()
+        {
+            extreemtEntities db = new extreemtEntities();
+            if (db.users.Where(u => u.isActive && u.dailyLeftActiveCount != 0 && u.dailyRightActiveCount != 0).Count() > 0)
+            {
+                List<user> users = db.users.Where(u => u.isActive && u.dailyLeftActiveCount != 0 && u.dailyRightActiveCount != 0).ToList();
+                foreach (user usr in users)
+                {
+                    int chequesCount = usr.cheques.Count;
+                    int dailyLeftCount = usr.dailyLeftActiveCount;
+                    int dailyRightCount = usr.dailyRightActiveCount;
+                    int numberOfCheques = 0;
+                    if (dailyLeftCount >= dailyRightCount)
+                    {
+                        numberOfCheques = dailyRightCount;
+                        usr.dailyLeftActiveCount = usr.dailyLeftActiveCount - usr.dailyRightActiveCount;
+                        usr.dailyRightActiveCount = 0;
+                    }
+                    else
+                    {
+                        numberOfCheques = dailyLeftCount;
+                        usr.dailyRightActiveCount = usr.dailyRightActiveCount - usr.dailyLeftActiveCount;
+                        usr.dailyLeftActiveCount = 0;
+                    }
+                    if (numberOfCheques > 6)
+                    {
+                        numberOfCheques = 6;
+                    }
+
+                    int productAdded = 0, cashAdded = 0;
+                    for (int i = 0; i < numberOfCheques; i++)
+                    {
+                        cheque ch = new cheque();
+                        ch.amount = 250;
+                        ch.chequeDate = DateTime.Now;
+                        ch.userId = usr.id;
+                        if (((i + chequesCount) + 1) % 3 == 0)
+                        {
+                            ch.chequeType = "product";
+                            productAdded += 250;
+                        }
+                        else
+                        {
+                            ch.chequeType = "cash";
+                            cashAdded += 250;
+                        }
+                        db.cheques.Add(ch);
+                    }
+                    usr.cashBank += cashAdded;
+                    usr.productBank += productAdded;
+
+                    db.Entry(usr).State = System.Data.EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+        }
         public ActionResult transferMoney()
         {
-            
+
             string error = "";
             try
             {
                 extreemtEntities db = new extreemtEntities();
                 int transId = int.Parse(Request.Form["id"]);
-                if (db.users.Where(u => u.userId == transId && u.genNumber == 1).Count() >= 0){
+                if (db.users.Where(u => u.userId == transId && u.genNumber == 1).Count() >= 0)
+                {
 
 
                     Account acc = new Account(this);
-                    user loggedUser = acc.getLoggedUser();
+                    user logged = Account.staticGetLoggedUser();
 
                     /*
                     //temp                    
@@ -93,20 +150,29 @@ namespace extreemt.Controllers
                     int currentuserId = int.Parse(Session["userId"].ToString());
                     */
                     int amount = int.Parse(Request.Form["amount"]);
-                    if (db.users.Where(u => u.userId == loggedUser.userId && u.genNumber == 1).Count() >= 0)
+                    if (db.users.Where(u => u.userId == logged.userId && u.genNumber == 1).Count() >= 0)
                     {
 
                         user transUser = db.users.Where(u => u.userId == transId && u.genNumber == 1).First();
-                        if (loggedUser.userId != transUser.userId)
+                        if (logged.userId != transUser.userId)
                         {
-                            if (loggedUser.cashBank >= amount)
+                            if (logged.cashBank >= amount)
                             {
+                                user loggedUser = db.users.Find(logged.id);
+
                                 db.Entry(loggedUser).State = System.Data.EntityState.Modified;
                                 db.Entry(transUser).State = System.Data.EntityState.Modified;
                                 transUser.cashBank += amount;
                                 loggedUser.cashBank -= amount;
                                 db.SaveChanges();
                                 error += "Amount Transfered Successfully";
+                                Transfer trans = new Transfer();
+                                trans.transferFrom = loggedUser.id;
+                                trans.transferTo = transUser.id;
+                                trans.transferDate = DateTime.Now;
+                                trans.amount = amount;
+                                db.Transfers.Add(trans);
+                                db.SaveChanges();
                             }
                             else
                             {
@@ -115,13 +181,20 @@ namespace extreemt.Controllers
                         }
                         else
                         {
-                            if (loggedUser.cashBank >= amount)
+                            if (logged.cashBank >= amount)
                             {
-                                loggedUser.productBank += amount;
-                                loggedUser.cashBank -= amount;
-                                db.Entry(transUser).CurrentValues.SetValues(loggedUser);
+                                logged.productBank += amount;
+                                logged.cashBank -= amount;
+                                db.Entry(transUser).CurrentValues.SetValues(logged);
                                 db.SaveChanges();
-                                error += "Amount Transfered Successfully to Your Product Bank!";                            
+                                error += "Amount Transfered Successfully to Your Product Bank!";
+                                Transfer trans = new Transfer();
+                                trans.transferFrom = logged.id;
+                                trans.transferTo = logged.id;
+                                trans.transferDate = DateTime.Now;
+                                trans.amount = amount;
+                                db.Transfers.Add(trans);
+                                db.SaveChanges();
                             }
                         }
                     }
@@ -141,7 +214,7 @@ namespace extreemt.Controllers
             }
             TempData["error"] = error;
             return Redirect(Url.Action("transfer", "Account"));
-             
+
         }
         public ActionResult transfer()
         {
@@ -161,7 +234,7 @@ namespace extreemt.Controllers
                     foreach (string msg in error.Value)
                     {
                         Response.Write(msg);
-                        
+
                     }
                     Response.Write("#");
                 }
@@ -175,7 +248,7 @@ namespace extreemt.Controllers
                     userId = algo.Encrypt(userId + "$$$1");
                     userId = HttpUtility.UrlEncode(userId.Replace("+", "25252"));
                 }
-                string url = Url.Action("genology", "Home") + "?a=" + userId;         
+                string url = Url.Action("genology", "Home") + "?a=" + userId;
                 //Response.Redirect(url);
 
                 Response.Write("success," + url);
@@ -192,7 +265,7 @@ namespace extreemt.Controllers
             {
                 Response.Write(db.users.Where(o => o.userId == parentId).First().firstname);
             }
-             */ 
+             */
         }
 
         // new 
@@ -208,10 +281,10 @@ namespace extreemt.Controllers
 
         public void changeAdminCredit()
         {
-            int newval = int.Parse (Request.Form["val"]);
+            int newval = int.Parse(Request.Form["val"]);
 
             Account acc = new Account(this);
-            acc.changeAdminCredit(newval); 
+            acc.changeAdminCredit(newval);
             Response.Write("success");
         }
 
@@ -232,7 +305,7 @@ namespace extreemt.Controllers
         public bool getSignUpStatus()
         {
             Account acc = new Account(this);
-            return acc.signUpClosed();   
+            return acc.signUpClosed();
         }
         public void logout()
         {

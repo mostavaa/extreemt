@@ -52,7 +52,9 @@
             <div class="redrow">
                 L: 0 R: 0
             </div>
-
+            <div class="orangerow">
+                L: 0 R: 0
+            </div>
         </div>
     </div>
 }
@@ -61,8 +63,12 @@
 {
     <div class="@cssClass" style="@style">
         @{
-            string backGround = "white";
-            if (user.status == "inActive")
+            string backGround="";
+            if (user.isActive)
+            {
+                backGround = "white";    
+            }
+            else
             {
                 backGround = "burlywood";
             }
@@ -93,7 +99,10 @@
             <div class="redrow">
                 L: @user.leftInactiveCount R: @user.rightInactiveCount
             </div>
-
+            <div class="orangerow">
+                L: @user.dailyLeftActiveCount R: @user.dailyRightActiveCount
+            </div>
+            
         </div>
     </div>
 }
@@ -118,7 +127,13 @@
             background-color: #FF6666;
             text-align: center;
         }
-
+        
+        .orangerow {
+            width: 100%;
+            font-family: Arial;
+            background-color: #ff6a00;
+            text-align: center;
+        }
         .nodepixels {
             display: inline-block;
         }
