@@ -61,8 +61,14 @@
 </fieldset>
 -->
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @{
+        extreemt.user usr = extreemt.Account.staticGetLoggedUser();
+        if (extreemt.Account.isAdmin(usr))
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.id })
+        }
+}
+    
 </p>
 <div id="details">
     <div class="col-md-9 product-price1">

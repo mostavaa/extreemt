@@ -26,12 +26,12 @@ namespace extreemt
         }
     
         public DbSet<category> categories { get; set; }
+        public DbSet<cheque> cheques { get; set; }
         public DbSet<photo> photos { get; set; }
         public DbSet<product> products { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
-        public DbSet<userPayProduct> userPayProducts { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
-        public DbSet<cheque> cheques { get; set; }
         public DbSet<user> users { get; set; }
+        public DbSet<userPayProduct> userPayProducts { get; set; }
     }
 }

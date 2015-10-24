@@ -251,6 +251,40 @@ namespace extreemt.Controllers
             ViewData["error"] = TempData["error"];
             return View();
         }
+        public void Sumbit_edit()
+        {
+
+            Account acc = new Account(this);
+            Dictionary<string, List<string>> errors = acc.UpdateInfo();
+            if (errors != null)
+            {
+                foreach (KeyValuePair<string, List<string>> error in errors)
+                {
+                    Response.Write(error.Key + ",");
+                    foreach (string msg in error.Value)
+                    {
+                        Response.Write(msg);
+
+                    }
+                    Response.Write("#");
+                }
+            }
+            else
+            {
+                string userId = (string)Session["userId"];
+                if (userId != null && userId != "")
+                {
+                    extreemt.crypt algo = new extreemt.crypt();
+                    userId = algo.Encrypt(userId + "$$$1");
+                    userId = HttpUtility.UrlEncode(userId.Replace("+", "25252"));
+                }
+                string url = Url.Action("genology", "Home") + "?a=" + userId;
+                //Response.Redirect(url);
+
+                Response.Write("success," + url);
+            }
+
+        }
         public void submitSignUp()
         {
 

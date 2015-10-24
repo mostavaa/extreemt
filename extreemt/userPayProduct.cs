@@ -18,6 +18,8 @@ namespace extreemt
         public int userId { get; set; }
         public int productId { get; set; }
         public System.DateTime date { get; set; }
+        public string productName { get; set; }
+        public Nullable<int> price { get; set; }
     
         public virtual product product { get; set; }
         public virtual user user { get; set; }

@@ -31,7 +31,7 @@ namespace extreemt
     
         public virtual category category { get; set; }
         public virtual ICollection<photo> photos { get; set; }
-        public virtual ICollection<userPayProduct> userPayProducts { get; set; }
         public virtual user user { get; set; }
+        public virtual ICollection<userPayProduct> userPayProducts { get; set; }
     }
 }

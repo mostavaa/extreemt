@@ -278,6 +278,8 @@ namespace extreemt.Controllers
                     }
                     
                     up.date = DateTime.Now;
+                    up.price = db.products.Find(_proId).price;
+                    up.productName = db.products.Find(_proId).name;
                     db.userPayProducts.Add(up);
                     db.SaveChanges();
                     user user = db.users.Find(loggedUser.id);

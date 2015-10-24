@@ -9,7 +9,7 @@
 }
 <div class="container">
 
-    <form role="form" id="myForm" method="post" action="submitSignUp" class="form-inline">
+    <form role="form" id="myForm" method="post" action="Sumbit_edit" class="form-inline">
 
         @{
             string a = (string)ViewData["a"];
@@ -31,9 +31,9 @@
             <div class="form-group col-md-6">
                 <label class="col-md-3 control-label" for="">Title*</label>
                 <select id="title" name="title" required class="form-control col-md-6">
-                    <option value="Mr" @{if (@usr.title == "Mr") { <text> selected="selected" </text>  }}>Mr</option>
+                    <option value="Mr" @{if (@usr.title == "Mr") { <text> selected="selected" </text>   }}>Mr</option>
 
-                    <option value="Mss" @{if (@usr.title == "Mss") { <text> selected="selected" </text>   }}>Mss</option>
+                    <option value="Mss" @{if (@usr.title == "Mss") { <text> selected="selected" </text>    }}>Mss</option>
                 </select>
             </div>
             <div class='col-md-6 error'></div>
@@ -394,39 +394,39 @@
                 <button class="btn" name="edit" id="edit">Edit Password</button>
             </div>
         </div>
-                <div style=" display:none" id="secur">
-                    <h2>Security Detail</h2>
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label class="col-md-3 control-label" for="">Current Login Password*</label>
+        <div style=" display:none" id="secur">
+            <h2>Security Detail</h2>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="">Current Login Password*</label>
 
-                            <input required name="loginPassword" pattern="[a-zA-Z0-9]+" type="password" id="loginPassword" class="form-control col-md-6" placeholder="Enter Password">
-                        </div>
-                        <div class='col-md-6 error'></div>
-
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label class="col-md-3 control-label" for="">New Login Password*</label>
-
-                            <input required name="newLoginPassword" pattern="[a-zA-Z0-9]+" type="password" id="newLoginPassword" class="form-control col-md-6" placeholder="Enter New Login Password">
-                        </div>
-                        <div class='col-md-6 error'></div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label class="col-md-3 control-label" for="">Confirm New Login Password*</label>
-
-                            <input required name="confirmLoginPassword" pattern="[a-zA-Z0-9]+" type="password" id="confirmLoginPassword" class="form-control col-md-6" placeholder="Confirm Login Password">
-                        </div>
-                        <div class='col-md-6 error'></div>
-                    </div>
+                    <input required name="loginPassword" pattern="[a-zA-Z0-9]+" type="password" id="loginPassword" class="form-control col-md-6" placeholder="Enter Password">
                 </div>
-                <div class="row">
-                    <input name="update" type="button" class="btn btn-default col-md-offset-3" value="Save Changes" id="update" />
-                    <img src="~/Content/images/loading.gif" class="loading col-md-offset-3" style="display:none" />
+                <div class='col-md-6 error'></div>
+
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="">New Login Password*</label>
+
+                    <input required name="newLoginPassword" pattern="[a-zA-Z0-9]+" type="password" id="newLoginPassword" class="form-control col-md-6" placeholder="Enter New Login Password">
                 </div>
-                <br>
+                <div class='col-md-6 error'></div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="">Confirm New Login Password*</label>
+
+                    <input required name="confirmLoginPassword" pattern="[a-zA-Z0-9]+" type="password" id="confirmLoginPassword" class="form-control col-md-6" placeholder="Confirm Login Password">
+                </div>
+                <div class='col-md-6 error'></div>
+            </div>
+        </div>
+        <div class="row">
+            <input name="update" type="button" class="btn btn-default col-md-offset-3" value="Save Changes" id="update" />
+            <img src="~/Content/images/loading.gif" class="loading col-md-offset-3" style="display:none" />
+        </div>
+        <br>
     </form>
 </div>
 
@@ -441,7 +441,7 @@
                 button = this;
                 $(this).hide();
                 $(this).parent().find(".loading").show();
-                $.post("@Url.Action("Sumbit_edit", "Registered")", $("#myForm").serialize(), function (res) {
+                $.post("@Url.Action("Sumbit_edit", "Account")", $("#myForm").serialize(), function (res) {
                     
                     if (res.split(",")[0] == "success") {
                         window.location.href = ""+res.split(",")[1]+"";
