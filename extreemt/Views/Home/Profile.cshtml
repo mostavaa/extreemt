@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<h2>Profile</h2>
+<hr />
+
+@{
+
+    string userId = (string)Session["userId"];
+    if (userId != null && userId != "")
+    {
+        extreemt.crypt algo = new extreemt.crypt();
+        userId = algo.Encrypt(userId + "$$$1");
+        userId = HttpUtility.UrlEncode(userId.Replace("+", "25252"));
+    }
+    string genology_url = Url.Action("genology", "Home") + "?a=" + userId;
+}
+
+<div id='cssmenu'>
+    <ul>
+        <li>
+            <a href='#'>MY COMMISSION</a>
+            <ul>
+                <li>
+                    <a href='@Url.Action("Cash_Bank", "Registered")'>Cash Bank</a>
+                </li>
+                <li>
+                    <a href='@Url.Action("Product_Bank", "Registered")'>Product Bank</a>
+                </li>
+                <li><a href='@Url.Action("Account_Summary", "Registered")'>Account Summary</a>
+            </ul>
+        </li>
+        <li>
+            <a href='#'>My Team </a>
+            <ul>
+                <li><a href='@genology_url'>Genealogy Team</a></li>
+                <li><a href='@Url.Action("Group_list", "Registered")'>Group List </a></li>
+            </ul>
+        </li>
+        <li>
+            <a href='#'>MY SIGNUP</a>
+            <ul>
+                <li><a href='@Url.Action("Daily_Signup", "Registered")'>Daily  Signup</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href='#'>Transfer</a>
+            <ul>
+                <li><a href='@Url.Action("transfer", "Account")'>Transfer</a></li>
+                <li><a href='@Url.Action("My_Transfer", "Registered")'>My Transfer </a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href='#'>My Profile</a>
+            <ul>
+                <li><a href='@Url.Action("My_Basket", "Registered")'>My Basket</a></li>
+                <li><a href='@Url.Action("My_Order", "Registered")'>MY Order </a></li>
+                <li><a href='@Url.Action("Update_Info", "Registered")'>Update Info</a></li>
+            </ul>
+        </li>
+
+    </ul>
+</div>
+<hr />

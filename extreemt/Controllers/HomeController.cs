@@ -28,6 +28,10 @@ namespace extreemt.Controllers
         {
             return View();
         }
+        public ActionResult Profile()
+        {
+            return View();
+        }
         public  ActionResult Update_Category()
         {
             return View();
