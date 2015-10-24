@@ -1,5 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="extreemtModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="category">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="cheque">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="amount" Type="int" Nullable="false" />
+    <Property Name="chequeDate" Type="date" Nullable="false" />
+    <Property Name="chequeType" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="photos">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="photo" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="productId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="description" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="count" Type="int" Nullable="false" />
+    <Property Name="date" Type="date" Nullable="false" />
+    <Property Name="price" Type="int" Nullable="false" />
+    <Property Name="categoryId" Type="int" Nullable="false" />
+    <Property Name="userId" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Transfer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="transferFrom" Type="int" Nullable="false" />
+    <Property Name="transferTo" Type="int" Nullable="false" />
+    <Property Name="transferDate" Type="date" Nullable="false" />
+    <Property Name="amount" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="user">
     <Key>
       <PropertyRef Name="id" />
@@ -31,8 +89,156 @@
     <Property Name="registererId" Type="int" />
     <Property Name="cashBank" Type="int" Nullable="false" />
     <Property Name="productBank" Type="int" Nullable="false" />
+    <Property Name="registerDate" Type="date" />
+    <Property Name="dailyLeftActiveCount" Type="int" Nullable="false" />
+    <Property Name="dailyRightActiveCount" Type="int" Nullable="false" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="userPayProduct">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="productId" Type="int" Nullable="false" />
+    <Property Name="date" Type="date" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_cheque_user">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="cheque" Type="Self.cheque" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="cheque">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_photos_product">
+    <End Role="product" Type="Self.product" Multiplicity="1" />
+    <End Role="photos" Type="Self.photos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="photos">
+        <PropertyRef Name="productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_product_category">
+    <End Role="category" Type="Self.category" Multiplicity="1" />
+    <End Role="product" Type="Self.product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="product">
+        <PropertyRef Name="categoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_product_user">
+    <End Role="user" Type="Self.user" Multiplicity="0..1" />
+    <End Role="product" Type="Self.product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="product">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transfer_user">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="Transfer" Type="Self.Transfer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transfer">
+        <PropertyRef Name="transferFrom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transfer_user1">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="Transfer" Type="Self.Transfer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transfer">
+        <PropertyRef Name="transferTo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_userPayProduct_product">
+    <End Role="product" Type="Self.product" Multiplicity="1" />
+    <End Role="userPayProduct" Type="Self.userPayProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="userPayProduct">
+        <PropertyRef Name="productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_userPayProduct_user">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="userPayProduct" Type="Self.userPayProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="userPayProduct">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="extreemtModelStoreContainer">
+    <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cheque" EntityType="Self.cheque" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="photos" EntityType="Self.photos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Transfer" EntityType="Self.Transfer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="userPayProduct" EntityType="Self.userPayProduct" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_cheque_user" Association="Self.FK_cheque_user">
+      <End Role="user" EntitySet="user" />
+      <End Role="cheque" EntitySet="cheque" />
+    </AssociationSet>
+    <AssociationSet Name="FK_photos_product" Association="Self.FK_photos_product">
+      <End Role="product" EntitySet="product" />
+      <End Role="photos" EntitySet="photos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_product_category" Association="Self.FK_product_category">
+      <End Role="category" EntitySet="category" />
+      <End Role="product" EntitySet="product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_product_user" Association="Self.FK_product_user">
+      <End Role="user" EntitySet="user" />
+      <End Role="product" EntitySet="product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transfer_user" Association="Self.FK_Transfer_user">
+      <End Role="user" EntitySet="user" />
+      <End Role="Transfer" EntitySet="Transfer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transfer_user1" Association="Self.FK_Transfer_user1">
+      <End Role="user" EntitySet="user" />
+      <End Role="Transfer" EntitySet="Transfer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_userPayProduct_product" Association="Self.FK_userPayProduct_product">
+      <End Role="product" EntitySet="product" />
+      <End Role="userPayProduct" EntitySet="userPayProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK_userPayProduct_user" Association="Self.FK_userPayProduct_user">
+      <End Role="user" EntitySet="user" />
+      <End Role="userPayProduct" EntitySet="userPayProduct" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

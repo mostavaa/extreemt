@@ -257,18 +257,24 @@ namespace extreemt.Controllers
                 {
                     userPayProduct up = new userPayProduct();
                     up.productId = _proId;
+                    user userRefForActivate = null;
                     if (wkala == "1")
                     {
                         up.userId = loggedUser.id;
+                        userRefForActivate = loggedUser;
                     }
                     else if (wkala == "2")
                     {
 
-                        up.userId = db.users.Where(u => u.genNumber == 2 && u.parentGenNum == 1 && u.parentUserId == loggedUser.userId && u.position == "left").First().id; 
+                        up.userId = db.users.Where(u => u.genNumber == 2 && u.parentGenNum == 1 && u.parentUserId == loggedUser.userId && u.position == "left").First().id;
+                        userRefForActivate = db.users.Where(u => u.genNumber == 2 && u.parentGenNum == 1 && u.parentUserId == loggedUser.userId && u.position == "left").First();
+                        
                     }
                     else if (wkala == "3")
                     {
                         up.userId = db.users.Where(u => u.genNumber == 3 && u.parentGenNum == 1 && u.parentUserId == loggedUser.userId && u.position == "right").First().id;
+                        userRefForActivate = db.users.Where(u => u.genNumber == 3 && u.parentGenNum == 1 && u.parentUserId == loggedUser.userId && u.position == "right").First();
+
                     }
                     
                     up.date = DateTime.Now;
@@ -278,7 +284,7 @@ namespace extreemt.Controllers
                     user.productBank -= productCost;
                     db.Entry(user).State = EntityState.Modified;
                     db.SaveChanges();
-                    //TODO whick user ?
+                    this.activateUser(userRefForActivate);
                     return Redirect(Url.Action("Index", "Account"));
                 }
                 else
@@ -292,6 +298,67 @@ namespace extreemt.Controllers
                 return null;
             }
             return null;
+        }
+        public void activateUser(user user)
+        {
+            if (user.isActive)
+            {
+                return;
+            }
+            List<userPayProduct> userProducts = user.userPayProducts.ToList();
+            // check if he buyed a membership and another product 
+            bool buyedMembership = false , buyedAnotherProduct = false , active = false;
+            
+            foreach (userPayProduct up in userProducts)
+            {
+                if (up.product.category.name.ToLower().Replace(" ","") == "membership")
+                {
+                    buyedMembership = true;
+                }
+                else
+                {
+                    buyedAnotherProduct = true;
+                }
+                if (buyedMembership && buyedAnotherProduct)
+                {
+                    active = true;
+                    break;
+                }
+            }
+            if (active)
+            {
+                extreemtEntities db2 = new extreemtEntities();
+                user myUser = db2.users.Find(user.id);
+                db2.Entry(myUser).State = EntityState.Modified;
+                myUser.isActive = true;
+                db2.SaveChanges();
+                this.updateActiveParents(myUser);
+            }
+        }
+        private void updateActiveParents(user user)
+        {
+            extreemtEntities db2 = new extreemtEntities();
+            user parent=  null;
+            while (db2.users.Where(u => u.userId == user.parentUserId && u.genNumber == user.parentGenNum).Count() > 0)
+            {
+                parent = db2.users.Where(u => u.userId == user.parentUserId && u.genNumber == user.parentGenNum).First();
+                if (parent.isActive)
+                {
+                    db2.Entry(parent).State = EntityState.Modified;
+                    if (user.position == "left")
+                    {
+                        parent.leftActiveCount++;
+                        parent.dailyLeftActiveCount++;
+                    }
+                    else
+                    {
+                        parent.rightActiveCount++;
+                        parent.dailyRightActiveCount++;
+                    }
+                }
+                user = parent;
+            }
+            db2.SaveChanges();
         }
     }
 }

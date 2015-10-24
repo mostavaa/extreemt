@@ -1,0 +1,46 @@
+﻿@model extreemt.photo
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>photo</legend>
+
+        @Html.HiddenFor(model => model.id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.photo1)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.photo1)
+            @Html.ValidationMessageFor(model => model.photo1)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.productId, "product")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("productId", String.Empty)
+            @Html.ValidationMessageFor(model => model.productId)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

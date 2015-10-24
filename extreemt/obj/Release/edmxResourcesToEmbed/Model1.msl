@@ -1,9 +1,87 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="extreemtModelStoreContainer" CdmEntityContainer="extreemtEntities">
+    <EntitySetMapping Name="categories">
+      <EntityTypeMapping TypeName="extreemtModel.category">
+        <MappingFragment StoreEntitySet="category">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="photos">
+      <EntityTypeMapping TypeName="extreemtModel.photo">
+        <MappingFragment StoreEntitySet="photos">
+          <ScalarProperty Name="productId" ColumnName="productId" />
+          <ScalarProperty Name="photo1" ColumnName="photo" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="products">
+      <EntityTypeMapping TypeName="extreemtModel.product">
+        <MappingFragment StoreEntitySet="product">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="extreemtModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="definition" ColumnName="definition" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="userPayProducts">
+      <EntityTypeMapping TypeName="extreemtModel.userPayProduct">
+        <MappingFragment StoreEntitySet="userPayProduct">
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="productId" ColumnName="productId" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transfers">
+      <EntityTypeMapping TypeName="extreemtModel.Transfer">
+        <MappingFragment StoreEntitySet="Transfer">
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="transferDate" ColumnName="transferDate" />
+          <ScalarProperty Name="transferTo" ColumnName="transferTo" />
+          <ScalarProperty Name="transferFrom" ColumnName="transferFrom" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cheques">
+      <EntityTypeMapping TypeName="extreemtModel.cheque">
+        <MappingFragment StoreEntitySet="cheque">
+          <ScalarProperty Name="chequeType" ColumnName="chequeType" />
+          <ScalarProperty Name="chequeDate" ColumnName="chequeDate" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="users">
       <EntityTypeMapping TypeName="extreemtModel.user">
         <MappingFragment StoreEntitySet="user">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="dailyRightActiveCount" ColumnName="dailyRightActiveCount" />
+          <ScalarProperty Name="dailyLeftActiveCount" ColumnName="dailyLeftActiveCount" />
+          <ScalarProperty Name="registerDate" ColumnName="registerDate" />
           <ScalarProperty Name="productBank" ColumnName="productBank" />
           <ScalarProperty Name="cashBank" ColumnName="cashBank" />
           <ScalarProperty Name="registererId" ColumnName="registererId" />

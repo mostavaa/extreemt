@@ -1,6 +1,12 @@
 ﻿@{
     ViewBag.Title = "Index";
     extreemt.user user = extreemt.Account.staticGetLoggedUser();
+   
 }
 
 <h2>@user.username </h2>
+
+<div class="row">
+    <h3>Cash Bank : @user.cashBank</h3>
+    <h3>Product Bank : @user.productBank</h3>
+</div>

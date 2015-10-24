@@ -4,9 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6024e077e6df490aa62334f378f41088" Name="Diagram1" ZoomLevel="50">
-        <EntityTypeShape EntityType="extreemtModel.user" Width="1.5" PointX="0.75" PointY="0.75" />
-      </Diagram>
+      <Diagram DiagramId="6024e077e6df490aa62334f378f41088" Name="Diagram1" ZoomLevel="41">
+        <EntityTypeShape EntityType="extreemtModel.category" Width="1.5" PointX="0.75" PointY="11.25" />
+        <EntityTypeShape EntityType="extreemtModel.photo" Width="1.5" PointX="5.25" PointY="7" />
+        <EntityTypeShape EntityType="extreemtModel.product" Width="1.5" PointX="3" PointY="3.375" />
+        <EntityTypeShape EntityType="extreemtModel.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="extreemtModel.userPayProduct" Width="1.5" PointX="5.25" PointY="3.875" />
+        <AssociationConnector Association="extreemtModel.FK_product_category" />
+        <AssociationConnector Association="extreemtModel.FK_photos_product" />
+        <AssociationConnector Association="extreemtModel.FK_userPayProduct_product" />
+        <EntityTypeShape EntityType="extreemtModel.Transfer" Width="1.5" PointX="3" PointY="7.75" />
+        <EntityTypeShape EntityType="extreemtModel.cheque" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="extreemtModel.user" Width="1.5" PointX="0.75" PointY="2.875" />
+        <AssociationConnector Association="extreemtModel.FK_cheque_user" />
+        <AssociationConnector Association="extreemtModel.FK_product_user" />
+        <AssociationConnector Association="extreemtModel.FK_Transfer_user" />
+        <AssociationConnector Association="extreemtModel.FK_Transfer_user1" />
+        <AssociationConnector Association="extreemtModel.FK_userPayProduct_user" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

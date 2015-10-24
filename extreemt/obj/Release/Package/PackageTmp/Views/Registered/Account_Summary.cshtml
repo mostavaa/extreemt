@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Account_Summary";
+    extreemt.user user = extreemt.Account.staticGetLoggedUser();
+    List<extreemt.cheque> chqs = new List<extreemt.cheque>();
+    if (user.cheques.Count > 0)
+    {
+        chqs = user.cheques.OrderByDescending(o=>o.chequeDate).ToList();
+    }
+}
+
+<h2>Account_Summary</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Date</th>
+
+        </tr>
+
+    </thead>
+    <tbody>
+        @{
+            if (chqs.Count > 0)
+            {
+                foreach (extreemt.cheque item in chqs)
+                {
+                    <tr>            
+                        <td>@item.chequeType</td>
+                        <td>@item.amount</td>
+                        <td>@item.chequeDate.ToString("yyyy-MM-dd")</td>
+                    </tr>
+                }
+            }
+        }
+
+    </tbody>
+</table>

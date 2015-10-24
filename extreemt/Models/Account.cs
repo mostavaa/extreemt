@@ -15,6 +15,7 @@ namespace extreemt
         private extreemtEntities context;
         //private System.Collections.Specialized.NameValueCollection Form;
         private Controllers.AccountController accountController;
+        private Controllers.RegisteredController registeredController;
 
 
         public Account(Controllers.AccountController accountController)
@@ -24,6 +25,77 @@ namespace extreemt
             this.context = new extreemtEntities();
         }
 
+        public Account(Controllers.RegisteredController registeredController)
+        {
+            // TODO: Complete member initialization
+            this.registeredController = registeredController;
+        }
+        public Account()
+        {
+
+        }
+        
+        public List<user> getParentChildren(user parent , List<user> candidates)
+        {
+            List<user> children = new List<user>();
+            if (candidates == null || candidates.Count == 0)
+                return children;
+            foreach(user candidate in candidates){
+                user can = candidate;
+                if(this.isChild(parent , candidate)){
+                    children.Add(can);
+                }
+            }
+            return children;
+        }
+        public bool isChild(user parent , user candidate)
+        {
+            if (candidate.id == parent.id)
+            {
+                return false;
+            }
+            extreemtEntities db = new extreemtEntities();
+            while(true){
+                if (db.users.Where(u => u.userId == candidate.parentUserId).Count() > 0)
+                {
+                    user candidateParent = db.users.Where(u => u.userId == candidate.parentUserId).First();
+                    if (candidateParent.id == parent.id)
+                    {
+                        return true;
+                    }
+                    candidate = candidateParent;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+        }
+        public bool isRight(user parent, user user)
+        {
+            if (user.id == parent.id)
+                return false;
+
+            extreemtEntities db = new extreemtEntities();
+            while (true)
+            {
+                if (user.parentUserId == parent.userId)
+                {
+                    if (user.position == "right")
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                if (db.users.Where(u => u.userId == user.parentUserId).Count() > 0)
+                    user = db.users.Where(u => u.userId == user.parentUserId).First();
+                
+            }
+        }
         public static bool isAdmin(user user)
         {
             return (user.registererId == null && user.parentUserId == null && user.parentGenNum == 0 && user.genNumber == 1);
@@ -52,14 +124,14 @@ namespace extreemt
         public Dictionary<string, List<string>> signUp()
         {
             validateAccount va = new validateAccount(this.accountController.Request.Form);
-
+            /*
             if (this.signUpClosed())
             {
                 Dictionary<string, List<string>> errors = new Dictionary<string, List<string>>();
                 errors.Add("Sign Up Closed", new List<string> { "Sign Up Closed Temporarily" });
                 return errors;
             }
-
+            */
             if (va.validateSignUp().Count > 0)
                 return va.validateSignUp();
 
@@ -156,9 +228,9 @@ namespace extreemt
             user.rightActiveCount = 0;
             user.rightInactiveCount = 1;
             user.leftInactiveCount = 1;
-          
+            user.registerDate = DateTime.Now;
             user.registererId = int.Parse(HttpContext.Current.Session["userId"].ToString());
-
+             
             string _generatedNumber = tools.generateRandomNumber(8);
             int generatedNumber  = int.Parse(_generatedNumber);
             while (db.users.Where(o => o.userId == generatedNumber).Count() > 0)
@@ -180,6 +252,7 @@ namespace extreemt
             leftUser.leftInactiveCount = 0;
             leftUser.rightInactiveCount = 0;
             leftUser.status = "inActive";
+
             db.users.Add(leftUser);
 
             db.SaveChanges();
@@ -202,8 +275,9 @@ namespace extreemt
         private void cutOffCashCredit(user user, int amount)
         {
             this.context = new extreemtEntities();
-            this.context.Entry(user).State = System.Data.EntityState.Modified;
-            user.cashBank -= amount;
+            user usr = this.context.users.Find(user.id);
+            this.context.Entry(usr).State = System.Data.EntityState.Modified;
+            usr.cashBank -= amount;
             this.context.SaveChanges();
         }
         private bool userHaveEnoughMoneyForRegister(user user)
