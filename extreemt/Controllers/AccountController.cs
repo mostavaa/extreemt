@@ -82,6 +82,24 @@ namespace extreemt.Controllers
                 foreach (user usr in users)
                 {
                     int chequesCount = usr.cheques.Count;
+                    if (usr.genNumber == 1)
+                    {
+                        chequesCount += db.users.Where(u => u.parentUserId == usr.userId && u.genNumber == 2).First().cheques.Count;
+                        chequesCount += db.users.Where(u => u.parentUserId == usr.userId && u.genNumber == 3).First().cheques.Count;
+                    }
+                    else if(usr.genNumber==2)
+                    {
+                        user parent = db.users.Where(u => u.userId == usr.parentUserId && u.genNumber == 1).First();
+                        chequesCount += parent.cheques.Count;
+                      chequesCount+= db.users.Where(u => u.parentUserId == parent.userId && u.genNumber == 3).First().cheques.Count;
+                    }
+                    else
+                    {
+                        user parent = db.users.Where(u => u.userId == usr.parentUserId && u.genNumber == 1).First();
+                        chequesCount += parent.cheques.Count;
+                        chequesCount += db.users.Where(u => u.parentUserId == parent.userId && u.genNumber == 2).First().cheques.Count;
+                    
+                    }
                     int dailyLeftCount = usr.dailyLeftActiveCount;
                     int dailyRightCount = usr.dailyRightActiveCount;
                     int numberOfCheques = 0;
@@ -121,10 +139,22 @@ namespace extreemt.Controllers
                         }
                         db.cheques.Add(ch);
                     }
-                    usr.cashBank += cashAdded;
-                    usr.productBank += productAdded;
+                    if (usr.genNumber == 1)
+                    {
 
-                    db.Entry(usr).State = System.Data.EntityState.Modified;
+                        usr.cashBank += cashAdded;
+                        usr.productBank += productAdded;
+
+                        db.Entry(usr).State = System.Data.EntityState.Modified;
+                    }
+                    else
+                    {
+                        user parent = db.users.Where(u => u.userId == usr.parentUserId).First();
+                        parent.cashBank += cashAdded;
+                        parent.productBank += productAdded;
+
+                        db.Entry(parent).State = System.Data.EntityState.Modified;
+                    }
                     db.SaveChanges();
                 }
             }

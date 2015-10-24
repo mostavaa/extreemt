@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Category";
+}
+
+<h2>Category</h2>
+
+<div class="product">
+    <div class="container">
+
+
+        <div class="col-md-9 product1">
+            <div class=" bottom-product">
+                @{
+                    for (int i = 0; i < 10; i++)
+                    {
+                        if (i % 3 == 0)
+                        {
+                            <div class="clearfix"> </div>
+
+                        }
+                        <div class="col-md-4 bottom-cd simpleCart_shelfItem">
+                            <div class="product-at ">
+                                <a href="single.html">
+                                    <img class="img-responsive" src="~/Content/images/ip1.jpg" alt="">
+                                    <div class="pro-grid">
+                                        <span class="buy-in">Buy Now @i</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <a href="#" class="item_add"><p class="number item_price"><i> </i>EGP500.00</p></a>
+                        </div>
+                    }
+                }
+
+            </div>
+
+        </div>
+    </div>
+</div>
+

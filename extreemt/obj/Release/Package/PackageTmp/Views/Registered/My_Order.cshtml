@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "My_Order";
+}
+
+<h2>My_Order</h2>
+@{
+    extreemt.user usr = extreemt.Account.staticGetLoggedUser();
+    extreemt.extreemtEntities db = new extreemt.extreemtEntities();
+
+    List<extreemt.userPayProduct> userPayProducts = null;
+    if (db.userPayProducts.Where(u => u.userId == usr.id).Count() > 0)
+    {
+        userPayProducts = db.userPayProducts.Where(u => u.userId == usr.id).ToList();
+
+    }
+    else
+    {
+        userPayProducts = null;
+    }
+    extreemt.user leftUser = db.users.Where(u => u.parentGenNum == 1
+        && u.parentUserId == usr.userId
+        && u.position == "left"
+        ).First();
+
+    List<extreemt.userPayProduct> userPayProductsLeft = null;
+    if (db.userPayProducts.Where(u => u.userId == leftUser.id).Count() > 0)
+    {
+        userPayProductsLeft = db.userPayProducts.Where(u => u.userId == leftUser.id).ToList();
+
+    }
+    else
+    {
+        userPayProductsLeft = null;
+    }
+    extreemt.user rightUser = db.users.Where(u => u.parentGenNum == 1
+    && u.parentUserId == usr.userId
+    && u.position == "right"
+    ).First();
+
+    List<extreemt.userPayProduct> userPayProductsRight = null;
+    if (db.userPayProducts.Where(u => u.userId == rightUser.id).Count() > 0)
+    {
+        userPayProductsRight = db.userPayProducts.Where(u => u.userId == rightUser.id).ToList();
+
+    }
+    else
+    {
+        userPayProductsRight = null;
+    }
+
+}
+@*Display All Products This User Has Buied*@
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>001</td>
+            <td>001</td>
+        </tr>
+        @{
+            if (userPayProducts != null)
+            {
+                foreach (extreemt.userPayProduct up in userPayProducts)
+                {
+                    int productId = up.productId;
+                    if (db.products.Where(p => p.id == productId).Count() > 0)
+                    {
+
+                        <tr>
+                            <td>@up.product.name</td>
+                            <td>@up.date.ToString("yyyy-MM-dd")</td>
+                        </tr>
+                    }
+
+                }
+            }
+
+        }
+        <tr>
+            <td>002</td>
+            <td>002</td>
+        </tr>
+        @{
+            if (userPayProductsLeft != null)
+            {
+                foreach (extreemt.userPayProduct up in userPayProductsLeft)
+                {
+                    int productId = up.productId;
+                    if (db.products.Where(p => p.id == productId).Count() > 0)
+                    {
+
+                        <tr>
+                            <td>@up.product.name</td>
+                            <td>@up.date.ToString("yyyy-MM-dd")</td>
+                        </tr>
+                    }
+
+                }
+            }
+
+        }
+        <tr>
+            <td>003</td>
+            <td>003</td>
+        </tr>
+        @{
+            if (userPayProductsRight != null)
+            {
+                foreach (extreemt.userPayProduct up in userPayProductsRight)
+                {
+                    int productId = up.productId;
+                    if (db.products.Where(p => p.id == productId).Count() > 0)
+                    {
+
+                        <tr>
+                            <td>@up.product.name</td>
+                            <td>@up.date.ToString("yyyy-MM-dd")</td>
+                        </tr>
+                    }
+
+                }
+            }
+
+        }
+    </tbody>
+</table>

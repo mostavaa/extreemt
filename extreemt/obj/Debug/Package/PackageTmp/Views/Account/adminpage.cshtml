@@ -1,0 +1,69 @@
+﻿@{
+    int adminCashBank = (int)ViewData["adminCashBank"];
+    bool SignUpStatus = (bool)ViewData["SignUpStatus"];
+    string signUpStatusDataClosed = "";
+    string signUpStatusBtnValue = "";
+    if (SignUpStatus)
+    {
+        //closed
+        signUpStatusDataClosed = "false";
+        signUpStatusBtnValue = "Open Sign Up";
+    }
+    else
+    {
+        //not closed
+        signUpStatusDataClosed = "true";
+        signUpStatusBtnValue = "Close Sign Up";
+    }
+    
+}
+<form class="form-inline">
+    <label>Change Admin Cash Credit</label>
+    <input type="number" class="form-control" value="@adminCashBank" name="cashcredit" id="cashcredit" />
+    <input type="button" class="btn btn-default" name="cashcreditsubmit" value="Change" id="cashcreditsubmit" />
+</form>
+
+<input type="button" class="btn btn-default" id="closeSignUp" name="closeSignUp" data-closed="@signUpStatusDataClosed" value="@signUpStatusBtnValue" />
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#closeSignUp").click(function () {
+                res = confirm("Are You Sure You Are Going to Change Sign Up Status");
+                if (res == true) {
+                    status = $(this).attr("data-closed");
+                    $.post("@Url.Action("changeSignUp", "Account")", "status=" + status, function (res) {
+                        if (res == "success") {
+                            if (status == "false") {
+                                $("#closeSignUp").attr("data-closed", "true");
+                                $("#closeSignUp").val("Close Sign Up");
+                            } else if (status == "true") {
+                                $("#closeSignUp").attr("data-closed", "false");
+                                $("#closeSignUp").val("Open Sign Up");
+                            }
+                            alert("sign Up changed successfully");
+                        }
+                    });
+                }
+            });
+
+            $("#cashcreditsubmit").click(function () {
+                val = $("#cashcredit").val();
+                if (val != null && val != "" && !isNaN(val)) {
+                    res = confirm("Are You Sure You Are Going to Change Your Credit");
+                    if (res == true) {
+                    
+                        $.post("@Url.Action("changeAdminCredit", "Account")", "val="+val, function (res) {
+                            if (res == "success") {
+                                alert("Credit Changed Successfully");
+                            }
+                        });
+                    }
+                } else {
+                    alert("Please Enter Real Number");
+                }
+
+            });
+        });
+    </script>
+}
