@@ -48,7 +48,7 @@ namespace extreemt.Controllers
             List<extreemt.user> allOldUsers = null;
             if (db.users.Where(u => u.registerDate > user.registerDate).Count() > 0)
             {
-                allOldUsers = db.users.Where(u => u.registerDate > user.registerDate ).OrderByDescending(o => o.registerDate).ToList();
+                allOldUsers = db.users.Where(u => u.registerDate > user.registerDate).OrderByDescending(o => o.registerDate).ToList();
             }
             Account acc = new Account();
             List<user> allRegisterdChilds = acc.getParentChildren(user, allOldUsers);
@@ -60,16 +60,17 @@ namespace extreemt.Controllers
 
         public ActionResult Daily_Signup()
         {
-                extreemt.user user = extreemt.Account.staticGetLoggedUser();
-    extreemt.extreemtEntities db = new extreemt.extreemtEntities();
-    List<extreemt.user> allOldUsers = null ;
-    if(db.users.Where(u=>u.registerDate>user.registerDate).Count()>0){
-        allOldUsers = db.users.Where(u => u.registerDate > user.registerDate && u.registerDate==DateTime.Now).OrderByDescending(o=>o.registerDate).ToList();
-    }
-    Account acc = new Account();
-            List<user> allRegisterdChilds =  acc.getParentChildren(user , allOldUsers);
+            extreemt.user user = extreemt.Account.staticGetLoggedUser();
+            extreemt.extreemtEntities db = new extreemt.extreemtEntities();
+            List<extreemt.user> allOldUsers = null;
+            if (db.users.Where(u => u.registerDate > user.registerDate).Count() > 0)
+            {
+                allOldUsers = db.users.Where(u => u.registerDate > user.registerDate && u.registerDate == DateTime.Now).OrderByDescending(o => o.registerDate).ToList();
+            }
+            Account acc = new Account();
+            List<user> allRegisterdChilds = acc.getParentChildren(user, allOldUsers);
             ViewData["allRegisterdChilds"] = allRegisterdChilds;
-            
+
             return View();
         }
 
@@ -91,66 +92,13 @@ namespace extreemt.Controllers
         {
             return View();
         }
-         public ActionResult Update_Info()
+        public ActionResult Update_Info()
         {
-           
-             return View();
+
+            return View();
 
         }
-        public ActionResult Sumbit_edit()
-         {
-            extreemtEntities db = new extreemtEntities();
 
-            int userid = int.Parse(System.Web.HttpContext.Current.Session["userId"].ToString());
-           List<user> usrs = db.users.Where(u => u.userId == userid).ToList();
-            // Validate Input 
-           bool change = false;
-           if (Request.Form["loginPassword"] != null || Request.Form["loginPassword"] != "")
-           {
-               if (usrs[0].loginPassword == Request.Form["loginPassword"])
-               {
-                   if (Request.Form["newLoginPassword"] == Request.Form["confirmLoginPassword"])
-                       change = true;
-                   else
-                   {
-                       Response.Write("New Login And Confirm Login Dosn't Match ");
-                   }
 
-               }
-               else
-               {
-                   Response.Write("Login Password Error ");
-
-               }
-           }
-               
-              
-           foreach (var usr in usrs)
-           {
-               if(change == true)
-                   usr.loginPassword = Request.Form["newLoginPassword"];
-               usr.mail = Request.Form["mail"];
-               usr.title = Request.Form["title"];
-               usr.username = Request.Form["username"];
-               usr.mobile = Request.Form["mobile"];
-               usr.homephone = Request.Form["homephone"];
-               usr.country = Request.Form["country"];
-               usr.city = Request.Form["city"];
-               usr.address = Request.Form["address"];
-               usr.ssn = Request.Form["ssn"];
-               usr.nationality = Request.Form["nationality"];
-               usr.relationship = Request.Form["relationship"];
-
-            
-               db.Entry(usr).State = EntityState.Modified;
-
-           }
-             //db.Entry(usr).State = EntityState.Modified;
-
-             db.SaveChanges();
-
-             return RedirectToAction("Update_Info", "Registered"); 
-         }
-
-        }
+    }
 }

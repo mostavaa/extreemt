@@ -75,32 +75,20 @@
         <h3>Menu</h3>
         <ul>
 
-            <li><a href="@Url.Action("Index","Home")" class="active">Home</a></li>
-            <li><a href="#">Your Company</a></li>
-            <li><a href="#">Team Work</a></li>
+            @{
+                if (usr != null)
+                {
+                    <li><a href="@Url.Action("Profile","Home")" class="active">Dashboard</a></li>
+                }
+                else
+                {
+                    <li><a href="@Url.Action("Index","Home")" class="active">Home</a></li>
+                }
+            }
 
             <li>
-
-                <a href="#">Products</a>
-
-
-                @{
-
-                    string userId = (string)Session["userId"];
-                    if (userId != null && userId != "")
-                    {
-                        extreemt.crypt algo = new extreemt.crypt();
-                        userId = algo.Encrypt(userId + "$$$1");
-                        userId = HttpUtility.UrlEncode(userId.Replace("+", "25252"));
-                    }
-                    string url = Url.Action("genology", "Home") + "?a=" + userId;
-                }
-
+                <a href="@Url.Action("Index","Product")">Products</a>
             </li>
-            <li><a href="@url">Genealogy <span class="sr-only">(current)</span></a></li>
-            <li><a href="@Url.Action("transfer", "Account")">Transfer</a></li>
-
-            <li><a href="#">Your Brands</a></li>
             <li><a href="#">Contact Us</a></li>
         </ul>
 

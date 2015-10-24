@@ -8,10 +8,10 @@ using System.Web;
 
 namespace extreemt
 {
-    
+
     public class Account
     {
-       
+
         private extreemtEntities context;
         //private System.Collections.Specialized.NameValueCollection Form;
         private Controllers.AccountController accountController;
@@ -20,7 +20,7 @@ namespace extreemt
 
         public Account(Controllers.AccountController accountController)
         {
-            
+
             this.accountController = accountController;
             this.context = new extreemtEntities();
         }
@@ -34,28 +34,31 @@ namespace extreemt
         {
 
         }
-        
-        public List<user> getParentChildren(user parent , List<user> candidates)
+
+        public List<user> getParentChildren(user parent, List<user> candidates)
         {
             List<user> children = new List<user>();
             if (candidates == null || candidates.Count == 0)
                 return children;
-            foreach(user candidate in candidates){
+            foreach (user candidate in candidates)
+            {
                 user can = candidate;
-                if(this.isChild(parent , candidate)){
+                if (this.isChild(parent, candidate))
+                {
                     children.Add(can);
                 }
             }
             return children;
         }
-        public bool isChild(user parent , user candidate)
+        public bool isChild(user parent, user candidate)
         {
             if (candidate.id == parent.id)
             {
                 return false;
             }
             extreemtEntities db = new extreemtEntities();
-            while(true){
+            while (true)
+            {
                 if (db.users.Where(u => u.userId == candidate.parentUserId).Count() > 0)
                 {
                     user candidateParent = db.users.Where(u => u.userId == candidate.parentUserId).First();
@@ -93,7 +96,7 @@ namespace extreemt
                 }
                 if (db.users.Where(u => u.userId == user.parentUserId).Count() > 0)
                     user = db.users.Where(u => u.userId == user.parentUserId).First();
-                
+
             }
         }
         public static bool isAdmin(user user)
@@ -108,18 +111,63 @@ namespace extreemt
 
             extreemtEntities db = new extreemtEntities();
 
-            
+
             int userId = int.Parse(this.accountController.Request.Form["id"]);
             string password = this.accountController.Request.Form["password"];
             if (db.users.Where(u => u.userId == userId && u.loginPassword == password).Count() <= 0)
             {
-               
+
                 Dictionary<string, List<string>> errors = new Dictionary<string, List<string>>();
                 errors.Add("id", new List<string>() { "<p>Id or password may wrong</p>" });
                 return errors;
             }
             return null;
 
+        }
+        public bool passwordChanged = false;
+        private void updateUser()
+        {
+            extreemtEntities db = new extreemtEntities();
+
+            int userid = int.Parse(System.Web.HttpContext.Current.Session["userId"].ToString());
+            List<user> usrs = db.users.Where(u => u.userId == userid).ToList();
+            // Validate Input 
+
+
+            
+            foreach (var usr in usrs)
+            {
+                if (this.passwordChanged == true)
+                    usr.loginPassword = this.accountController.Request.Form["newLoginPassword"];
+                usr.mail = this.accountController.Request.Form["mail"];
+                usr.title = this.accountController.Request.Form["title"];
+                usr.username = this.accountController.Request.Form["username"];
+                usr.mobile = this.accountController.Request.Form["mobile"];
+                usr.homephone = this.accountController.Request.Form["homephone"];
+                usr.country = this.accountController.Request.Form["country"];
+                usr.city = this.accountController.Request.Form["city"];
+                usr.address = this.accountController.Request.Form["address"];
+                usr.ssn = this.accountController.Request.Form["ssn"];
+                usr.nationality = this.accountController.Request.Form["nationality"];
+                usr.relationship = this.accountController.Request.Form["relationship"];
+
+
+                db.Entry(usr).State = System.Data.EntityState.Modified;
+
+            }
+            //db.Entry(usr).State = EntityState.Modified;
+
+            db.SaveChanges();
+        }
+        public Dictionary<string, List<string>> UpdateInfo()
+        {
+            validateAccount va = new validateAccount(this.accountController.Request.Form);
+            va.mode = "update";
+            if (va.validateSignUp().Count > 0)
+                return va.validateSignUp();
+            this.passwordChanged = va.passwordChanged;
+            this.updateUser();
+            return null;
         }
         public Dictionary<string, List<string>> signUp()
         {
@@ -182,7 +230,7 @@ namespace extreemt
             {
                 return;
             }
-            
+
             string userId = (string)HttpContext.Current.Session["userId"];
             if (userId != null && userId != "")
             {
@@ -230,13 +278,13 @@ namespace extreemt
             user.leftInactiveCount = 1;
             user.registerDate = DateTime.Now;
             user.registererId = int.Parse(HttpContext.Current.Session["userId"].ToString());
-             
+
             string _generatedNumber = tools.generateRandomNumber(8);
-            int generatedNumber  = int.Parse(_generatedNumber);
+            int generatedNumber = int.Parse(_generatedNumber);
             while (db.users.Where(o => o.userId == generatedNumber).Count() > 0)
             {
-                 _generatedNumber = tools.generateRandomNumber(8);
-                 generatedNumber = int.Parse(_generatedNumber);
+                _generatedNumber = tools.generateRandomNumber(8);
+                generatedNumber = int.Parse(_generatedNumber);
             }
 
 
@@ -375,7 +423,7 @@ namespace extreemt
             extreemtEntities db = new extreemtEntities();
             if (db.users.Where(u => u.userId == id).Count() > 0)
             {
-                return db.users.Where(u => u.userId == id && u.genNumber==1).First();
+                return db.users.Where(u => u.userId == id && u.genNumber == 1).First();
             }
             return null;
         }
@@ -431,7 +479,7 @@ namespace extreemt
 
         public validateAccount(System.Collections.Specialized.NameValueCollection Form)
         {
-            
+
             this.Form = Form;
         }
         private void addError(string field, string errorMsg)
@@ -517,6 +565,8 @@ namespace extreemt
             extreemtEntities db = new extreemtEntities();
             return (db.users.Where(u => u.mail == mail).Count() > 0);
         }
+        public string mode = "insert";
+        public bool passwordChanged = false;
         public Dictionary<string, List<string>> validateSignUp()
         {
             this.errors = new Dictionary<string, List<string>>();
@@ -526,72 +576,130 @@ namespace extreemt
                 addError("user", "<p>user Not Logged</p>");
                 return this.errors;
             }
-            string content = this.Form["a"];
-
-            extreemt.crypt algo = new extreemt.crypt();
-            string decryptedId = algo.Decrypt(content);
-            string[] user = decryptedId.Split(new char[] { '$', '$', '$' });
-            int i = 0;
-            while (user[i] == "")
+            if (this.mode == "insert")
             {
+                string content = this.Form["a"];
+
+                extreemt.crypt algo = new extreemt.crypt();
+                string decryptedId = algo.Decrypt(content);
+                string[] user = decryptedId.Split(new char[] { '$', '$', '$' });
+                int i = 0;
+                while (user[i] == "")
+                {
+                    i++;
+                }
+                if (user[i] != "2" && user[i] != "3")
+                {
+
+                    addError("user", "<p>error</p>");
+                    return this.errors;
+                }
                 i++;
-            }
-            if (user[i] != "2" && user[i] != "3")
-            {
-
-                addError("user", "<p>error</p>");
-                return this.errors;
-            }
-            i++;
-            while (user[i] == "")
-            {
+                while (user[i] == "")
+                {
+                    i++;
+                }
+                if (user[i] != "left" && user[i] != "right")
+                {
+                    addError("user", "<p>error</p>");
+                    return this.errors;
+                }
                 i++;
+                while (user[i] == "")
+                {
+                    i++;
+                }
+                string parentIdd = user[i];
+
+
+
+
+
+                int parentId = int.Parse(parentIdd);
+
+                extreemtEntities db = new extreemtEntities();
+                if (db.users.Where(o => o.userId == parentId).Count() <= 0)
+                {
+                    addError("parentId", "<p>parent don't exist<p>");
+                    return this.errors;
+                }
+
             }
-            if (user[i] != "left" && user[i] != "right")
+            user loggedUser = Account.staticGetLoggedUser();
+
+            if (this.mode == "update")
             {
-                addError("user", "<p>error</p>");
-                return this.errors;
+                if (this.Form["mail"] != loggedUser.mail)
+                {
+                    if (validateAccount.mailExisits(this.Form["mail"]))
+                    {
+                        addError("mail", "<p>Mail Exists - please choose another one</p>");
+                        return this.errors;
+
+                    }
+                }
+                if (this.Form["username"] != loggedUser.username)
+                {
+                    if (validateAccount.usernameExisits(this.Form["username"]))
+                    {
+                        addError("username", "<p>username Exists - please choose another one</p>");
+                        return this.errors;
+                    }
+                }
             }
-            i++;
-            while (user[i] == "")
+            if (this.mode == "insert")
             {
-                i++;
+                if (validateAccount.mailExisits(this.Form["mail"]))
+                {
+                    addError("mail", "<p>Mail Exists - please choose another one</p>");
+                    return this.errors;
+
+                }
+
+
+
+                if (validateAccount.usernameExisits(this.Form["username"]))
+                {
+                    addError("username", "<p>username Exists - please choose another one</p>");
+                    return this.errors;
+                }
             }
-            string parentIdd = user[i];
-
-
-
-
-
-            int parentId = int.Parse(parentIdd);
-
-            extreemtEntities db = new extreemtEntities();
-            if (db.users.Where(o => o.userId == parentId).Count() <= 0)
-            {
-                addError("parentId", "<p>parent don't exist<p>");
-                return this.errors;
-            }
-
-
-            if (validateAccount.mailExisits(this.Form["mail"]))
-            {
-                addError("mail", "<p>Mail Exists - please choose another one</p>");
-                return this.errors;
-
-            }
-
-            if (validateAccount.usernameExisits(this.Form["username"]))
-            {
-                addError("username", "<p>username Exists - please choose another one</p>");
-                return this.errors;
-            }
-
             //existance 
             List<string> requiredFields = new List<string> { "mail", "title", "username", "mobile"
             ,"country","city" , "address" ,"ssn" ,"nationality" 
-             , "loginPassword" , "confirmLoginPassword" , "binCode"
-            ,"confirmBinCode" 
+               
             };
+            bool Passwordchanged = false;
+            if (this.mode == "insert")
+            {
+                requiredFields.Add("loginPassword");
+                requiredFields.Add("binCode");
+                requiredFields.Add("confirmBinCode");
+                requiredFields.Add("confirmLoginPassword");
+            }else if (this.mode=="update"){
+                
+                if (this.Form["loginPassword"] != null && this.Form["loginPassword"] != "")
+                {
+                    requiredFields.Add("newLoginPassword");
+                    requiredFields.Add("confirmLoginPassword");
+                    if (loggedUser.loginPassword == this.Form["loginPassword"])
+                    {
+                        if (this.Form["newLoginPassword"] == this.Form["confirmLoginPassword"]){
+                            Passwordchanged = true;
+                            
+                        }
+                        else
+                        {
+                            this.addError("newLoginPassword", "New Login And Confirm Login Dosn't Match ");
+                        }
+
+                    }
+                    else
+                    {
+                        this.addError("loginPassword", "Pleasse Enter your old password");
+                    }
+                }
+            }
             this.required(requiredFields);
             //length
             ////exact
@@ -612,17 +720,25 @@ namespace extreemt
             rangeLength.Add("city", new List<int> { 3, 30 });
             rangeLength.Add("address", new List<int> { 3, 100 });
             rangeLength.Add("nationality", new List<int> { 3, 30 });
-            rangeLength.Add("loginPassword", new List<int> { 5, 30 });
+            if ((this.mode == "update" && Passwordchanged)||this.mode=="insert")
+            {
+                rangeLength.Add("loginPassword", new List<int> { 5, 30 });
+            }
+            
+            if(this.mode=="insert")
             rangeLength.Add("binCode", new List<int> { 5, 30 });
             range(rangeLength);
 
             //password
 
-            if (tools.trimMoreThanOneSpace(this.Form["loginPassword"]) != tools.trimMoreThanOneSpace(this.Form["confirmLoginPassword"]))
-                addError("confirmLoginPassword", "<p>Login password and confirm login password aren't exact</p>");
-
-            if (tools.trimMoreThanOneSpace(this.Form["binCode"]) != tools.trimMoreThanOneSpace(this.Form["confirmBinCode"]))
-                addError("confirmBinCode", "<p>Bin Code and confirm Bin code aren't exact</p>");
+            if (this.mode == "insert")
+            {
+                if (tools.trimMoreThanOneSpace(this.Form["loginPassword"]) != tools.trimMoreThanOneSpace(this.Form["confirmLoginPassword"]))
+                    addError("confirmLoginPassword", "<p>Login password and confirm login password aren't exact</p>");
+            
+                if (tools.trimMoreThanOneSpace(this.Form["binCode"]) != tools.trimMoreThanOneSpace(this.Form["confirmBinCode"]))
+                    addError("confirmBinCode", "<p>Bin Code and confirm Bin code aren't exact</p>");
+            }
 
             //inclusion
 
@@ -630,7 +746,7 @@ namespace extreemt
             if (!validation.IsValidEmail(tools.trimMoreThanOneSpace(this.Form["mail"])))
                 addError("mail", "<p>E-mail not valid</p>");
             if (!validation.isAlphaNumeric(tools.trimMoreThanOneSpace(this.Form["username"])))
-                addError("username", "<p>First Name not valid</p>");
+                addError("username", "<p>username not valid</p>");
 
             if (!validation.isNumeric(tools.trimMoreThanOneSpace(this.Form["mobile"])))
                 addError("mobile", "<p>Mobile not valid</p>");
@@ -650,15 +766,31 @@ namespace extreemt
             if (!validation.isAlphaNumeric(tools.trimMoreThanOneSpace(this.Form["nationality"])))
                 addError("nationality", "<p>Nationality not valid</p>");
 
-            if (!validation.isAlphaNumeric(tools.trimMoreThanOneSpace(this.Form["loginPassword"])))
-                addError("loginPassword", "<p>Login Password not valid</p>");
-            if (!validation.isAlphaNumeric(tools.trimMoreThanOneSpace(this.Form["confirmLoginPassword"])))
-                addError("confirmLoginPassword", "<p>Confirm Login Password not valid</p>");
-            if (!validation.isAlphaNumeric(tools.trimMoreThanOneSpace(this.Form["binCode"])))
-                addError("binCode", "<p>Bin Code not valid</p>");
-            if (!validation.isAlphaNumeric(tools.trimMoreThanOneSpace(this.Form["confirmBinCode"])))
-                addError("confirmBinCode", "<p>Confirm Bin Code not valid</p>");
 
+            if (this.mode == "insert")
+            {
+                if (!validation.isAlphaNumeric(tools.trimMoreThanOneSpace(this.Form["loginPassword"])))
+                    addError("loginPassword", "<p>Login Password not valid</p>");
+                if (!validation.isAlphaNumeric(tools.trimMoreThanOneSpace(this.Form["confirmLoginPassword"])))
+                    addError("confirmLoginPassword", "<p>Confirm Login Password not valid</p>");
+                if (!validation.isAlphaNumeric(tools.trimMoreThanOneSpace(this.Form["binCode"])))
+                    addError("binCode", "<p>Bin Code not valid</p>");
+                if (!validation.isAlphaNumeric(tools.trimMoreThanOneSpace(this.Form["confirmBinCode"])))
+                    addError("confirmBinCode", "<p>Confirm Bin Code not valid</p>");
+            }
+            else if (this.mode=="update" && Passwordchanged) {
+                if (!validation.isAlphaNumeric(tools.trimMoreThanOneSpace(this.Form["loginPassword"])))
+                    addError("loginPassword", "<p>Login Password not valid</p>");
+                if (!validation.isAlphaNumeric(tools.trimMoreThanOneSpace(this.Form["newLoginPassword"])))
+                    addError("newLoginPassword", "<p>new Login Password not valid</p>");
+                if (!validation.isAlphaNumeric(tools.trimMoreThanOneSpace(this.Form["confirmLoginPassword"])))
+                    addError("confirmLoginPassword", "<p>Confirm Login Password not valid</p>");
+               
+            }
+            if (this.mode == "update")
+            {
+                this.passwordChanged = Passwordchanged;
+            }
 
             return this.errors;
         }

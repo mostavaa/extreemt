@@ -9,6 +9,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="cheques">
+      <EntityTypeMapping TypeName="extreemtModel.cheque">
+        <MappingFragment StoreEntitySet="cheque">
+          <ScalarProperty Name="chequeType" ColumnName="chequeType" />
+          <ScalarProperty Name="chequeDate" ColumnName="chequeDate" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="photos">
       <EntityTypeMapping TypeName="extreemtModel.photo">
         <MappingFragment StoreEntitySet="photos">
@@ -43,16 +54,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="userPayProducts">
-      <EntityTypeMapping TypeName="extreemtModel.userPayProduct">
-        <MappingFragment StoreEntitySet="userPayProduct">
-          <ScalarProperty Name="date" ColumnName="date" />
-          <ScalarProperty Name="productId" ColumnName="productId" />
-          <ScalarProperty Name="userId" ColumnName="userId" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Transfers">
       <EntityTypeMapping TypeName="extreemtModel.Transfer">
         <MappingFragment StoreEntitySet="Transfer">
@@ -60,17 +61,6 @@
           <ScalarProperty Name="transferDate" ColumnName="transferDate" />
           <ScalarProperty Name="transferTo" ColumnName="transferTo" />
           <ScalarProperty Name="transferFrom" ColumnName="transferFrom" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="cheques">
-      <EntityTypeMapping TypeName="extreemtModel.cheque">
-        <MappingFragment StoreEntitySet="cheque">
-          <ScalarProperty Name="chequeType" ColumnName="chequeType" />
-          <ScalarProperty Name="chequeDate" ColumnName="chequeDate" />
-          <ScalarProperty Name="amount" ColumnName="amount" />
-          <ScalarProperty Name="userId" ColumnName="userId" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -108,6 +98,18 @@
           <ScalarProperty Name="username" ColumnName="username" />
           <ScalarProperty Name="title" ColumnName="title" />
           <ScalarProperty Name="mail" ColumnName="mail" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="userPayProducts">
+      <EntityTypeMapping TypeName="extreemtModel.userPayProduct">
+        <MappingFragment StoreEntitySet="userPayProduct">
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="productName" ColumnName="productName" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="productId" ColumnName="productId" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -102,6 +102,8 @@
     <Property Name="userId" Type="int" Nullable="false" />
     <Property Name="productId" Type="int" Nullable="false" />
     <Property Name="date" Type="date" Nullable="false" />
+    <Property Name="productName" Type="nvarchar" MaxLength="50" />
+    <Property Name="price" Type="int" />
   </EntityType>
   <Association Name="FK_cheque_user">
     <End Role="user" Type="Self.user" Multiplicity="1" />
