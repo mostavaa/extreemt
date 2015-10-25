@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="extreemtModel.cheque" Width="1.5" PointX="3" PointY="12.125" />
         <EntityTypeShape EntityType="extreemtModel.photo" Width="1.5" PointX="5.25" PointY="8.625" />
         <EntityTypeShape EntityType="extreemtModel.product" Width="1.5" PointX="3" PointY="4.875" />
-        <EntityTypeShape EntityType="extreemtModel.sysdiagram" Width="1.5" PointX="2.75" PointY="1.5" />
         <EntityTypeShape EntityType="extreemtModel.Transfer" Width="1.5" PointX="3" PointY="9" />
         <EntityTypeShape EntityType="extreemtModel.user" Width="1.5" PointX="0.75" PointY="3.625" />
         <AssociationConnector Association="extreemtModel.FK_product_category" />

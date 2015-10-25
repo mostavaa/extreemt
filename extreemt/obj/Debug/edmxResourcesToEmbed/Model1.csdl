@@ -5,7 +5,6 @@
     <EntitySet Name="cheques" EntityType="extreemtModel.cheque" />
     <EntitySet Name="photos" EntityType="extreemtModel.photo" />
     <EntitySet Name="products" EntityType="extreemtModel.product" />
-    <EntitySet Name="sysdiagrams" EntityType="extreemtModel.sysdiagram" />
     <EntitySet Name="Transfers" EntityType="extreemtModel.Transfer" />
     <EntitySet Name="users" EntityType="extreemtModel.user" />
     <AssociationSet Name="FK_product_category" Association="extreemtModel.FK_product_category">
@@ -86,16 +85,6 @@
     <NavigationProperty Name="photos" Relationship="extreemtModel.FK_photos_product" FromRole="product" ToRole="photo" />
     <NavigationProperty Name="user" Relationship="extreemtModel.FK_product_user" FromRole="product" ToRole="user" />
     <NavigationProperty Name="userPayProducts" Relationship="extreemtModel.FK_userPayProduct_product" FromRole="product" ToRole="userPayProduct" />
-  </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="Transfer">
     <Key>

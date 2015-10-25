@@ -50,88 +50,113 @@
 
 }
 @*Display All Products This User Has Buied*@
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Product Name</th>
-            <th>Date</th>
-            <th>Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>001</td>
-            <td>001</td>
-            <td>001</td>
-        </tr>
-        @{
-            if (userPayProducts != null)
-            {
-                foreach (extreemt.userPayProduct up in userPayProducts)
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Date</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>001</td>
+                <td>001</td>
+                <td></td>
+            </tr>
+            @{
+                if (userPayProducts != null)
                 {
-                    int productId = up.productId;
-                    if (db.products.Where(p => p.id == productId).Count() > 0)
+                    foreach (extreemt.userPayProduct up in userPayProducts)
                     {
+                        int productId = up.productId;
+                        if (db.products.Where(p => p.id == productId).Count() > 0)
+                        {
 
-                        <tr>
-                            <td>@up.productName</td>
-                            <td>@up.date.ToString("yyyy-MM-dd")</td>
-                            <td>@up.price</td>
-                        </tr>
+                            <tr>
+                                <td>@up.productName</td>
+                                <td>@up.date.ToString("yyyy-MM-dd")</td>
+                                <td>@up.price</td>
+                            </tr>
+                        }
+
                     }
-
                 }
-            }
 
-        }
-        <tr>
-            <td>002</td>
-            <td>002</td>
-        </tr>
-        @{
-            if (userPayProductsLeft != null)
-            {
-                foreach (extreemt.userPayProduct up in userPayProductsLeft)
+            }
+        </tbody>
+    </table>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Date</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>002</td>
+                <td>002</td>
+                <td></td>
+            </tr>
+            @{
+                if (userPayProductsLeft != null)
                 {
-                    int productId = up.productId;
-                    if (db.products.Where(p => p.id == productId).Count() > 0)
+                    foreach (extreemt.userPayProduct up in userPayProductsLeft)
                     {
+                        int productId = up.productId;
+                        if (db.products.Where(p => p.id == productId).Count() > 0)
+                        {
 
-                        <tr>
-                            <td>@up.product.name</td>
-                            <td>@up.date.ToString("yyyy-MM-dd")</td>
-                            <td>@up.price</td>
-                        </tr>
+                            <tr>
+                                <td>@up.product.name</td>
+                                <td>@up.date.ToString("yyyy-MM-dd")</td>
+                                <td>@up.price</td>
+                            </tr>
+                        }
+
                     }
-
                 }
-            }
 
-        }
-        <tr>
-            <td>003</td>
-            <td>003</td>
-        </tr>
-        @{
-            if (userPayProductsRight != null)
-            {
-                foreach (extreemt.userPayProduct up in userPayProductsRight)
+            }
+        </tbody>
+    </table>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Date</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>003</td>
+                <td>003</td>
+                <td></td>
+            </tr>
+            @{
+                if (userPayProductsRight != null)
                 {
-                    int productId = up.productId;
-                    if (db.products.Where(p => p.id == productId).Count() > 0)
+                    foreach (extreemt.userPayProduct up in userPayProductsRight)
                     {
+                        int productId = up.productId;
+                        if (db.products.Where(p => p.id == productId).Count() > 0)
+                        {
 
-                        <tr>
-                            <td>@up.product.name</td>
-                            <td>@up.date.ToString("yyyy-MM-dd")</td>
-                            <td>@up.price</td>
-                        </tr>
+                            <tr>
+                                <td>@up.product.name</td>
+                                <td>@up.date.ToString("yyyy-MM-dd")</td>
+                                <td>@up.price</td>
+                            </tr>
+                        }
+
                     }
-
                 }
-            }
 
-        }
-    </tbody>
-</table>
+            }
+        </tbody>
+    </table>
+</div>
