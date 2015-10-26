@@ -15,29 +15,9 @@ namespace extreemt.Controllers
         {
             return View();
         }
-        public ActionResult Product()
-        {
-            return View();
 
-        }
-        public ActionResult Category()
-        {
-            return View();
-        }
-        public ActionResult Afetr_Login()
-        {
-            return View();
-        }
+
         public ActionResult Profile()
-        {
-            return View();
-        }
-        public  ActionResult Update_Category()
-        {
-            return View();
-
-        }
-        public ActionResult Add_Product()
         {
             return View();
         }

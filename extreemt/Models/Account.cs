@@ -172,14 +172,14 @@ namespace extreemt
         public Dictionary<string, List<string>> signUp()
         {
             validateAccount va = new validateAccount(this.accountController.Request.Form);
-            /*
+            
             if (this.signUpClosed())
             {
                 Dictionary<string, List<string>> errors = new Dictionary<string, List<string>>();
                 errors.Add("Sign Up Closed", new List<string> { "Sign Up Closed Temporarily" });
                 return errors;
             }
-            */
+            
             if (va.validateSignUp().Count > 0)
                 return va.validateSignUp();
 
