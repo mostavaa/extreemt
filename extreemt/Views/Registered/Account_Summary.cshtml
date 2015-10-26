@@ -32,56 +32,58 @@
 }
 
 <h2>Account_Summary</h2>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Agency</th>
-            <th>Type</th>
-            <th>Amount</th>
-            <th>Date</th>
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Agency</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Date</th>
 
-        </tr>
+            </tr>
 
-    </thead>
-    <tbody>
-        @{
-            if (chqs.Count > 0)
-            {
-                foreach (extreemt.cheque item in chqs)
+        </thead>
+        <tbody>
+            @{
+                if (chqs.Count > 0)
                 {
-                    <tr>            
-                        <td>001</td>
-                        <td>@item.chequeType</td>
-                        <td>@item.amount</td>
-                        <td>@item.chequeDate.ToString("yyyy-MM-dd")</td>
-                    </tr>
+                    foreach (extreemt.cheque item in chqs)
+                    {
+                        <tr>
+                            <td>001</td>
+                            <td>@item.chequeType</td>
+                            <td>@item.amount</td>
+                            <td>@item.chequeDate.ToString("yyyy-MM-dd")</td>
+                        </tr>
+                    }
+                }
+                if (leftchqs.Count > 0)
+                {
+                    foreach (extreemt.cheque item in leftchqs)
+                    {
+                        <tr>
+                            <td>002</td>
+                            <td>@item.chequeType</td>
+                            <td>@item.amount</td>
+                            <td>@item.chequeDate.ToString("yyyy-MM-dd")</td>
+                        </tr>
+                    }
+                }
+                if (rightchqs.Count > 0)
+                {
+                    foreach (extreemt.cheque item in rightchqs)
+                    {
+                        <tr>
+                            <td>003</td>
+                            <td>@item.chequeType</td>
+                            <td>@item.amount</td>
+                            <td>@item.chequeDate.ToString("yyyy-MM-dd")</td>
+                        </tr>
+                    }
                 }
             }
-            if (leftchqs.Count > 0)
-            {
-                foreach (extreemt.cheque item in leftchqs)
-                {
-                    <tr>
-                        <td>002</td>
-                        <td>@item.chequeType</td>
-                        <td>@item.amount</td>
-                        <td>@item.chequeDate.ToString("yyyy-MM-dd")</td>
-                    </tr>
-                }
-            }
-            if (rightchqs.Count > 0)
-            {
-                foreach (extreemt.cheque item in rightchqs)
-                {
-                    <tr>
-                        <td>003</td>
-                        <td>@item.chequeType</td>
-                        <td>@item.amount</td>
-                        <td>@item.chequeDate.ToString("yyyy-MM-dd")</td>
-                    </tr>
-                }
-            }
-}
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>

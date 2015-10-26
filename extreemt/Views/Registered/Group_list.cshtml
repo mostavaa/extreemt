@@ -17,42 +17,43 @@
 
 }
 <h2>Group_list</h2>
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>IR ID</th>
-            <th>IR Name</th>
-            <th>Applier id</th>
-            <th>Applier Name</th>
-            <th>Applier Side</th>
-            <th>Confirm Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            extreemt.extreemtEntities db = new extreemt.extreemtEntities();
-            extreemt.Account acc = new extreemt.Account();
-
-        }
-
-        @foreach (extreemt.user user in allRegisterdChilds)
-        {
-            string applierPos = "left";
-            if (acc.isRight(db.users.Where(u => u.userId == user.registererId).First(), user))
-            {
-                applierPos = "right";
-            }
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <td>@user.userId</td>
-                <td>@user.username</td>
-                <td>@user.registererId</td>
-                <td>@db.users.Where(u => u.userId == user.registererId).First().username</td>
-                <td>@applierPos</td>
-                <td>@user.registerDate.Value.ToString("yyyy-MM-dd")</td>
+                <th>IR ID</th>
+                <th>IR Name</th>
+                <th>Applier id</th>
+                <th>Applier Name</th>
+                <th>Applier Side</th>
+                <th>Confirm Date</th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @{
+                extreemt.extreemtEntities db = new extreemt.extreemtEntities();
+                extreemt.Account acc = new extreemt.Account();
 
-    </tbody>
+            }
 
-</table>
+            @foreach (extreemt.user user in allRegisterdChilds)
+            {
+                string applierPos = "left";
+                if (acc.isRight(db.users.Where(u => u.userId == user.registererId).First(), user))
+                {
+                    applierPos = "right";
+                }
+                <tr>
+                    <td>@user.userId</td>
+                    <td>@user.username</td>
+                    <td>@user.registererId</td>
+                    <td>@db.users.Where(u => u.userId == user.registererId).First().username</td>
+                    <td>@applierPos</td>
+                    <td>@user.registerDate.Value.ToString("yyyy-MM-dd")</td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+</div>

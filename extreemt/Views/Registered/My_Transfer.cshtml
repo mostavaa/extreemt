@@ -34,45 +34,46 @@
 }
 
 <h2>My_Transfer</h2>
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            @* All Transfers From And To this user*@
-            <th>Transfer From</th>
-            <th>Transfer To</th>
-            <th>Transfer Date </th>
-            <th>Transfer Amount </th>
-
-        </tr>
-
-    </thead>
-    <tbody>
-        @foreach (extreemt.Transfer trans in transFrom)
-        {
-            string fromUserName = db.users.Find(trans.transferFrom).username;
-            string toUserName = db.users.Find(trans.transferTo).username;
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <td>@fromUserName</td>
-                <td>@toUserName</td>
-                <td>@trans.transferDate.ToString("yyyy-MM-dd")</td>
-                <td>@trans.amount</td>
+                @* All Transfers From And To this user*@
+                <th>Transfer From</th>
+                <th>Transfer To</th>
+                <th>Transfer Date </th>
+                <th>Transfer Amount </th>
+
             </tr>
-        }
-        @foreach (extreemt.Transfer trans in transTo)
-        {
-            if (trans.transferFrom == trans.transferTo)
+
+        </thead>
+        <tbody>
+            @foreach (extreemt.Transfer trans in transFrom)
             {
-                continue;
+                string fromUserName = db.users.Find(trans.transferFrom).username;
+                string toUserName = db.users.Find(trans.transferTo).username;
+                <tr>
+                    <td>@fromUserName</td>
+                    <td>@toUserName</td>
+                    <td>@trans.transferDate.ToString("yyyy-MM-dd")</td>
+                    <td>@trans.amount</td>
+                </tr>
             }
-            string fromUserName = db.users.Find(trans.transferFrom).username;
-            string toUserName = db.users.Find(trans.transferTo).username;
-            <tr>
-                <td>@fromUserName</td>
-                <td>@toUserName</td>
-                <td>@trans.transferDate.ToString("yyyy-MM-dd")</td>
-                <td>@trans.amount</td>
-            </tr>
-        }
-    </tbody>
-</table>
+            @foreach (extreemt.Transfer trans in transTo)
+            {
+                if (trans.transferFrom == trans.transferTo)
+                {
+                    continue;
+                }
+                string fromUserName = db.users.Find(trans.transferFrom).username;
+                string toUserName = db.users.Find(trans.transferTo).username;
+                <tr>
+                    <td>@fromUserName</td>
+                    <td>@toUserName</td>
+                    <td>@trans.transferDate.ToString("yyyy-MM-dd")</td>
+                    <td>@trans.amount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
