@@ -1,9 +1,23 @@
+<<<<<<< HEAD
 ﻿@{
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
 @model IEnumerable<extreemt.product>
 
+=======
+﻿@model IEnumerable<extreemt.product>
+@{
+    if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
+    {
+        if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
+        {
+            Response.Redirect(Url.Action("Index", "Home"));
+            return;
+        }
+    }
+}
+>>>>>>> 1552016cd5186ef7b43dba1bcf613068a253d068
 @{
     ViewBag.Title = "Products";
 }

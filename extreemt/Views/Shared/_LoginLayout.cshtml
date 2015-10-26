@@ -1,4 +1,14 @@
 ﻿@using org.jivesoftware.util;
+@{
+    if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
+    {
+        if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
+        {
+            Response.Redirect(Url.Action("Index", "Home"));
+            return;
+        }
+    }
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,16 +37,17 @@
 </head>
 <body>
     @{
-    /*
+    
         if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
         {
             if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
             {
                 Response.Redirect(Url.Action("Index", "Home"));
+                return;
             }
         }
 
-            */
+            
     }
     <div>
         <img style="width:250px;max-height:150px" class="img-rounded" src="~/Content/images/logo.jpg" />
@@ -49,8 +60,15 @@
                 extreemt.user usr = extreemt.Account.staticGetLoggedUser();
                 if (usr != null)
                 {
+                    if (extreemt.Account.isAdmin(usr))
+                    {
+                        <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("Admin", "Account")">@usr.username</a></p>
+                    }
+                    else
+                    {
+                        <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("Index", "Account")">@usr.username</a></p>
 
-                    <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("Index", "Account")">@usr.username</a></p>
+                    }
                     <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("logout", "Account")">LogOut</a></p>
                 }
                 else

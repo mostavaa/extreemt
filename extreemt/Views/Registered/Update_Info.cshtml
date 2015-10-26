@@ -1,4 +1,14 @@
 ﻿@{
+    if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
+    {
+        if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
+        {
+            Response.Redirect(Url.Action("Index", "Home"));
+            return;
+        }
+    }
+}
+@{
     ViewBag.Title = "Update_Info";
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }

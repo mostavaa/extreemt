@@ -19,20 +19,103 @@ namespace extreemt
         private static void fillPermissions()
         {
             permissions = new Dictionary<string, List<string>>();
-            permissions.Add("user", new List<string> { "/Home/genology", 
+            permissions.Add("user", new List<string> { 
+                "/Home/genology", 
                 "/Home", 
                 "/Home/Index", 
-                "/Home/Product", 
-                "/Home/Category", 
-                "/Home/Afetr_Login", 
+                "/Home/Profile" ,
                 "/Account/transfer",
-                "/Account",
-                "/Account/Index",
+                "/Account/transferMoney",
                 "/Account/SignUp" ,
-                "/Account/adminpage" 
-            
+                "/Account/adminpage" ,
+                "/Account/taskscheduledforcommmission" ,
+                "/Account/Sumbit_edit" ,
+                "/Account/submitSignUp" ,
+
+                "/Account/logout" ,
+                "/Account/getUserByIdForTransfer" ,
+
+                "/Product" ,
+                "/Product/Index" ,
+                "/Product/Details" ,
+                "/Product/selectUser" ,
+                "/Product/Buy" ,
+                "/Product/activateUser" ,
+                "/Product/updateActiveParents" ,
+                "/Registered/Cash_Bank" ,
+                "/Registered/Product_Bank" ,
+                "/Registered/Account_Summary" ,
+                "/Registered/Group_list" ,
+                "/Registered/Daily_Signup" ,
+                "/Registered/My_Transfer" ,
+                "/Registered/My_Basket" ,
+                "/Registered/My_Order" ,
+                "/Registered/Update_Info" ,
             });
-            permissions.Add("visitor", new List<string> { "/Home/Index", "/Account/Login" });
+            permissions.Add("admin", new List<string> { 
+                "/Home/genology", 
+                "/Home", 
+                "/Home/Index", 
+                "/Home/Profile" ,
+                "/Account/transfer",
+                "/Account/transferMoney",
+                "/Account/SignUp" ,
+                "/Account/adminpage" ,
+                "/Account/taskscheduledforcommmission" ,
+                "/Account/Sumbit_edit" ,
+                "/Account/submitSignUp" ,
+
+                "/Account/logout" ,
+                "/Account/getUserByIdForTransfer" ,
+
+
+                "/Product/selectUser" ,
+                "/Product/Buy" ,
+                "/Product/activateUser" ,
+                "/Product/updateActiveParents" ,
+                "/Registered/Cash_Bank" ,
+                "/Registered/Product_Bank" ,
+                "/Registered/Account_Summary" ,
+                "/Registered/Group_list" ,
+                "/Registered/Daily_Signup" ,
+                "/Registered/My_Transfer" ,
+                "/Registered/My_Basket" ,
+                "/Registered/My_Order" ,
+                "/Registered/Update_Info" ,
+       
+            
+                                "/Product" ,
+                "/Product/Index" ,
+                "/Product/Details" ,
+                "/Product/Create" ,
+                "/Product/insertProductPhotos" ,
+                "/Product/deleteProductPhotos" ,
+                "/Product/DeleteAllPhotosEdit" ,
+                "/Product/Edit" ,
+                "/Product/Delete" ,
+
+                                "/Category" ,
+                "/Category/Index" ,
+                "/Category/Details" ,
+                "/Category/Create" ,
+                "/Category/Edit" ,
+                "/Category/Delete" ,
+                "/Category/DeleteConfirmed" ,
+
+                                "/Account/Admin" ,
+                "/Account/changeAdminCredit" ,
+                "/Account/getAdminCredit" ,
+                "/Account/changeSignUp" ,
+                "/Account/getSignUpStatus" ,
+            });
+            permissions.Add("visitor", new List<string> { 
+                "/Home/Index",
+                "/Account/Login",
+                "/Account/taskscheduledforcommmission" ,
+                "/Account/submitLogin" ,
+
+
+            });
 
         }
         public static bool isAuthorized(string page)
@@ -49,6 +132,29 @@ namespace extreemt
                 if (userId != 0)
                 {
                     current = "user";
+                    extreemtEntities db = new extreemtEntities();
+                    if (db.users.Where(u => u.userId == userId).Count() > 0)
+                    {
+                        user admin = db.users.Where(u => u.userId == userId).First();
+                        if (Account.isAdmin(admin))
+                        {
+                            current = "admin";
+                        }
+                    }
+                }
+            }
+            foreach (KeyValuePair<string, List<string>> item in tools.permissions)
+            {
+                if (item.Key == current)
+                {
+                    foreach (string pg in item.Value)
+                    {
+                        if (page.Contains(pg))
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
                 }
             }
             return tools.permissions[current].Contains(page);

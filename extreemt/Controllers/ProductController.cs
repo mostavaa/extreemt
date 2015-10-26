@@ -240,8 +240,8 @@ namespace extreemt.Controllers
             proId = proId.Replace("25252", "+");
             extreemt.crypt algo = new extreemt.crypt();
             proId = algo.Decrypt(proId);
-            
-            
+
+
             extreemtEntities db = new extreemtEntities();
             int _proId = int.Parse(proId);
             if (db.products.Where(o => o.id == _proId).Count() == 0)
@@ -268,7 +268,7 @@ namespace extreemt.Controllers
 
                         up.userId = db.users.Where(u => u.genNumber == 2 && u.parentGenNum == 1 && u.parentUserId == loggedUser.userId && u.position == "left").First().id;
                         userRefForActivate = db.users.Where(u => u.genNumber == 2 && u.parentGenNum == 1 && u.parentUserId == loggedUser.userId && u.position == "left").First();
-                        
+
                     }
                     else if (wkala == "3")
                     {
@@ -276,7 +276,7 @@ namespace extreemt.Controllers
                         userRefForActivate = db.users.Where(u => u.genNumber == 3 && u.parentGenNum == 1 && u.parentUserId == loggedUser.userId && u.position == "right").First();
 
                     }
-                    
+
                     up.date = DateTime.Now;
                     up.price = db.products.Find(_proId).price;
                     up.productName = db.products.Find(_proId).name;
@@ -309,12 +309,14 @@ namespace extreemt.Controllers
             }
             List<userPayProduct> userProducts = user.userPayProducts.ToList();
             // check if he buyed a membership and another product 
-            bool buyedMembership = false , buyedAnotherProduct = false , active = false;
-            
+            bool buyedMembership = false, buyedAnotherProduct = false, active = false;
+
+            int membershipCount = 0;
             foreach (userPayProduct up in userProducts)
             {
-                if (up.product.category.name.ToLower().Replace(" ","") == "membership")
+                if (up.product.category.name.ToLower().Replace(" ", "") == "membership")
                 {
+                    membershipCount = membershipCount + (int)up.price;
                     buyedMembership = true;
                 }
                 else
@@ -323,8 +325,11 @@ namespace extreemt.Controllers
                 }
                 if (buyedMembership && buyedAnotherProduct)
                 {
-                    active = true;
-                    break;
+                    if (membershipCount > 350)
+                    {
+                        active = true;
+                        break;
+                    }
                 }
             }
             if (active)
@@ -340,7 +345,7 @@ namespace extreemt.Controllers
         private void updateActiveParents(user user)
         {
             extreemtEntities db2 = new extreemtEntities();
-            user parent=  null;
+            user parent = null;
             while (db2.users.Where(u => u.userId == user.parentUserId && u.genNumber == user.parentGenNum).Count() > 0)
             {
                 parent = db2.users.Where(u => u.userId == user.parentUserId && u.genNumber == user.parentGenNum).First();
