@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "Group_list";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
+
 @{
     extreemt.user usr = extreemt.Account.staticGetLoggedUser();
     List<extreemt.user> allRegisterdChilds = (List<extreemt.user>)ViewData["allRegisterdChilds"];

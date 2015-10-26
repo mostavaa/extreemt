@@ -432,14 +432,12 @@
     <Content Include="Views\Account\SignUp.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Home\genology.cshtml" />
     <Content Include="Views\Account\transfer.cshtml" />
     <Content Include="Views\Home\genology - Copy.cshtml" />
     <Content Include="Views\Account\adminpage.cshtml" />
     <Content Include="Views\Home\genology2.cshtml" />
     <Content Include="Views\Home\Product.cshtml" />
     <Content Include="Views\Home\Category.cshtml" />
-    <Content Include="Views\Home\Afetr_Login.cshtml" />
     <Content Include="Views\Account\Admin.cshtml" />
     <Content Include="Views\Home\Update_Category.cshtml" />
     <Content Include="Views\Home\Add_Product.cshtml" />
@@ -448,8 +446,6 @@
     <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Category\Delete.cshtml" />
-    <Content Include="Views\Product\Index.cshtml" />
-    <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Views\Product\Delete.cshtml" />
@@ -459,17 +455,20 @@
     <Content Include="Views\Photo\Edit.cshtml" />
     <Content Include="Views\Photo\Delete.cshtml" />
     <Content Include="Views\Product\selectUser.cshtml" />
+    <Content Include="Views\Registered\My_Basket.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\Home\Profile.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Registered\Cash_Bank.cshtml" />
     <Content Include="Views\Registered\Product_Bank.cshtml" />
     <Content Include="Views\Registered\Account_Summary.cshtml" />
     <Content Include="Views\Registered\Group_list.cshtml" />
     <Content Include="Views\Registered\Daily_Signup.cshtml" />
     <Content Include="Views\Registered\My_Transfer.cshtml" />
-    <Content Include="Views\Registered\My_Basket.cshtml" />
     <Content Include="Views\Registered\My_Order.cshtml" />
     <Content Include="Views\Registered\Update_Info.cshtml" />
-    <Content Include="Views\Shared\_LoginLayout.cshtml" />
-    <Content Include="Views\Home\Profile.cshtml" />
+    <Content Include="Views\Home\genology.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

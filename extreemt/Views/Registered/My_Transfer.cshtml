@@ -1,12 +1,14 @@
 ﻿@{
     ViewBag.Title = "My_Transfer";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+
     extreemt.user user = extreemt.Account.staticGetLoggedUser();
     List<extreemt.Transfer> transFrom = new List<extreemt.Transfer>();
     List<extreemt.Transfer> transTo = new List<extreemt.Transfer>();
     extreemt.extreemtEntities db = new extreemt.extreemtEntities();
     if (db.Transfers.Where(t => t.transferFrom == user.id).Count() > 0)
     {
-        transFrom = db.Transfers.Where(t => t.transferFrom == user.id).OrderByDescending(t=>t.transferDate).ToList();
+        transFrom = db.Transfers.Where(t => t.transferFrom == user.id).OrderByDescending(t => t.transferDate).ToList();
 
     }
     else
@@ -15,7 +17,7 @@
     }
     if (db.Transfers.Where(t => t.transferTo == user.id).Count() > 0)
     {
-        transTo = db.Transfers.Where(t => t.transferTo == user.id).OrderByDescending(t=>t.transferDate).ToList();
+        transTo = db.Transfers.Where(t => t.transferTo == user.id).OrderByDescending(t => t.transferDate).ToList();
     }
     else
     {

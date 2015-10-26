@@ -1,4 +1,8 @@
-﻿@model IEnumerable<extreemt.product>
+﻿@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+@model IEnumerable<extreemt.product>
 
 @{
     ViewBag.Title = "Products";
@@ -6,7 +10,7 @@
 
 
 
-<h3>
+<h2>
     @{
         extreemt.user usr = extreemt.Account.staticGetLoggedUser();
         if (extreemt.Account.isAdmin(usr))
@@ -15,7 +19,7 @@
         }
     }
 
-</h3>
+</h2>
 <!--
 <table>
     <tr>

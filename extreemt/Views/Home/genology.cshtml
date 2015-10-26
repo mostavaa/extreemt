@@ -1,7 +1,10 @@
 ﻿@using org.jivesoftware.util;
+
 @{
     ViewBag.Title = "genology";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
+
 
 @helper renderEmptyNode(extreemt.user currentUser, string cssClass, string myPos)
 {
@@ -34,17 +37,17 @@
             <div class="">
                 <span>Empty</span>
             </div>
-            
-                @{
-                    if (currentUser != null)
-                    {
-                        <div class=""><span><a href="@url">Add One</a></span></div>
-                    }
-                    else
-                    {
-                        <div class=""><a href="#">Add One</a></div>
-                    }
-}
+
+            @{
+                if (currentUser != null)
+                {
+                    <div class=""><span><a href="@url">Add One</a></span></div>
+                }
+                else
+                {
+                    <div class=""><a href="#">Add One</a></div>
+                }
+            }
 
             <div class="greenrow">
                 L: 0  R: 0
@@ -59,14 +62,14 @@
     </div>
 }
 
-@helper renderNode(extreemt.user user, string cssClass, string style="")
+@helper renderNode(extreemt.user user, string cssClass, string style = "")
 {
     <div class="@cssClass" style="@style">
         @{
-            string backGround="";
+            string backGround = "";
             if (user.isActive)
             {
-                backGround = "white";    
+                backGround = "white";
             }
             else
             {
@@ -102,7 +105,7 @@
             <div class="orangerow">
                 L: @user.dailyLeftActiveCount R: @user.dailyRightActiveCount
             </div>
-            
+
         </div>
     </div>
 }
@@ -127,13 +130,14 @@
             background-color: #FF6666;
             text-align: center;
         }
-        
+
         .orangerow {
             width: 100%;
             font-family: Arial;
             background-color: #ff6a00;
             text-align: center;
         }
+
         .nodepixels {
             display: inline-block;
         }
@@ -270,29 +274,29 @@
             }
         }
 
-    <div class="wrapper">
+        <div class="wrapper">
 
 
-        <div class="myrow">
-            @{
+            <div class="myrow">
+                @{
         string style = "margin:0 auto;display:block!important";
-            }
-            @renderNode(currentUser, "nodepixels", style)
+                }
+                @renderNode(currentUser, "nodepixels", style)
 
-        </div>
-        
-                <div class="myrow">
-                    <div class="offset4" style="width:585px">
+            </div>
 
-                        <img width="100%" height="100%" src="~/Content/images/level1.PNG">
+            <div class="myrow">
+                <div class="offset4" style="width:585px">
 
-                    </div>
+                    <img width="100%" height="100%" src="~/Content/images/level1.PNG">
+
                 </div>
-                
-        <!--level2-->
+            </div>
 
-        <div class="myrow">
-            @{
+            <!--level2-->
+
+            <div class="myrow">
+                @{
 
 
         if (leftUser != null)
@@ -303,10 +307,10 @@
         {
             @renderEmptyNode(currentUser, "offset3 nodepixels", "left");
         }
-            }
+                }
 
 
-            @{
+                @{
 
 
         if (rightUser != null)
@@ -317,31 +321,31 @@
         {
             @renderEmptyNode(currentUser, "offset5 nodepixels", "right");
         }
-            }
-        </div>
-        
-                <div class="myrow">
+                }
+            </div>
 
-                    <div class="offset2" style="width:335px;float:left">
+            <div class="myrow">
 
-                        <img width="100%" height="100%" src="~/Content/images/level1.PNG">
+                <div class="offset2" style="width:335px;float:left">
 
-                    </div>
-
-
-                    <div class="offset3" style="width:340px;float:left">
-
-                        <img width="100%" height="100%" src="~/Content/images/level1.PNG">
-
-                    </div>
-
+                    <img width="100%" height="100%" src="~/Content/images/level1.PNG">
 
                 </div>
-                
-        
-        <!--level 3-->
-        <div class="myrow">
-            @{
+
+
+                <div class="offset3" style="width:340px;float:left">
+
+                    <img width="100%" height="100%" src="~/Content/images/level1.PNG">
+
+                </div>
+
+
+            </div>
+
+
+            <!--level 3-->
+            <div class="myrow">
+                @{
         extreemt.user leftLeftUser = null;
         extreemt.user leftRightUser = null;
         currentUser = leftUser;
@@ -415,8 +419,8 @@
 
         }
 
-            }
-            @{
+                }
+                @{
         extreemt.user rightLeftUser = null;
         extreemt.user rightRightUser = null;
         currentUser = rightUser;
@@ -487,44 +491,44 @@
 
         }
 
-            }
+                }
 
-        </div>
+            </div>
 
-                <div class="myrow">
+            <div class="myrow">
 
-                    <div class="" style="float:left;margin-left:100px;width:200px;">
+                <div class="" style="float:left;margin-left:100px;width:200px;">
 
-                        <img width="100%" height="100%" src="~/Content/images/level1.PNG">
-
-                    </div>
-
-
-                    <div class="" style="float:left;width:200px;margin-left: 89px;">
-
-                        <img width=" 100%" height="100%" src="~/Content/images/level1.PNG">
-
-                    </div>
-                    <div class="" style="float:left;width:200px;margin-left: 138px;">
-
-                        <img width=" 100%" height="100%" src="~/Content/images/level1.PNG">
-
-                    </div>
-
-
-                    <div class="" style="float:left;width:200px;margin-left: 89px;">
-
-                        <img width=" 100%" height="100%" src="~/Content/images/level1.PNG">
-
-                    </div>
+                    <img width="100%" height="100%" src="~/Content/images/level1.PNG">
 
                 </div>
 
-        
-        <!--level 4-->
-        <div class="myrow">
 
-            @{
+                <div class="" style="float:left;width:200px;margin-left: 89px;">
+
+                    <img width=" 100%" height="100%" src="~/Content/images/level1.PNG">
+
+                </div>
+                <div class="" style="float:left;width:200px;margin-left: 138px;">
+
+                    <img width=" 100%" height="100%" src="~/Content/images/level1.PNG">
+
+                </div>
+
+
+                <div class="" style="float:left;width:200px;margin-left: 89px;">
+
+                    <img width=" 100%" height="100%" src="~/Content/images/level1.PNG">
+
+                </div>
+
+            </div>
+
+
+            <!--level 4-->
+            <div class="myrow">
+
+                @{
         extreemt.user leftLeftLeftUser = null;
         extreemt.user leftLeftRightUser = null;
         currentUser = leftLeftUser;
@@ -595,9 +599,9 @@
 
         }
 
-            }
+                }
 
-            @{
+                @{
         extreemt.user leftRightLeftUser = null;
         extreemt.user leftRightRightUser = null;
         currentUser = leftRightUser;
@@ -670,9 +674,9 @@
         }
 
 
-            }
+                }
 
-            @{
+                @{
         extreemt.user rightLeftLeftUser = null;
         extreemt.user rightLeftRightUser = null;
         currentUser = rightLeftUser;
@@ -742,8 +746,8 @@
             @renderEmptyNode(currentUser, "nodepixels", "right");
 
         }
-            }
-            @{
+                }
+                @{
         extreemt.user rightRightLeftUser = null;
         extreemt.user rightRightRightUser = null;
         currentUser = rightRightUser;
@@ -812,10 +816,10 @@
             @renderEmptyNode(currentUser, "nodepixels", "right");
 
         }
-            }
+                }
+            </div>
+            <br />
         </div>
-        <br />
-    </div>
 
     }
 }

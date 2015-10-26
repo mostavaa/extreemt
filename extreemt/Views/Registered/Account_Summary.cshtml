@@ -1,10 +1,11 @@
 ﻿@{
     ViewBag.Title = "Account_Summary";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
     extreemt.user user = extreemt.Account.staticGetLoggedUser();
     List<extreemt.cheque> chqs = new List<extreemt.cheque>();
     if (user.cheques.Count > 0)
     {
-        chqs = user.cheques.OrderByDescending(o=>o.chequeDate).ToList();
+        chqs = user.cheques.OrderByDescending(o => o.chequeDate).ToList();
     }
     extreemt.extreemtEntities db = new extreemt.extreemtEntities();
     extreemt.user leftuser = db.users.Where(u => u.parentUserId == user.userId && u.genNumber == 2).First();

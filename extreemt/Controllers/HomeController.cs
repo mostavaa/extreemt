@@ -24,10 +24,7 @@ namespace extreemt.Controllers
         {
             return View();
         }
-        public ActionResult Afetr_Login()
-        {
-            return View();
-        }
+      
         public ActionResult Profile()
         {
             return View();

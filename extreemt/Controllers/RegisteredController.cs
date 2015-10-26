@@ -15,7 +15,6 @@ namespace extreemt.Controllers
 {
     public class RegisteredController : Controller
     {
-        private Controllers.RegisteredController registerController;
         //
         // GET: /Registered/
 
