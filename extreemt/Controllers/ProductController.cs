@@ -315,7 +315,7 @@ namespace extreemt.Controllers
             int membershipCount = 0;
             foreach (userPayProduct up in userProducts)
             {
-                if (up.product.category.name.ToLower().Replace(" ", "") == "membership")
+                if (up.product.category.name.ToLower().Replace(" ", "").Contains("membership"))
                 {
                     membershipCount = membershipCount + (int)up.price;
                     buyedMembership = true;
