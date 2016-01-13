@@ -123,7 +123,22 @@
             <div class="orangerow">
                 L: @user.dailyLeftActiveCount R: @user.dailyRightActiveCount
             </div>
-
+            <div>
+                @{
+                    if (user.genNumber == 1)
+                    {
+                        Write("001");
+                    }
+                    else if (user.genNumber == 2)
+                    {
+                        Write("002");
+                    }
+                    else
+                    {
+                        Write("003");
+                    }
+                }
+            </div>
         </div>
     </div>
 }
