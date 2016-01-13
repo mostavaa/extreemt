@@ -1,15 +1,24 @@
 ﻿@model IEnumerable<extreemt.category>
-
+@{
+    if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
+    {
+        if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
+        {
+            Response.Redirect(Url.Action("Index", "Home"));
+            return;
+        }
+    }
+}
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h1>Index</h1>
 
-<p>
+<p class="btn btn-default" style="background-color:#d6dbe9">
     @Html.ActionLink("Create New", "Create")
 </p>
-<table>
+<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.name)
@@ -24,7 +33,6 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.id })
         </td>
     </tr>

@@ -1,12 +1,24 @@
 ﻿@{
+    if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
+    {
+        if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
+        {
+            Response.Redirect(Url.Action("Index", "Home"));
+            return;
+        }
+    }
+}
+@{
     ViewBag.Title = "My_Transfer";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+
     extreemt.user user = extreemt.Account.staticGetLoggedUser();
     List<extreemt.Transfer> transFrom = new List<extreemt.Transfer>();
     List<extreemt.Transfer> transTo = new List<extreemt.Transfer>();
     extreemt.extreemtEntities db = new extreemt.extreemtEntities();
     if (db.Transfers.Where(t => t.transferFrom == user.id).Count() > 0)
     {
-        transFrom = db.Transfers.Where(t => t.transferFrom == user.id).OrderByDescending(t=>t.transferDate).ToList();
+        transFrom = db.Transfers.Where(t => t.transferFrom == user.id).OrderByDescending(t => t.transferDate).ToList();
 
     }
     else
@@ -15,7 +27,7 @@
     }
     if (db.Transfers.Where(t => t.transferTo == user.id).Count() > 0)
     {
-        transTo = db.Transfers.Where(t => t.transferTo == user.id).OrderByDescending(t=>t.transferDate).ToList();
+        transTo = db.Transfers.Where(t => t.transferTo == user.id).OrderByDescending(t => t.transferDate).ToList();
     }
     else
     {
@@ -24,45 +36,46 @@
 }
 
 <h2>My_Transfer</h2>
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            @* All Transfers From And To this user*@
-            <th>Transfer From</th>
-            <th>Transfer To</th>
-            <th>Transfer Date </th>
-            <th>Transfer Amount </th>
-
-        </tr>
-
-    </thead>
-    <tbody>
-        @foreach (extreemt.Transfer trans in transFrom)
-        {
-            string fromUserName = db.users.Find(trans.transferFrom).username;
-            string toUserName = db.users.Find(trans.transferTo).username;
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <td>@fromUserName</td>
-                <td>@toUserName</td>
-                <td>@trans.transferDate.ToString("yyyy-MM-dd")</td>
-                <td>@trans.amount</td>
+                @* All Transfers From And To this user*@
+                <th>Transfer From</th>
+                <th>Transfer To</th>
+                <th>Transfer Date </th>
+                <th>Transfer Amount </th>
+
             </tr>
-        }
-        @foreach (extreemt.Transfer trans in transTo)
-        {
-            if (trans.transferFrom == trans.transferTo)
+
+        </thead>
+        <tbody>
+            @foreach (extreemt.Transfer trans in transFrom)
             {
-                continue;
+                string fromUserName = db.users.Find(trans.transferFrom).username;
+                string toUserName = db.users.Find(trans.transferTo).username;
+                <tr>
+                    <td>@fromUserName</td>
+                    <td>@toUserName</td>
+                    <td>@trans.transferDate.ToString("yyyy-MM-dd")</td>
+                    <td>@trans.amount</td>
+                </tr>
             }
-            string fromUserName = db.users.Find(trans.transferFrom).username;
-            string toUserName = db.users.Find(trans.transferTo).username;
-            <tr>
-                <td>@fromUserName</td>
-                <td>@toUserName</td>
-                <td>@trans.transferDate.ToString("yyyy-MM-dd")</td>
-                <td>@trans.amount</td>
-            </tr>
-        }
-    </tbody>
-</table>
+            @foreach (extreemt.Transfer trans in transTo)
+            {
+                if (trans.transferFrom == trans.transferTo)
+                {
+                    continue;
+                }
+                string fromUserName = db.users.Find(trans.transferFrom).username;
+                string toUserName = db.users.Find(trans.transferTo).username;
+                <tr>
+                    <td>@fromUserName</td>
+                    <td>@toUserName</td>
+                    <td>@trans.transferDate.ToString("yyyy-MM-dd")</td>
+                    <td>@trans.amount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

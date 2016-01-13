@@ -2,28 +2,22 @@
 <Schema Namespace="extreemtModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="extreemtEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="categories" EntityType="extreemtModel.category" />
+    <EntitySet Name="cheques" EntityType="extreemtModel.cheque" />
     <EntitySet Name="photos" EntityType="extreemtModel.photo" />
     <EntitySet Name="products" EntityType="extreemtModel.product" />
-    <EntitySet Name="sysdiagrams" EntityType="extreemtModel.sysdiagram" />
-    <EntitySet Name="userPayProducts" EntityType="extreemtModel.userPayProduct" />
+    <EntitySet Name="Transfers" EntityType="extreemtModel.Transfer" />
+    <EntitySet Name="users" EntityType="extreemtModel.user" />
     <AssociationSet Name="FK_product_category" Association="extreemtModel.FK_product_category">
       <End Role="category" EntitySet="categories" />
       <End Role="product" EntitySet="products" />
     </AssociationSet>
-    <AssociationSet Name="FK_photos_product" Association="extreemtModel.FK_photos_product">
-      <End Role="product" EntitySet="products" />
-      <End Role="photo" EntitySet="photos" />
-    </AssociationSet>
-    <AssociationSet Name="FK_userPayProduct_product" Association="extreemtModel.FK_userPayProduct_product">
-      <End Role="product" EntitySet="products" />
-      <End Role="userPayProduct" EntitySet="userPayProducts" />
-    </AssociationSet>
-    <EntitySet Name="Transfers" EntityType="extreemtModel.Transfer" />
-    <EntitySet Name="cheques" EntityType="extreemtModel.cheque" />
-    <EntitySet Name="users" EntityType="extreemtModel.user" />
     <AssociationSet Name="FK_cheque_user" Association="extreemtModel.FK_cheque_user">
       <End Role="user" EntitySet="users" />
       <End Role="cheque" EntitySet="cheques" />
+    </AssociationSet>
+    <AssociationSet Name="FK_photos_product" Association="extreemtModel.FK_photos_product">
+      <End Role="product" EntitySet="products" />
+      <End Role="photo" EntitySet="photos" />
     </AssociationSet>
     <AssociationSet Name="FK_product_user" Association="extreemtModel.FK_product_user">
       <End Role="user" EntitySet="users" />
@@ -37,6 +31,11 @@
       <End Role="user" EntitySet="users" />
       <End Role="Transfer" EntitySet="Transfers" />
     </AssociationSet>
+    <EntitySet Name="userPayProducts" EntityType="extreemtModel.userPayProduct" />
+    <AssociationSet Name="FK_userPayProduct_product" Association="extreemtModel.FK_userPayProduct_product">
+      <End Role="product" EntitySet="products" />
+      <End Role="userPayProduct" EntitySet="userPayProducts" />
+    </AssociationSet>
     <AssociationSet Name="FK_userPayProduct_user" Association="extreemtModel.FK_userPayProduct_user">
       <End Role="user" EntitySet="users" />
       <End Role="userPayProduct" EntitySet="userPayProducts" />
@@ -49,6 +48,17 @@
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="products" Relationship="extreemtModel.FK_product_category" FromRole="category" ToRole="product" />
+  </EntityType>
+  <EntityType Name="cheque">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="amount" Type="Int32" Nullable="false" />
+    <Property Name="chequeDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="chequeType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="user" Relationship="extreemtModel.FK_cheque_user" FromRole="cheque" ToRole="user" />
   </EntityType>
   <EntityType Name="photo">
     <Key>
@@ -73,66 +83,9 @@
     <Property Name="userId" Type="Int32" />
     <NavigationProperty Name="category" Relationship="extreemtModel.FK_product_category" FromRole="product" ToRole="category" />
     <NavigationProperty Name="photos" Relationship="extreemtModel.FK_photos_product" FromRole="product" ToRole="photo" />
-    <NavigationProperty Name="userPayProducts" Relationship="extreemtModel.FK_userPayProduct_product" FromRole="product" ToRole="userPayProduct" />
     <NavigationProperty Name="user" Relationship="extreemtModel.FK_product_user" FromRole="product" ToRole="user" />
+    <NavigationProperty Name="userPayProducts" Relationship="extreemtModel.FK_userPayProduct_product" FromRole="product" ToRole="userPayProduct" />
   </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
-  <EntityType Name="userPayProduct">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="userId" Type="Int32" Nullable="false" />
-    <Property Name="productId" Type="Int32" Nullable="false" />
-    <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
-    <NavigationProperty Name="product" Relationship="extreemtModel.FK_userPayProduct_product" FromRole="userPayProduct" ToRole="product" />
-    <NavigationProperty Name="user" Relationship="extreemtModel.FK_userPayProduct_user" FromRole="userPayProduct" ToRole="user" />
-  </EntityType>
-  <Association Name="FK_product_category">
-    <End Type="extreemtModel.category" Role="category" Multiplicity="1" />
-    <End Type="extreemtModel.product" Role="product" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="category">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="product">
-        <PropertyRef Name="categoryId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_photos_product">
-    <End Type="extreemtModel.product" Role="product" Multiplicity="1" />
-    <End Type="extreemtModel.photo" Role="photo" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="product">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="photo">
-        <PropertyRef Name="productId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_userPayProduct_product">
-    <End Type="extreemtModel.product" Role="product" Multiplicity="1" />
-    <End Type="extreemtModel.userPayProduct" Role="userPayProduct" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="product">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="userPayProduct">
-        <PropertyRef Name="productId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="Transfer">
     <Key>
       <PropertyRef Name="id" />
@@ -144,17 +97,6 @@
     <Property Name="amount" Type="Int32" Nullable="false" />
     <NavigationProperty Name="user" Relationship="extreemtModel.FK_Transfer_user" FromRole="Transfer" ToRole="user" />
     <NavigationProperty Name="user1" Relationship="extreemtModel.FK_Transfer_user1" FromRole="Transfer" ToRole="user" />
-  </EntityType>
-  <EntityType Name="cheque">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="userId" Type="Int32" Nullable="false" />
-    <Property Name="amount" Type="Int32" Nullable="false" />
-    <Property Name="chequeDate" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="chequeType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="user" Relationship="extreemtModel.FK_cheque_user" FromRole="cheque" ToRole="user" />
   </EntityType>
   <EntityType Name="user">
     <Key>
@@ -197,6 +139,18 @@
     <NavigationProperty Name="Transfers1" Relationship="extreemtModel.FK_Transfer_user1" FromRole="user" ToRole="Transfer" />
     <NavigationProperty Name="userPayProducts" Relationship="extreemtModel.FK_userPayProduct_user" FromRole="user" ToRole="userPayProduct" />
   </EntityType>
+  <Association Name="FK_product_category">
+    <End Type="extreemtModel.category" Role="category" Multiplicity="1" />
+    <End Type="extreemtModel.product" Role="product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="product">
+        <PropertyRef Name="categoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_cheque_user">
     <End Type="extreemtModel.user" Role="user" Multiplicity="1" />
     <End Type="extreemtModel.cheque" Role="cheque" Multiplicity="*" />
@@ -206,6 +160,18 @@
       </Principal>
       <Dependent Role="cheque">
         <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_photos_product">
+    <End Type="extreemtModel.product" Role="product" Multiplicity="1" />
+    <End Type="extreemtModel.photo" Role="photo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="photo">
+        <PropertyRef Name="productId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -242,6 +208,31 @@
       </Principal>
       <Dependent Role="Transfer">
         <PropertyRef Name="transferTo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="userPayProduct">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="productId" Type="Int32" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="productName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="price" Type="Int32" />
+    <NavigationProperty Name="product" Relationship="extreemtModel.FK_userPayProduct_product" FromRole="userPayProduct" ToRole="product" />
+    <NavigationProperty Name="user" Relationship="extreemtModel.FK_userPayProduct_user" FromRole="userPayProduct" ToRole="user" />
+  </EntityType>
+  <Association Name="FK_userPayProduct_product">
+    <End Type="extreemtModel.product" Role="product" Multiplicity="1" />
+    <End Type="extreemtModel.userPayProduct" Role="userPayProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="userPayProduct">
+        <PropertyRef Name="productId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

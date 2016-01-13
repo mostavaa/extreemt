@@ -1,8 +1,21 @@
 ﻿@model extreemt.product
-
+@{
+    if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
+    {
+        if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
+        {
+            Response.Redirect(Url.Action("Index", "Home"));
+            return;
+        }
+    }
+}
 @{
     ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
+
+
+
 
 <h2>Details</h2>
 <!--
@@ -61,124 +74,131 @@
 </fieldset>
 -->
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @{
+        extreemt.user usr = extreemt.Account.staticGetLoggedUser();
+        if (extreemt.Account.isAdmin(usr))
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.id })
+        }
+    }
+
 </p>
 <div id="details">
-    <div class="col-md-9 product-price1">
+    <div class="row">
+        <div class="col-md-9 product-price1">
 
-        <div class="col-md-5 ">
-            @{
-                if (Model.photos.Count > 0)
-                {
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            @{
-                    int i = 0;
-                    foreach (extreemt.photo pho in Model.photos)
-                    {
-                        if (i == 0)
-                        {
-                            <li data-target="#myCarousel" data-slide-to="@i" class="active"></li>
-                        }
-                        else
-                        {
-                            <li data-target="#myCarousel" data-slide-to="@i"></li>
-                        }
-                        i++;
-                    }
-                            }
-                        </ol>
-
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner" role="listbox">
-                            @{
-
-                    i = 0;
-                    foreach (extreemt.photo pho in Model.photos)
-                    {
-                        string str = pho.photo1;
-                        if (i == 0)
-                        {
-                            <div class="item active">
-                                <img class="img-responsive" src="~/Upload/@str" alt="Chania">
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="item">
-                                <img class="img-responsive" src="~/Upload/@str" alt="Chania">
-                            </div>
-                        }
-                        i++;
-                    }
-                            }
-
-
-
-                        </div>
-
-                        <!-- Left and right controls -->
-                        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-                }
-                else
-                {
-                    <img class="img-responsive" src="~/Content/images/product.jpg">
-                }
-            }
-
-
-
-        </div>
-        <div class="col-md-7 single-top-in simpleCart_shelfItem">
-            <div class="single-para ">
-                <h4>@Html.DisplayFor(model => model.name)</h4>
-
-                <h5 class="item_price"> Price: @Html.DisplayFor(model => model.price) EGP</h5>
-
-                <p>
-                    Quantity
-                    @Html.DisplayFor(model => model.count)
-                </p>
-                <div>
-
-                    <nav>
-                        <ul class="cd-tabs-navigation">
-                            <li><a data-content="fashion" href="#0" class="selected ">Description </a></li>
-                        </ul>
-                    </nav>
-                    <ul class="cd-tabs-content">
-                        <li data-content="fashion" class="selected">
-                            <div class="facts">
-                                <p> @Html.DisplayFor(model => model.description) </p>
-
-                            </div>
-
-                        </li>
-
-                    </ul>
-                </div>
+            <div class="col-md-5 ">
                 @{
-                    extreemt.crypt algo = new extreemt.crypt();
-                    string encId = algo.Encrypt(""+Model.id);
-                    encId = HttpUtility.UrlEncode(encId.Replace("+", "25252"));
-                    
+                    if (Model.photos.Count > 0)
+                    {
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                @{
+                        int i = 0;
+                        foreach (extreemt.photo pho in Model.photos)
+                        {
+                            if (i == 0)
+                            {
+                                <li data-target="#myCarousel" data-slide-to="@i" class="active"></li>
+                            }
+                            else
+                            {
+                                <li data-target="#myCarousel" data-slide-to="@i"></li>
+                            }
+                            i++;
+                        }
+                                }
+                            </ol>
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                                @{
+
+                        i = 0;
+                        foreach (extreemt.photo pho in Model.photos)
+                        {
+                            string str = pho.photo1;
+                            if (i == 0)
+                            {
+                                <div class="item active">
+                                    <img class="img-responsive" src="~/Upload/@str" alt="Chania">
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="item">
+                                    <img class="img-responsive" src="~/Upload/@str" alt="Chania">
+                                </div>
+                            }
+                            i++;
+                        }
+                                }
+
+
+
+                            </div>
+
+                            <!-- Left and right controls -->
+                            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <img class="img-responsive" src="~/Content/images/product.jpg">
+                    }
                 }
 
-                <a href="@Url.Action("selectUser", "Product")?proId=@encId" class="add-cart item_add">Buy</a>
 
 
             </div>
-        </div>
-        
+            <div class="col-md-7 single-top-in simpleCart_shelfItem">
+                <div class="single-para ">
+                    <h4>@Html.DisplayFor(model => model.name)</h4>
+
+                    <h5 class="item_price"> Price: @Html.DisplayFor(model => model.price) EGP</h5>
+
+                    <p>
+                        Quantity
+                        @Html.DisplayFor(model => model.count)
+                    </p>
+                    <div>
+
+                        <nav>
+                            <ul class="cd-tabs-navigation">
+                                <li><a data-content="fashion" href="#0" class="selected ">Description </a></li>
+                            </ul>
+                        </nav>
+                        <ul class="cd-tabs-content">
+                            <li data-content="fashion" class="selected">
+                                <div class="facts">
+                                    <p> @Html.DisplayFor(model => model.description) </p>
+
+                                </div>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                    @{
+                        extreemt.crypt algo = new extreemt.crypt();
+                        string encId = algo.Encrypt("" + Model.id);
+                        encId = HttpUtility.UrlEncode(encId.Replace("+", "25252"));
+
+                    }
+
+                    <a href="@Url.Action("selectUser", "Product")?proId=@encId" class="add-cart item_add">Buy</a>
+
+
+                </div>
+            </div>
+
             @{
                 if (ViewData["error"] != "" && ViewData["error"] != null)
                 {
@@ -193,8 +213,9 @@
                 }
 
             }
-                    
-        <!---->
 
+            <!---->
+
+        </div>
     </div>
 </div>

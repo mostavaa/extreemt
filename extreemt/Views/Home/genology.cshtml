@@ -72,11 +72,12 @@
     </div>
 }
 
-@helper renderNode(extreemt.user user, string cssClass, string style = "")
+@helper renderNode(bool first,extreemt.user user, string cssClass, string style = "")
 {
     <div class="@cssClass" style="@style">
         @{
             string backGround = "";
+            string position = "";
             if (user.isActive)
             {
                 backGround = "white";
@@ -85,6 +86,11 @@
             {
                 backGround = "burlywood";
             }
+            //if (user.position == "left" && first==false)
+            //{ position = "002";}
+            //else if (user.position == "right" && first == false)
+            //{ position = "003";}
+            //else {position = "001";}
         }
         <div style="min-height:200px;background-color:@backGround;text-align:center;border-style:solid;border-radius:7px">
 
@@ -104,6 +110,8 @@
 
             <div class="">
                 <span>@user.username</span>
+
+                <p>@position</p>
             </div>
 
             <div class="greenrow">
@@ -291,7 +299,7 @@
                 @{
         string style = "margin:0 auto;display:block!important";
                 }
-                @renderNode(currentUser, "nodepixels", style)
+                @renderNode(true,currentUser, "nodepixels", style)
 
             </div>
 
@@ -311,7 +319,7 @@
 
         if (leftUser != null)
         {
-            @renderNode(leftUser, "offset3 nodepixels");
+            @renderNode(false,leftUser, "offset3 nodepixels");
         }
         else
         {
@@ -325,7 +333,7 @@
 
         if (rightUser != null)
         {
-            @renderNode(rightUser, "offset5 nodepixels");
+            @renderNode(false,rightUser, "offset5 nodepixels");
         }
         else
         {
@@ -411,7 +419,7 @@
 
         if (leftLeftUser != null)
         {
-            @renderNode(leftLeftUser, "offset1nos nodepixels");
+            @renderNode(true,leftLeftUser, "offset1nos nodepixels");
         }
         else
         {
@@ -421,7 +429,7 @@
 
         if (leftRightUser != null)
         {
-            @renderNode(leftRightUser, "offset1nos nodepixels");
+            @renderNode(true,leftRightUser, "offset1nos nodepixels");
         }
         else
         {
@@ -483,7 +491,7 @@
 
         if (rightLeftUser != null)
         {
-            @renderNode(rightLeftUser, "offset2rob3 nodepixels");
+            @renderNode(true,rightLeftUser, "offset2rob3 nodepixels");
         }
         else
         {
@@ -493,7 +501,7 @@
 
         if (rightRightUser != null)
         {
-            @renderNode(rightRightUser, "offset1nos nodepixels");
+            @renderNode(true,rightRightUser, "offset1nos nodepixels");
         }
         else
         {
@@ -591,7 +599,7 @@
 
         if (leftLeftLeftUser != null)
         {
-            @renderNode(leftLeftLeftUser, "offsetnos nodepixels");
+            @renderNode(false,leftLeftLeftUser, "offsetnos nodepixels");
         }
         else
         {
@@ -601,7 +609,7 @@
 
         if (leftLeftRightUser != null)
         {
-            @renderNode(leftLeftRightUser, "nodepixels");
+            @renderNode(false,leftLeftRightUser, "nodepixels");
         }
         else
         {
@@ -664,7 +672,7 @@
 
         if (leftRightLeftUser != null)
         {
-            @renderNode(leftRightLeftUser, "nodepixels");
+            @renderNode(false,leftRightLeftUser, "nodepixels");
         }
         else
         {
@@ -675,7 +683,7 @@
 
         if (leftRightRightUser != null)
         {
-            @renderNode(leftRightRightUser, "nodepixels");
+            @renderNode(false,leftRightRightUser, "nodepixels");
         }
         else
         {
@@ -739,7 +747,7 @@
 
         if (rightLeftLeftUser != null)
         {
-            @renderNode(rightLeftLeftUser, "offsetrob3 nodepixels");
+            @renderNode(false,rightLeftLeftUser, "offsetrob3 nodepixels");
         }
         else
         {
@@ -749,7 +757,7 @@
 
         if (rightLeftRightUser != null)
         {
-            @renderNode(rightLeftRightUser, "nodepixels");
+            @renderNode(false,rightLeftRightUser, "nodepixels");
         }
         else
         {
@@ -810,7 +818,7 @@
 
         if (rightRightLeftUser != null)
         {
-            @renderNode(rightRightLeftUser, "nodepixels");
+            @renderNode(false,rightRightLeftUser, "nodepixels");
         }
         else
         {
@@ -819,7 +827,7 @@
         }
         if (rightRightRightUser != null)
         {
-            @renderNode(rightRightRightUser, "nodepixels");
+            @renderNode(false,rightRightRightUser, "nodepixels");
         }
         else
         {

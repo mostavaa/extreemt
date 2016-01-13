@@ -1,69 +1,267 @@
 ﻿@{
-    int adminCashBank = (int)ViewData["adminCashBank"];
-    bool SignUpStatus = (bool)ViewData["SignUpStatus"];
-    string signUpStatusDataClosed = "";
-    string signUpStatusBtnValue = "";
-    if (SignUpStatus)
+    if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
     {
-        //closed
-        signUpStatusDataClosed = "false";
-        signUpStatusBtnValue = "Open Sign Up";
+        if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
+        {
+            Response.Redirect(Url.Action("Index", "Home"));
+            return;
+        }
     }
-    else
-    {
-        //not closed
-        signUpStatusDataClosed = "true";
-        signUpStatusBtnValue = "Close Sign Up";
-    }
-
 }
-<form class="form-inline">
-    <label>Change Admin Cash Credit</label>
-    <input type="number" class="form-control" value="@adminCashBank" name="cashcredit" id="cashcredit" />
-    <input type="button" class="btn btn-default" name="cashcreditsubmit" value="Change" id="cashcreditsubmit" />
-</form>
+@{
+    extreemt.user usr = extreemt.Account.staticGetLoggedUser();
+    if (extreemt.Account.isAdmin(usr))
+    {
+        extreemt.extreemtEntities db = new extreemt.extreemtEntities();
 
-<input type="button" class="btn btn-default" id="closeSignUp" name="closeSignUp" data-closed="@signUpStatusDataClosed" value="@signUpStatusBtnValue" />
+        int adminCashBank = (int)ViewData["adminCashBank"];
+        bool SignUpStatus = (bool)ViewData["SignUpStatus"];
+        string signUpStatusDataClosed = "";
+        string signUpStatusBtnValue = "";
+        if (SignUpStatus)
+        {
+            //closed
+            signUpStatusDataClosed = "false";
+            signUpStatusBtnValue = "Open Sign Up";
+        }
+        else
+        {
+            //not closed
+            signUpStatusDataClosed = "true";
+            signUpStatusBtnValue = "Close Sign Up";
+        }
 
-@section scripts{
-    <script>
-        $(document).ready(function () {
-            $("#closeSignUp").click(function () {
-                res = confirm("Are You Sure You Are Going to Change Sign Up Status");
-                if (res == true) {
-                    status = $(this).attr("data-closed");
-                    $.post("@Url.Action("changeSignUp", "Account")", "status=" + status, function (res) {
-                        if (res == "success") {
-                            if (status == "false") {
-                                $("#closeSignUp").attr("data-closed", "true");
-                                $("#closeSignUp").val("Close Sign Up");
-                            } else if (status == "true") {
-                                $("#closeSignUp").attr("data-closed", "false");
-                                $("#closeSignUp").val("Open Sign Up");
-                            }
-                            alert("sign Up changed successfully");
+        List<extreemt.userPayProduct> userPayProducts = null;
+        int c = db.userPayProducts.Where(u => u.date.Month == DateTime.Now.Month).Count();
+        if (db.userPayProducts.Where(u => u.date.Month == DateTime.Now.Month).Count() > 0)
+        {
+            userPayProducts = db.userPayProducts.Where(u => u.date.Month == DateTime.Now.Month).OrderByDescending(x => x.id).ToList();
+
+        }
+        else
+        {
+            userPayProducts = null;
+        }
+
+        extreemt.user leftUser = db.users.Where(u => u.parentGenNum == 1
+      && u.parentUserId == usr.userId
+      && u.position == "left"
+      ).First();
+
+        List<extreemt.userPayProduct> userPayProductsLeft = null;
+        if (db.userPayProducts.Where(u => u.userId == leftUser.id && u.date.Month == DateTime.Now.Month).Count() > 0)
+        {
+            userPayProductsLeft = db.userPayProducts.Where(u => u.userId == leftUser.id && u.date.Month == DateTime.Now.Month).OrderByDescending(x => x.id).ToList();
+
+        }
+        else
+        {
+            userPayProductsLeft = null;
+        }
+        extreemt.user rightUser = db.users.Where(u => u.parentGenNum == 1
+        && u.parentUserId == usr.userId
+        && u.position == "right"
+        ).First();
+
+        List<extreemt.userPayProduct> userPayProductsRight = null;
+        if (db.userPayProducts.Where(u => u.userId == rightUser.id && u.date.Month == DateTime.Now.Month).Count() > 0)
+        {
+            userPayProductsRight = db.userPayProducts.Where(u => u.userId == rightUser.id && u.date.Month == DateTime.Now.Month).OrderByDescending(x => x.id).ToList();
+
+        }
+        else
+        {
+            userPayProductsRight = null;
+        }
+
+        <form class="form-inline">
+            <label>Change Admin Cash Credit</label>
+            <input type="number" class="form-control" value="@adminCashBank" name="cashcredit" id="cashcredit" />
+            <input type="button" class="btn btn-default" name="cashcreditsubmit" value="Change" id="cashcreditsubmit" />
+        </form>
+
+        <input type="button" class="btn btn-default" id="closeSignUp" name="closeSignUp" data-closed="@signUpStatusDataClosed" value="@signUpStatusBtnValue" />
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Date</th>
+                    <th>Price</th>
+                    <th>username</th>
+                    <th>address</th>
+                    <th>mobile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>001</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                @{
+        if (userPayProducts != null)
+        {
+            foreach (extreemt.userPayProduct up in userPayProducts)
+            {
+                int productId = up.productId;
+                if (db.products.Where(p => p.id == productId).Count() > 0)
+                {
+
+                    <tr>
+                        <td>@up.productName</td>
+                        <td>@up.date.ToString("yyyy-MM-dd")</td>
+                        <td>@up.price</td>
+                        <td>@up.user.username</td>
+                        <td>@up.user.address</td>
+                        <td>@up.user.mobile</td>
+
+                    </tr>
+                }
+
+            }
+        }
+
+                }
+            </tbody>
+        </table>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Date</th>
+                    <th>Price</th>
+                    <th>username</th>
+                    <th>address</th>
+                    <th>mobile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>002</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                @{
+        if (userPayProductsLeft != null)
+        {
+            foreach (extreemt.userPayProduct up in userPayProductsLeft)
+            {
+                int productId = up.productId;
+                if (db.products.Where(p => p.id == productId).Count() > 0)
+                {
+
+                    <tr>
+                        <td>@up.productName</td>
+                        <td>@up.date.ToString("yyyy-MM-dd")</td>
+                        <td>@up.price</td>
+                        <td>@up.user.username</td>
+                        <td>@up.user.address</td>
+                        <td>@up.user.mobile</td>
+
+                    </tr>
+                }
+
+            }
+        }
+
+                }
+            </tbody>
+
+        </table>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Date</th>
+                    <th>Price</th>
+                    <th>username</th>
+                    <th>address</th>
+                    <th>mobile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>003</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                @{
+        if (userPayProductsRight != null)
+        {
+            foreach (extreemt.userPayProduct up in userPayProductsRight)
+            {
+                int productId = up.productId;
+                if (db.products.Where(p => p.id == productId).Count() > 0)
+                {
+
+                    <tr>
+                        <td>@up.productName</td>
+                        <td>@up.date.ToString("yyyy-MM-dd")</td>
+                        <td>@up.price</td>
+                        <td>@up.user.username</td>
+                        <td>@up.user.address</td>
+                        <td>@up.user.mobile</td>
+
+                    </tr>
+                }
+
+            }
+        }
+
+                }
+            </tbody>
+
+        </table>
+        @section scripts{
+            <script>
+                $(document).ready(function () {
+                    $("#closeSignUp").click(function () {
+                        res = confirm("Are You Sure You Are Going to Change Sign Up Status");
+                        if (res == true) {
+                            status = $(this).attr("data-closed");
+                            $.post("@Url.Action("changeSignUp", "Account")", "status=" + status, function (res) {
+                                if (res == "success") {
+                                    if (status == "false") {
+                                        $("#closeSignUp").attr("data-closed", "true");
+                                        $("#closeSignUp").val("Close Sign Up");
+                                    } else if (status == "true") {
+                                        $("#closeSignUp").attr("data-closed", "false");
+                                        $("#closeSignUp").val("Open Sign Up");
+                                    }
+                                    alert("sign Up changed successfully");
+                                }
+                            });
                         }
                     });
-                }
-            });
 
-            $("#cashcreditsubmit").click(function () {
-                val = $("#cashcredit").val();
-                if (val != null && val != "" && !isNaN(val)) {
-                    res = confirm("Are You Sure You Are Going to Change Your Credit");
-                    if (res == true) {
+                    $("#cashcreditsubmit").click(function () {
+                        val = $("#cashcredit").val();
+                        if (val != null && val != "" && !isNaN(val)) {
+                            res = confirm("Are You Sure You Are Going to Change Your Credit");
+                            if (res == true) {
 
-                        $.post("@Url.Action("changeAdminCredit", "Account")", "val="+val, function (res) {
-                            if (res == "success") {
-                                alert("Credit Changed Successfully");
+                                $.post("@Url.Action("changeAdminCredit", "Account")", "val=" + val, function (res) {
+                                    if (res == "success") {
+                                        alert("Credit Changed Successfully");
+                                    }
+                                });
                             }
-                        });
-                    }
-                } else {
-                    alert("Please Enter Real Number");
-                }
+                        } else {
+                            alert("Please Enter Real Number");
+                        }
 
-            });
-        });
-    </script>
+                    });
+                });
+            </script>
+        }
+    }
 }

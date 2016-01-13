@@ -1,4 +1,14 @@
 ﻿@using org.jivesoftware.util;
+@{
+    if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
+    {
+        if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
+        {
+            Response.Redirect(Url.Action("Index", "Home"));
+            return;
+        }
+    }
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,23 +36,24 @@
                 
 
         @RenderSection("head", required: false)
-        <link rel="shortcut icon" href="~/Content/12.ico">
+    <link rel="shortcut icon" href="~/Content/images/logo2.jpg">
 </head>
 <body>
     @{
-        /*
+        
         if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
         {
             if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
             {
                 Response.Redirect(Url.Action("Index", "Home"));
+                return;
             }
         }
             
-            */
+            
     }
     <div>
-        <img style="width:250px;max-height:150px" class="img-rounded" src="~/Content/images/logo.jpg" />
+        <img style="width:250px;max-height:150px" class="img-rounded" src="~/Content/images/logo2.jpg" />
     </div>
     <div id="house" class="top-header">
         <div class="container">
@@ -52,14 +63,20 @@
                 extreemt.user usr = extreemt.Account.staticGetLoggedUser();
                 if (usr != null)
                 {
-                   <!-- <li class="right"><a href="@Url.Action("logout" , "Account")"><span class="glyphicon glyphicon-log-in"></span>LogOut</a></li>
-                    <li class="right"><a href="@Url.Action("Index", "Account")"><span class="glyphicon glyphicon-log-in"></span>@usr.username</a></li>-->
-                  <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("Index", "Account")">@usr.username</a></p>
-                <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("logout", "Account")">LogOut</a></p>
+                    if (extreemt.Account.isAdmin(usr))
+                    {
+                        <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("Admin", "Account")">@usr.username</a></p>
+                    }
+                    else
+                    {
+                        <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("Index", "Account")">@usr.username</a></p>
+
+                    }
+                    <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("logout", "Account")">LogOut</a></p>
                 }
                 else
                 {
-                   <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("Login" , "Account")">Login</a></p>
+                   <p  class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("Login" , "Account")">Login</a></p>
                 }
             }
 
@@ -76,32 +93,20 @@
         <h3>Menu</h3>
         <ul>
 
-            <li><a href="@Url.Action("Index","Home")" class="active">Home</a></li>
-            <li><a href="#">Your Company</a></li>
-            <li><a href="#">Team Work</a></li>
+            @{
+                if (usr != null)
+                {
+                    <li><a href="@Url.Action("Profile","Home")" class="active">Dashboard</a></li>
+                }
+                else
+                {
+                    <li><a href="@Url.Action("Index","Home")" class="active">Home</a></li>
+                }
+            }
 
             <li>
-
-                <a href="#">Products</a>
-
-
-                @{
-
-                    string userId = (string)Session["userId"];
-                    if (userId != null && userId != "")
-                    {
-                        extreemt.crypt algo = new extreemt.crypt();
-                        userId = algo.Encrypt(userId + "$$$1");
-                        userId = HttpUtility.UrlEncode(userId.Replace("+", "25252"));
-                    }
-                    string url = Url.Action("genology", "Home") + "?a=" + userId;
-                }
-
+                <a href="@Url.Action("Index","Product")">Products</a>
             </li>
-            <li><a href="@url">Genealogy <span class="sr-only">(current)</span></a></li>
-            <li><a href="@Url.Action("transfer", "Account")">Transfer</a></li>
-
-            <li><a href="#">Your Brands</a></li>
             <li><a href="#">Contact Us</a></li>
         </ul>
 
@@ -166,7 +171,10 @@
 
                     </ul>
                 </div>
-                <img style="width:250px;max-height:150px" class="img-rounded" src="~/Content/images/logo.jpg" />
+                <img style="width:250px;max-height:150px" class="img-rounded" src="~/Content/images/bank.jpg" />
+                <ul class="nav-bottom">
+                    <li><a href="#">Account Number: 144036727001</a></li>
+                </ul>
 
                 <div class="clearfix"> </div>
             </div>

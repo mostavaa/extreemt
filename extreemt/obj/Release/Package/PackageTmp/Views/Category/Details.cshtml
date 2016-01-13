@@ -1,10 +1,19 @@
 ﻿@model extreemt.category
-
+@{
+    if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
+    {
+        if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
+        {
+            Response.Redirect(Url.Action("Index", "Home"));
+            return;
+        }
+    }
+}
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h1>Details</h1>
 
 <fieldset>
     <legend>category</legend>

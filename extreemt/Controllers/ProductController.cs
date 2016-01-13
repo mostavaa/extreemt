@@ -251,9 +251,10 @@ namespace extreemt.Controllers
             user loggedUser = Account.staticGetLoggedUser();
             if (loggedUser != null)
             {
-                int productBank = loggedUser.productBank;
+                // it was product by misatake
+                int cashBank = loggedUser.cashBank;
                 int productCost = db.products.Find(_proId).price;
-                if (productBank >= productCost)
+                if (cashBank >= productCost)
                 {
                     userPayProduct up = new userPayProduct();
                     up.productId = _proId;

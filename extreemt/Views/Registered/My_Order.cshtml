@@ -38,7 +38,7 @@
     if (db.userPayProducts.Where(u => u.userId == leftUser.id).Count() > 0)
     {
         userPayProductsLeft = db.userPayProducts.Where(u => u.userId == leftUser.id).ToList();
-
+            
     }
     else
     {

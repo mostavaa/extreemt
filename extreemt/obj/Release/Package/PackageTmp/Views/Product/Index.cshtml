@@ -1,14 +1,33 @@
-﻿@model IEnumerable<extreemt.product>
-
-@{
+﻿@{
     ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+﻿@model IEnumerable<extreemt.product>
+@{
+    if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
+    {
+        if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
+        {
+            Response.Redirect(Url.Action("Index", "Home"));
+            return;
+        }
+    }
 }
 
 
 
-<h3>
-    @Html.ActionLink("Create New", "Create")
-</h3>
+
+<h2>
+    @{
+        extreemt.user usr = extreemt.Account.staticGetLoggedUser();
+        if (extreemt.Account.isAdmin(usr))
+        {
+            @Html.ActionLink("Create New", "Create")
+        }
+    }
+
+</h2>
 <!--
 <table>
     <tr>
@@ -157,12 +176,18 @@
 
 
                         </a>
-                        <div class="pro-grid">
-                            <span class="buy-in">@Html.ActionLink("Edit", "Edit", new { id = item.id })</span>
-                        </div>
-                        <div class="pro-grid">
-                            <span class="buy-in">@Html.ActionLink("Delete", "Delete", new { id = item.id })</span>
-                        </div>
+                        @{
+                if (extreemt.Account.isAdmin(usr))
+                {
+                    <div class="pro-grid">
+                        <span class="buy-in">@Html.ActionLink("Edit", "Edit", new { id = item.id })</span>
+                    </div>
+                            <div class="pro-grid">
+                                <span class="buy-in">@Html.ActionLink("Delete", "Delete", new { id = item.id })</span>
+                            </div>
+                }
+                        }
+
 
                     </div>
                     <a href="@Url.Action("Details", "Product", new { id = item.id })" class="item_add"><p class="number item_price"><i> </i>EGP @Html.DisplayFor(modelItem => item.price)</p></a>
@@ -175,34 +200,36 @@
 
             }
 
-            <div class="row">
-                <ul class="pagination">
-                    @{
-                        int numOfPages = (int)ViewData["numOfPages"];
-                        for (int i = 1; i <= numOfPages; i++)
-                        {
-                            int page = 1;
-                            if (Request.Params["page"] != null && Request.Params["page"] != "")
-                            {
-                                page = int.Parse(Request.Params["page"]);
-                            }
-                            string url = Request.Url.GetLeftPart(UriPartial.Path);
-                            url+="?page="+i;
-                            if (i == page)
-                            {
-                                <li class="active"><a href="@url">@i</a></li>
-                            }
-                            else
-                            {
-                                <li><a href="@url">@i</a></li>
-                            }
-                        }
-                    }
 
-                </ul>
-            </div>
         </div>
 
+
+    </div>
+    <div class="row">
+        <ul class="pagination">
+            @{
+                int numOfPages = (int)ViewData["numOfPages"];
+                for (int i = 1; i <= numOfPages; i++)
+                {
+                    int page = 1;
+                    if (Request.Params["page"] != null && Request.Params["page"] != "")
+                    {
+                        page = int.Parse(Request.Params["page"]);
+                    }
+                    string url = Request.Url.GetLeftPart(UriPartial.Path);
+                    url += "?page=" + i;
+                    if (i == page)
+                    {
+                        <li class="active"><a href="@url">@i</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@url">@i</a></li>
+                    }
+                }
+            }
+
+        </ul>
     </div>
 
 </div>
