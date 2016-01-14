@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\mostafa\Desktop\sala7\extreemt\extreemt\bin\extreemt.dll.config
 C:\Users\mostafa\Desktop\sala7\extreemt\extreemt\bin\extreemt.dll
 C:\Users\mostafa\Desktop\sala7\extreemt\extreemt\bin\extreemt.pdb
@@ -285,3 +286,5 @@ J:\OneDrive\work\sala7\extreemt\extreemt\bin\System.Web.WebPages.Razor.xml
 J:\OneDrive\work\sala7\extreemt\extreemt\obj\Debug\extreemt.csprojResolveAssemblyReference.cache
 J:\OneDrive\work\sala7\extreemt\extreemt\obj\Debug\extreemt.dll
 J:\OneDrive\work\sala7\extreemt\extreemt\obj\Debug\extreemt.pdb
+=======
+>>>>>>> 5cab2cf3400fabc5a51ac8873f1da50e2371da4d

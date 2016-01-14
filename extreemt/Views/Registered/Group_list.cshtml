@@ -58,4 +58,32 @@
         </tbody>
 
     </table>
+
+    <div class="row">
+        <ul class="pagination">
+            @{
+                int numOfPages = (int)ViewData["numOfPages"];
+                for (int i = 1; i <= numOfPages; i++)
+                {
+                    int page = 1;
+                    if (Request.Params["page"] != null && Request.Params["page"] != "")
+                    {
+                        page = int.Parse(Request.Params["page"]);
+                    }
+                    string url = Request.Url.GetLeftPart(UriPartial.Path);
+                    url += "?page=" + i;
+                    if (i == page)
+                    {
+                        <li class="active"><a href="@url">@i</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@url">@i</a></li>
+                    }
+                }
+            }
+
+        </ul>
+    </div>
+
 </div>

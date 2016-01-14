@@ -54,7 +54,7 @@ label{
   background-color: #FCB09E;
 }
 p.location,p.mail,p.phone{
-  float: left;
+  float: right;
   color: #fff;
   font-size: 0.95em;
   margin-top: 0.9em;
@@ -1790,7 +1790,7 @@ ul.social li i:hover{
 	  padding: 7em 0 0 5em;
 	}
 	p.location, p.mail, p.phone {
-	  float: left;
+	  float: right;
 	  color: #fff;
 	  font-size: 0.85em;
 	  margin-top: 0.9em;
@@ -1842,7 +1842,7 @@ ul.social li i:hover{
 }
 @media (max-width:1024px){
 	p.location, p.mail, p.phone {
-	  float: left;
+	  float: right;
 	  color: #fff;
 	  font-size: 0.85em;
 	  margin-top: 0.9em;
@@ -1997,7 +1997,7 @@ ul.social li i:hover{
 }
 @media (max-width:800px){
 p.location, p.mail, p.phone {
-  float: left;
+  float: right;
   color: #fff;
   font-size: 0.85em;
   margin-top: 0.9em;
@@ -2170,7 +2170,7 @@ p.location, p.mail, p.phone {
 }
 @media (max-width:768px){
  p.location, p.mail, p.phone {
-  float: left;
+  float: right;
   color: #fff;
   font-size: 0.85em;
   margin-top: 0.9em;
@@ -2373,7 +2373,7 @@ p.location, p.mail, p.phone {
 	  min-height: 258px;
 	}
 	p.location, p.mail, p.phone {
-	  float: left;
+	  float: right;
 	  color: #fff;
 	  font-size: 0.85em;
 	  margin-top: 0.9em;
@@ -2476,7 +2476,7 @@ p.location, p.mail, p.phone {
 }
 @media (max-width:480px){
 	p.location, p.mail, p.phone {
-	  float: left;
+	  float: right;
 	  color: #fff;
 	  font-size: 0.85em;
 	  margin-top: 0.5em;
@@ -2760,7 +2760,7 @@ p.location, p.mail, p.phone {
   padding-top: 3em;
 }
 	p.location, p.mail, p.phone {
-	    float: left;
+	    float: right;
   font-size: 0.8em;
   margin-top: 0em;
   width: 39%;

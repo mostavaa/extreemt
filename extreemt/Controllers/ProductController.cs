@@ -251,9 +251,10 @@ namespace extreemt.Controllers
             user loggedUser = Account.staticGetLoggedUser();
             if (loggedUser != null)
             {
-                int productBank = loggedUser.productBank;
+                // it was product by misatake
+                int cashBank = loggedUser.cashBank;
                 int productCost = db.products.Find(_proId).price;
-                if (productBank >= productCost)
+                if (cashBank >= productCost)
                 {
                     userPayProduct up = new userPayProduct();
                     up.productId = _proId;
@@ -314,6 +315,9 @@ namespace extreemt.Controllers
             int membershipCount = 0;
             foreach (userPayProduct up in userProducts)
             {
+
+
+
                 if (up.product.category.name.ToLower().Replace(" ", "").Contains("membership"))
                 {
                     membershipCount = membershipCount + (int)up.price;

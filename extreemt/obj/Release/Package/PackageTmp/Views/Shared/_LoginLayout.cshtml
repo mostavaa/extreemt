@@ -32,15 +32,12 @@
 
     <!--<link href="~/css/business-casual.css" rel="stylesheet" />
     <link href="~/css/styles.css" rel="stylesheet" />-->
-    
-                
-
-        @RenderSection("head", required: false)
-        <link rel="shortcut icon" href="~/Content/12.ico">
+    @RenderSection("head", required: false)
+    <link rel="shortcut icon" href="~/Content/images/logo2.jpg">
 </head>
 <body>
     @{
-        
+    
         if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
         {
             if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
@@ -49,16 +46,16 @@
                 return;
             }
         }
-            
+
             
     }
     <div>
-        <img style="width:250px;max-height:150px" class="img-rounded" src="~/Content/images/logo.jpg" />
+        <img style="width:250px;max-height:150px" class="img-rounded" src="~/Content/images/logo2.jpg" />
     </div>
     <div id="house" class="top-header">
         <div class="container">
-            
-            
+
+
             @{
                 extreemt.user usr = extreemt.Account.staticGetLoggedUser();
                 if (usr != null)
@@ -76,11 +73,11 @@
                 }
                 else
                 {
-                   <p  class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("Login" , "Account")">Login</a></p>
+                    <p class="col-md-3 mail"><i class="glyphicon glyphicon-log-in"></i><a href="@Url.Action("Login" , "Account")">Login</a></p>
                 }
             }
 
-         
+
             <div class="clearfix"></div>
         </div>
     </div>
@@ -115,34 +112,10 @@
 
 
 
+    @RenderBody()
+<hr />
 
-
-        @RenderBody()
-
-
-    <!--contact-->
-    <div class="contact">
-        <div class="col-md-6 contact-top">
-            <div class="point"> <i class="glyphicon glyphicon-map-marker"></i></div>
-            <h3 class="tittle two">Find Us</h3>
-            <h4>For Any questions, Please feel free to Contact us by mail.</h4>
-            <div class="contact-ad">
-                <p>Address:.<p>
-                <p>Phone:<p>
-                <p>E-mail :<a href="#"></a></p>
-
-            </div>
-        </div>
-        <div class="col-md-6 map">
-            <iframe></iframe>
-            <div class="black">
-                <div class="map-l"> <i class="glyphicon glyphicon-map-marker"></i></div>
-            </div>
-        </div>
-        <div class="clearfix"> </div>
-    </div>
-    <!--//contact-->
-    <!--/footer-->
+      <!--/footer-->
     <div class="copy">
         <div class="container">
             <div class="footer-top-at">
@@ -171,7 +144,10 @@
 
                     </ul>
                 </div>
-                <img style="width:250px;max-height:150px" class="img-rounded" src="~/Content/images/logo.jpg" />
+                <img style="width:250px;max-height:150px" class="img-rounded" src="~/Content/images/bank.jpg" />
+                <ul class="nav-bottom">
+                    <li><a href="#">Account Number: 144036727001</a></li>
+                </ul>
 
                 <div class="clearfix"> </div>
             </div>
@@ -180,7 +156,7 @@
         <p>&copy; All Rights Reserved</p>
     </div>
 
-    
+
     <script src="~/js/jquery-2.1.3.min.js"></script>
     <script src="~/js/bootstrap.js"></script>
     <script src="~/js/script.js"></script>

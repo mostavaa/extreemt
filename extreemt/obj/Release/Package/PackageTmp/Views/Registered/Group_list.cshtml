@@ -1,48 +1,89 @@
 ﻿@{
-    ViewBag.Title = "Group_list";
+    if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
+    {
+        if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
+        {
+            Response.Redirect(Url.Action("Index", "Home"));
+            return;
+        }
+    }
 }
+@{
+    ViewBag.Title = "Group_list";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
 @{
     extreemt.user usr = extreemt.Account.staticGetLoggedUser();
     List<extreemt.user> allRegisterdChilds = (List<extreemt.user>)ViewData["allRegisterdChilds"];
 
 }
 <h2>Group_list</h2>
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>IR ID</th>
-            <th>IR Name</th>
-            <th>Applier id</th>
-            <th>Applier Name</th>
-            <th>Applier Side</th>
-            <th>Confirm Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            extreemt.extreemtEntities db = new extreemt.extreemtEntities();
-            extreemt.Account acc = new extreemt.Account();
-
-        }
-
-        @foreach (extreemt.user user in allRegisterdChilds)
-        {
-            string applierPos = "left";
-            if (acc.isRight(db.users.Where(u => u.userId == user.registererId).First(), user))
-            {
-                applierPos = "right";
-            }
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <td>@user.userId</td>
-                <td>@user.username</td>
-                <td>@user.registererId</td>
-                <td>@db.users.Where(u => u.userId == user.registererId).First().username</td>
-                <td>@applierPos</td>
-                <td>@user.registerDate.Value.ToString("yyyy-MM-dd")</td>
+                <th>IR ID</th>
+                <th>IR Name</th>
+                <th>Applier id</th>
+                <th>Applier Name</th>
+                <th>Applier Side</th>
+                <th>Confirm Date</th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @{
+                extreemt.extreemtEntities db = new extreemt.extreemtEntities();
+                extreemt.Account acc = new extreemt.Account();
 
-    </tbody>
+            }
 
-</table>
+            @foreach (extreemt.user user in allRegisterdChilds)
+            {
+                string applierPos = "left";
+                if (acc.isRight(db.users.Where(u => u.userId == user.registererId).First(), user))
+                {
+                    applierPos = "right";
+                }
+                <tr>
+                    <td>@user.userId</td>
+                    <td>@user.username</td>
+                    <td>@user.registererId</td>
+                    <td>@db.users.Where(u => u.userId == user.registererId).First().username</td>
+                    <td>@applierPos</td>
+                    <td>@user.registerDate.Value.ToString("yyyy-MM-dd")</td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+    <div class="row">
+        <ul class="pagination">
+            @{
+                int numOfPages = (int)ViewData["numOfPages"];
+                for (int i = 1; i <= numOfPages; i++)
+                {
+                    int page = 1;
+                    if (Request.Params["page"] != null && Request.Params["page"] != "")
+                    {
+                        page = int.Parse(Request.Params["page"]);
+                    }
+                    string url = Request.Url.GetLeftPart(UriPartial.Path);
+                    url += "?page=" + i;
+                    if (i == page)
+                    {
+                        <li class="active"><a href="@url">@i</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@url">@i</a></li>
+                    }
+                }
+            }
+
+        </ul>
+    </div>
+
+</div>

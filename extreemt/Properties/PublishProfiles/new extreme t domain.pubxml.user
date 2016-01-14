@@ -19,7 +19,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/21/2015 10:40:38</publishTime>
     </File>
     <File Include="bin/extreemt.dll">
-      <publishTime>10/17/2015 23:41:58</publishTime>
+      <publishTime>01/14/2016 13:00:10</publishTime>
     </File>
     <File Include="bin/IKVM.OpenJDK.Core.dll">
       <publishTime>03/17/2011 06:31:08</publishTime>
@@ -457,13 +457,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/03/2015 19:39:10</publishTime>
     </File>
     <File Include="css/component.css">
-      <publishTime>09/20/2015 21:26:34</publishTime>
+      <publishTime>10/24/2015 17:18:47</publishTime>
     </File>
     <File Include="css/flexslider.css">
       <publishTime>09/20/2015 21:26:34</publishTime>
     </File>
     <File Include="css/style.css">
-      <publishTime>10/08/2015 00:06:26</publishTime>
+      <publishTime>10/24/2015 17:18:47</publishTime>
     </File>
     <File Include="css/styles.css">
       <publishTime>07/03/2015 19:39:10</publishTime>
@@ -529,7 +529,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/20/2015 21:26:34</publishTime>
     </File>
     <File Include="Model1.edmx.diagram">
-      <publishTime>10/08/2015 00:16:28</publishTime>
+      <publishTime>10/26/2015 13:55:59</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>06/21/2015 10:41:07</publishTime>
@@ -580,97 +580,127 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/21/2015 10:40:55</publishTime>
     </File>
     <File Include="Views/Account/Admin.cshtml">
-      <publishTime>09/21/2015 01:39:41</publishTime>
+      <publishTime>01/14/2016 12:10:35</publishTime>
     </File>
     <File Include="Views/Account/adminpage.cshtml">
-      <publishTime>09/02/2015 20:46:12</publishTime>
+      <publishTime>10/25/2015 11:17:02</publishTime>
     </File>
     <File Include="Views/Account/Index.cshtml">
-      <publishTime>10/18/2015 00:52:30</publishTime>
+      <publishTime>10/25/2015 11:16:59</publishTime>
     </File>
     <File Include="Views/Account/Login.cshtml">
-      <publishTime>10/08/2015 00:06:26</publishTime>
+      <publishTime>10/25/2015 11:16:55</publishTime>
     </File>
     <File Include="Views/Account/SignUp.cshtml">
-      <publishTime>09/04/2015 10:29:08</publishTime>
+      <publishTime>10/25/2015 11:16:50</publishTime>
     </File>
     <File Include="Views/Account/transfer.cshtml">
-      <publishTime>09/04/2015 19:29:26</publishTime>
+      <publishTime>10/26/2015 13:56:03</publishTime>
     </File>
     <File Include="Views/Category/Create.cshtml">
-      <publishTime>10/08/2015 00:50:59</publishTime>
+      <publishTime>12/23/2015 07:10:11</publishTime>
     </File>
     <File Include="Views/Category/Delete.cshtml">
-      <publishTime>10/08/2015 00:51:01</publishTime>
+      <publishTime>12/23/2015 07:10:11</publishTime>
     </File>
     <File Include="Views/Category/Details.cshtml">
-      <publishTime>10/08/2015 00:50:59</publishTime>
+      <publishTime>12/23/2015 07:10:11</publishTime>
     </File>
     <File Include="Views/Category/Edit.cshtml">
-      <publishTime>10/08/2015 00:51:00</publishTime>
+      <publishTime>12/23/2015 07:10:11</publishTime>
     </File>
     <File Include="Views/Category/Index.cshtml">
-      <publishTime>10/08/2015 00:50:58</publishTime>
+      <publishTime>12/23/2015 07:10:11</publishTime>
     </File>
     <File Include="Views/Home/Add_Product.cshtml">
-      <publishTime>10/08/2015 00:06:26</publishTime>
+      <publishTime>12/23/2015 07:10:11</publishTime>
     </File>
     <File Include="Views/Home/Afetr_Login.cshtml">
       <publishTime>09/20/2015 21:26:33</publishTime>
     </File>
     <File Include="Views/Home/Category.cshtml">
-      <publishTime>10/08/2015 00:06:26</publishTime>
+      <publishTime>10/25/2015 11:18:53</publishTime>
     </File>
     <File Include="Views/Home/genology - Copy.cshtml">
-      <publishTime>07/22/2015 20:08:45</publishTime>
+      <publishTime>10/25/2015 11:18:27</publishTime>
     </File>
     <File Include="Views/Home/genology.cshtml">
-      <publishTime>09/04/2015 14:51:50</publishTime>
+      <publishTime>01/14/2016 12:10:35</publishTime>
     </File>
     <File Include="Views/Home/genology2.cshtml">
-      <publishTime>09/04/2015 11:31:38</publishTime>
+      <publishTime>12/23/2015 07:10:11</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>09/20/2015 21:26:33</publishTime>
+      <publishTime>10/25/2015 11:18:53</publishTime>
     </File>
     <File Include="Views/Home/Product.cshtml">
-      <publishTime>09/20/2015 21:26:33</publishTime>
+      <publishTime>10/25/2015 11:18:53</publishTime>
+    </File>
+    <File Include="Views/Home/Profile.cshtml">
+      <publishTime>12/23/2015 07:10:11</publishTime>
     </File>
     <File Include="Views/Home/Update_Category.cshtml">
-      <publishTime>10/08/2015 00:06:26</publishTime>
+      <publishTime>10/25/2015 11:18:41</publishTime>
     </File>
     <File Include="Views/Photo/Create.cshtml">
-      <publishTime>10/10/2015 15:22:59</publishTime>
+      <publishTime>10/25/2015 11:19:10</publishTime>
     </File>
     <File Include="Views/Photo/Delete.cshtml">
-      <publishTime>10/10/2015 15:23:00</publishTime>
+      <publishTime>10/25/2015 11:19:11</publishTime>
     </File>
     <File Include="Views/Photo/Details.cshtml">
-      <publishTime>10/10/2015 15:22:58</publishTime>
+      <publishTime>10/25/2015 11:19:11</publishTime>
     </File>
     <File Include="Views/Photo/Edit.cshtml">
-      <publishTime>10/10/2015 15:22:59</publishTime>
+      <publishTime>10/25/2015 11:19:11</publishTime>
     </File>
     <File Include="Views/Photo/Index.cshtml">
-      <publishTime>10/10/2015 15:22:57</publishTime>
+      <publishTime>10/25/2015 11:19:11</publishTime>
     </File>
     <File Include="Views/Product/Create.cshtml">
-      <publishTime>10/10/2015 19:50:26</publishTime>
+      <publishTime>12/23/2015 07:10:11</publishTime>
     </File>
     <File Include="Views/Product/Delete.cshtml">
-      <publishTime>10/10/2015 15:17:59</publishTime>
+      <publishTime>12/23/2015 07:10:11</publishTime>
     </File>
     <File Include="Views/Product/Details.cshtml">
-      <publishTime>10/16/2015 22:21:55</publishTime>
+      <publishTime>12/23/2015 07:10:11</publishTime>
     </File>
     <File Include="Views/Product/Edit.cshtml">
-      <publishTime>10/10/2015 19:50:24</publishTime>
+      <publishTime>10/25/2015 11:19:36</publishTime>
     </File>
     <File Include="Views/Product/Index.cshtml">
-      <publishTime>10/16/2015 19:17:06</publishTime>
+      <publishTime>12/23/2015 07:10:11</publishTime>
     </File>
     <File Include="Views/Product/selectUser.cshtml">
-      <publishTime>10/16/2015 22:22:43</publishTime>
+      <publishTime>10/25/2015 11:19:36</publishTime>
+    </File>
+    <File Include="Views/Registered/Account_Summary.cshtml">
+      <publishTime>12/23/2015 07:10:11</publishTime>
+    </File>
+    <File Include="Views/Registered/Cash_Bank.cshtml">
+      <publishTime>12/23/2015 07:10:11</publishTime>
+    </File>
+    <File Include="Views/Registered/Daily_Signup.cshtml">
+      <publishTime>01/14/2016 12:10:35</publishTime>
+    </File>
+    <File Include="Views/Registered/Group_list.cshtml">
+      <publishTime>01/14/2016 12:10:35</publishTime>
+    </File>
+    <File Include="Views/Registered/My_Basket.cshtml">
+      <publishTime>10/25/2015 11:20:06</publishTime>
+    </File>
+    <File Include="Views/Registered/My_Order.cshtml">
+      <publishTime>01/14/2016 12:10:35</publishTime>
+    </File>
+    <File Include="Views/Registered/My_Transfer.cshtml">
+      <publishTime>12/23/2015 07:10:12</publishTime>
+    </File>
+    <File Include="Views/Registered/Product_Bank.cshtml">
+      <publishTime>12/23/2015 07:10:12</publishTime>
+    </File>
+    <File Include="Views/Registered/Update_Info.cshtml">
+      <publishTime>01/14/2016 12:10:35</publishTime>
     </File>
     <File Include="Views/sala7/index.html">
       <publishTime>09/19/2015 19:28:02</publishTime>
@@ -682,7 +712,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/21/2015 10:40:25</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>10/08/2015 00:52:22</publishTime>
+      <publishTime>01/14/2016 12:10:35</publishTime>
+    </File>
+    <File Include="Views/Shared/_LoginLayout.cshtml">
+      <publishTime>01/14/2016 12:10:35</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>06/21/2015 10:40:25</publishTime>
@@ -691,7 +724,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/21/2015 10:40:25</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/17/2015 23:11:12</publishTime>
+      <publishTime>01/14/2016 12:52:23</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -1,8 +1,18 @@
 ﻿@{
+    if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
+    {
+        if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
+        {
+            Response.Redirect(Url.Action("Index", "Home"));
+            return;
+        }
+    }
+}
+@{
     ViewBag.Title = "Add_Product";
 }
 
-<h2>Add_Product</h2>
+<h1>Add_Product</h1>
 
 <div class="container">
     <h2>Add Product</h2>

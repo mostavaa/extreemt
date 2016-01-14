@@ -1,5 +1,16 @@
 ﻿@{
+    if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
+    {
+        if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
+        {
+            Response.Redirect(Url.Action("Index", "Home"));
+            return;
+        }
+    }
+}
+@{
     ViewBag.Title = "Product_Bank";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
 <h2>Product_Bank</h2>
@@ -7,21 +18,23 @@
     extreemt.user usr = extreemt.Account.staticGetLoggedUser();
 
 }
-<div style="width:50%">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>User</th>
-                <th>Product_Bank</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>@usr.username </td>
+<div class="container">
+    <div style="width:50%">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Product_Bank</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@usr.username </td>
 
-                <td>@usr.productBank</td>
-            </tr>
-        </tbody>
-    </table>
+                    <td>@usr.productBank</td>
+                </tr>
+            </tbody>
+        </table>
 
+    </div>
 </div>

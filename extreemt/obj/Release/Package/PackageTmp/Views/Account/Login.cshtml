@@ -1,4 +1,14 @@
 ﻿@{
+    if (!extreemt.tools.isAuthorized(Request.Url.AbsolutePath))
+    {
+        if (Request.Url.AbsolutePath != Url.Action("Index", "Home"))
+        {
+            Response.Redirect(Url.Action("Index", "Home"));
+            return;
+        }
+    }
+}
+@{
     ViewBag.Title = "Login";
 }
 
@@ -51,7 +61,7 @@
                         $(this).css("border-color", "");
                     });
                     if (res == "success") {
-                        window.location.href = "@Url.Action("Afetr_Login" , "Home")";
+                        window.location.href = "@Url.Action("Profile" , "Home")";
                     } else {
                         $(button).show();
                         $(button).parent().find(".loading").hide();
